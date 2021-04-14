@@ -1,0 +1,38 @@
+Package: BioPlexAnalysis
+Title: Applications and downstream analysis of BioPlex PPI data
+Version: 0.99.1
+Authors@R: 
+    c(person("Ludwig", "Geistlinger",
+             role = c("aut", "cre"),
+             email = "ludwig_geistlinger@hms.harvard.edu"),
+      person("Robert", "Gentleman",
+             role = "aut",
+             email = "robert_gentleman@hms.harvard.edu"))
+Description: Applications and downstream analysis of BioPlex PPI data.
+Encoding: UTF-8
+License: Artistic-2.0
+VignetteBuilder: knitr
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Depends:
+    R (>= 4.0.0),
+    BioPlex	
+Imports: 
+    BiocFileCache,
+    GEOquery,
+    graph,
+    methods,
+    utils
+Suggests: 
+    AnnotationHub,
+    BioNet,
+    EnrichmentBrowser,
+    ExperimentHub,
+    ExpressionAtlas,
+    ggnetwork,
+    igraph,
+    knitr,
+    rmarkdown
+Remotes:
+    ccb-hms/BioPlex
