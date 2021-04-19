@@ -19,8 +19,6 @@ Depends:
     R (>= 4.0.0),
     BioPlex	
 Imports: 
-    BiocFileCache,
-    GEOquery,
     graph,
     methods,
     utils

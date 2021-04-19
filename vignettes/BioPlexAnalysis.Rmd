@@ -1,0 +1,150 @@
+---
+vignette: >
+  % \VignetteIndexEntry{Data analysis}
+  % \VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+output:
+  html_document:
+    mathjax: null   
+---
+
+# Setup
+```{r, message = FALSE}
+library(BioPlex)
+library(BioNet)
+library(AnnotationDbi)
+library(AnnotationHub)
+library(EnrichmentBrowser)
+library(ExpressionAtlas)
+library(graph)
+library(ggnetwork)
+```
+
+Connect to 
+[AnnotationHub](http://bioconductor.org/packages/AnnotationHub):
+
+```{r ahub, message = FALSE}
+ah <- AnnotationHub::AnnotationHub()
+```
+
+Connect to 
+[ExperimentHub](http://bioconductor.org/packages/ExperimentHub):
+
+```{r ehub, message = FALSE}
+eh <- ExperimentHub::ExperimentHub()
+```
+
+OrgDb package for human:
+```{r orgdb, message = FALSE}
+ahdb <- AnnotationHub::query(ah, c("orgDb", "Homo sapiens"))
+orgdb <- ahdb[[length(ahdb)]]
+orgdb
+keytypes(orgdb)
+```
+
+EnsDb package for human:
+```{r ensdb, message = FALSE}
+ahdb <- AnnotationHub::query(ah, c("ensDb", "Homo sapiens"))
+ensdb <- ahdb[[length(ahdb)]]
+ensdb
+keytypes(ensdb)
+```
+
+# BioNet
+
+Get the latest version of the 293T PPI network:
+
+```{r}
+bp.293t <- BioPlex::getBioPlex(cell.line = "293T", version = "3.0")
+```
+
+Get RNA-seq data for 293T cells from GEO: 
+[GSE122425](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE122425)
+
+```{r gse122425}
+gse122425 <- getGSE122425()
+```
+
+Differential expression analysis between NSUN2 knockout and wild type: 
+
+```{r de-ana-gse122425}
+gse122425$GROUP <- rep(c(0, 1), each = 3)
+gse122425 <- EnrichmentBrowser::deAna(gse122425, de.method = "DESeq2")
+```
+
+Inspect results:
+
+```{r de-results-gse122425}
+rowData(gse122425)
+not.na <- !is.na(rowData(gse122425)$PVAL)
+gse122425 <- gse122425[not.na,]
+EnrichmentBrowser::volcano(rowData(gse122425)$FC, rowData(gse122425)$ADJ.PVAL)
+```
+
+Change rownames to gene symbols for intersection with bioplex graph:
+ 
+```{r}
+rowData(gse122425)$ENSEMBL <- rownames(gse122425)
+rownames(gse122425) <- rowData(gse122425)$SYMBOL
+```
+
+Intersect bioplex graph and expression dataset:
+
+```{r isect-bp-gse122425}
+syms <- graph::nodeData(bp.gr, graph::nodes(bp.gr), "SYMBOL")
+syms <- unlist(syms)
+isect <- intersect(syms, rownames(gse122425)) 
+ind <- match(isect, syms) 
+bp.sgr <- graph::subGraph(names(syms)[ind], bp.gr)
+bp.sgr 
+bp.sgr <- BioNet::rmSelfLoops(bp.sgr)
+bp.sgr 
+```
+
+Get the DE p-values for each node:
+
+```{r de-bp-gse122425}
+syms <- syms[ind]
+ind <- match(isect, rownames(gse122425))
+pvals <- rowData(gse122425)[ind, "PVAL"]
+names(pvals) <- names(syms)
+head(pvals)
+```
+
+To score each node of the network we fit a Beta-uniform mixture model (BUM)
+to the p-value distribution and subsequently use the parameters of the model 
+for the scoring function:
+
+```{r bum-bp-gse122425}
+fb <- BioNet::fitBumModel(pvals)
+scores <- BioNet::scoreNodes(bp.sgr, fb, fdr = 0.05)
+head(scores)
+summary(scores)
+```
+
+Here  we  use  a  fast  heuristic  approach  to  calculate  an  approximation
+to  theoptimal scoring subnetwork.  
+An optimal solution can be calculated using the heinz algorithm requiring a 
+commercial CPLEX license.
+
+```{r heinz-bp-gse122425, eval = FALSE}
+module <- BioNet::runFastHeinz(bp.sgr, scores)
+```
+
+```{r heinz-bp-gse122425-cached, echo = FALSE, message = FALSE}
+module <- BioPlex:::.getResourceFromCache("gse122425.bionet.module")
+```
+
+```{r module-bp-gse122425}
+module
+```
+
+# GGEA
+
+# SGSeq
+
+## SessionInfo
+
+```{r sessionInfo}
+sessionInfo()
+```
