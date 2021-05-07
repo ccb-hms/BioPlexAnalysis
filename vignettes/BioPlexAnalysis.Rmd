@@ -12,42 +12,8 @@ output:
 ```{r, message = FALSE}
 library(BioPlex)
 library(BioNet)
-library(AnnotationDbi)
-library(AnnotationHub)
 library(EnrichmentBrowser)
-library(ExpressionAtlas)
 library(graph)
-library(ggnetwork)
-```
-
-Connect to 
-[AnnotationHub](http://bioconductor.org/packages/AnnotationHub):
-
-```{r ahub, message = FALSE}
-ah <- AnnotationHub::AnnotationHub()
-```
-
-Connect to 
-[ExperimentHub](http://bioconductor.org/packages/ExperimentHub):
-
-```{r ehub, message = FALSE}
-eh <- ExperimentHub::ExperimentHub()
-```
-
-OrgDb package for human:
-```{r orgdb, message = FALSE}
-ahdb <- AnnotationHub::query(ah, c("orgDb", "Homo sapiens"))
-orgdb <- ahdb[[length(ahdb)]]
-orgdb
-keytypes(orgdb)
-```
-
-EnsDb package for human:
-```{r ensdb, message = FALSE}
-ahdb <- AnnotationHub::query(ah, c("ensDb", "Homo sapiens"))
-ensdb <- ahdb[[length(ahdb)]]
-ensdb
-keytypes(ensdb)
 ```
 
 # BioNet
@@ -128,22 +94,22 @@ head(scores)
 summary(scores)
 ```
 
+## First reduction step: unsupervised detection of maximum scoring subnetwork
+
 Here  we  use  a  fast  heuristic  approach  to  calculate  an  approximation
 to  theoptimal scoring subnetwork.  
 An optimal solution can be calculated using the heinz algorithm requiring a 
 commercial CPLEX license.
 
-```{r heinz-bp-gse122425, eval = FALSE}
+Note: this will run for a couple of minutes so it will be a good idea to cache the
+result to not recompute this over and over again.
+
+```{r heinz-bp-gse122425}
 module <- BioNet::runFastHeinz(bp.sgr, scores)
-```
-
-```{r heinz-bp-gse122425-cached, echo = FALSE, message = FALSE}
-module <- BioPlex:::.getResourceFromCache("gse122425.bionet.module", update.value = NA)
-```
-
-```{r module-bp-gse122425}
 module
 ```
+
+## Second reduction step: supervised enrichment analysis of maximum scoring subnetwork 
 
 ```{r}
 kegg.gs <- EnrichmentBrowser::getGenesets(org = "hsa", db = "kegg", gene.id.type = "UNIPROT")
@@ -152,23 +118,39 @@ go.gs <- EnrichmentBrowser::getGenesets(org = "hsa", db = "go", gene.id.type = "
 head(go.gs)
 ```
 
+Given the maximum scoring subnetwork and gene sets of interest, we can
+now throw all kinds of set-based enrichment analysis (sbea) methods or 
+network-based enrichment analysis (nbea) methods onto the problem.
+
+```{r}
+EnrichmentBrowser::sbeaMethods()
+EnrichmentBrowser::nbeaMethods()
+```
+
+Those are conveniently wrapped in the EnrichmentBrowser package and we are
+going to try out a couple of them here.
+
+But for now we just take some information from the [paper](https://pubmed.ncbi.nlm.nih.gov/30526041/) to illustrate the concept:
+
 NSUN2 is a nucleolus RNA m5C methyltransferase, regulator of cell proliferation
 and cell differentiation, dysfunction associated with intellectual diseases
 and cancer; reported to be a downstream target gene of MYC oncogene, a master
 regulator of cell proliferation.
 
-Among the pathways showing enrichment in the paper is Ribosome: 
+Among the pathways showing enrichment in the paper is Ribosome, so as showcase
+let's extract nodes participating the gene set "Ribosome" from the maximum scoring
+subnetwork.
 
 ```{r}
 ind <- grep("Ribosome$", names(kegg.gs))
 ribo <- kegg.gs[[ind]]
 ribo <- intersect(ribo, graph::nodes(module))
 ribo.gr <- graph::subGraph(ribo, module)
+ribo.gr
 ```
 
-# GGEA
-
-# SGSeq
+Such a gene set induced sub-graph can then further explored in our BioPlex
+node data and edge data shiny viewer. 
 
 ## SessionInfo
 

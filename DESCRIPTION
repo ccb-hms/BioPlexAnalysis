@@ -23,13 +23,8 @@ Imports:
     methods,
     utils
 Suggests: 
-    AnnotationHub,
     BioNet,
     EnrichmentBrowser,
-    ExperimentHub,
-    ExpressionAtlas,
-    ggnetwork,
-    igraph,
     knitr,
     rmarkdown
 Remotes:
