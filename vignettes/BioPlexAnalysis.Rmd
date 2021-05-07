@@ -58,6 +58,12 @@ Get the latest version of the 293T PPI network:
 bp.293t <- BioPlex::getBioPlex(cell.line = "293T", version = "3.0")
 ```
 
+and turn into a graph object:
+
+```{r}
+bp.gr <- BioPlex::bioplex2graph(bp.293t)
+```
+
 Get RNA-seq data for 293T cells from GEO: 
 [GSE122425](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE122425)
 
@@ -98,7 +104,7 @@ ind <- match(isect, syms)
 bp.sgr <- graph::subGraph(names(syms)[ind], bp.gr)
 bp.sgr 
 bp.sgr <- BioNet::rmSelfLoops(bp.sgr)
-bp.sgr 
+bp.sgr
 ```
 
 Get the DE p-values for each node:
@@ -132,11 +138,32 @@ module <- BioNet::runFastHeinz(bp.sgr, scores)
 ```
 
 ```{r heinz-bp-gse122425-cached, echo = FALSE, message = FALSE}
-module <- BioPlex:::.getResourceFromCache("gse122425.bionet.module")
+module <- BioPlex:::.getResourceFromCache("gse122425.bionet.module", update.value = NA)
 ```
 
 ```{r module-bp-gse122425}
 module
+```
+
+```{r}
+kegg.gs <- EnrichmentBrowser::getGenesets(org = "hsa", db = "kegg", gene.id.type = "UNIPROT")
+head(kegg.gs)
+go.gs <- EnrichmentBrowser::getGenesets(org = "hsa", db = "go", gene.id.type = "UNIPROT")
+head(go.gs)
+```
+
+NSUN2 is a nucleolus RNA m5C methyltransferase, regulator of cell proliferation
+and cell differentiation, dysfunction associated with intellectual diseases
+and cancer; reported to be a downstream target gene of MYC oncogene, a master
+regulator of cell proliferation.
+
+Among the pathways showing enrichment in the paper is Ribosome: 
+
+```{r}
+ind <- grep("Ribosome$", names(kegg.gs))
+ribo <- kegg.gs[[ind]]
+ribo <- intersect(ribo, graph::nodes(module))
+ribo.gr <- graph::subGraph(ribo, module)
 ```
 
 # GGEA
