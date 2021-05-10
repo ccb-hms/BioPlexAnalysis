@@ -34,7 +34,7 @@ Get RNA-seq data for 293T cells from GEO:
 [GSE122425](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE122425)
 
 ```{r gse122425}
-gse122425 <- getGSE122425()
+gse122425 <- BioPlex::getGSE122425()
 ```
 
 Differential expression analysis between NSUN2 knockout and wild type: 
@@ -109,6 +109,20 @@ module <- BioNet::runFastHeinz(bp.sgr, scores)
 module
 ```
 
+For some reason `BioNet::runFastHeinz` drops the `edgeData` of the input graph,
+so we need to re-annotate those to the module.
+There doesn't seem to be a convenient way to bulk transfer `edgeData` from one
+graph to another, but rather only for one edge and one attribute at a time.
+
+With a little abuse, we help ourselves via accessing slots directly. 
+ 
+```{r}
+en <- names(edgeData(module))
+edgeDataDefaults(module) <- edgeDataDefaults(bp.sgr)
+module@edgeData@data[en] <- edgeData(bp.sgr)[en]
+```
+
+
 ## Second reduction step: supervised enrichment analysis of maximum scoring subnetwork 
 
 ```{r}
@@ -138,7 +152,7 @@ and cancer; reported to be a downstream target gene of MYC oncogene, a master
 regulator of cell proliferation.
 
 Among the pathways showing enrichment in the paper is Ribosome, so as showcase
-let's extract nodes participating the gene set "Ribosome" from the maximum scoring
+let's extract nodes participating in the gene set "Ribosome" from the maximum scoring
 subnetwork.
 
 ```{r}
@@ -151,6 +165,23 @@ ribo.gr
 
 Such a gene set induced sub-graph can then further explored in our BioPlex
 node data and edge data shiny viewer. 
+
+For that we might be interested in mapping all kind of additional data onto the
+nodes and the edges of the network.
+
+For example, we might want to add the Bioplex proteome data onto the graph for
+inspection via the shiny graph viewer.
+
+```{r}
+bp.prot <- BioPlex::getBioplexProteome()
+bp.prot
+ribo.gr <- BioPlex::mapSummarizedExperimentOntoGraph(ribo.gr, bp.prot,
+    col.names = grep("HEK", colnames(bp.prot), value = TRUE), 
+    rowdata.cols = c("nr.peptides", "log2ratio", "adj.pvalue"),
+    prefix = "bpprot_")
+head(graph::nodeData(ribo.gr, n = 2))
+```
+
 
 ## SessionInfo
 
