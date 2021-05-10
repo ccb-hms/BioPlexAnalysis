@@ -179,7 +179,7 @@ ribo.gr <- BioPlex::mapSummarizedExperimentOntoGraph(ribo.gr, bp.prot,
     col.names = grep("HEK", colnames(bp.prot), value = TRUE), 
     rowdata.cols = c("nr.peptides", "log2ratio", "adj.pvalue"),
     prefix = "bpprot_")
-head(graph::nodeData(ribo.gr, n = 2))
+head(graph::nodeData(ribo.gr), n = 2)
 ```
 
 
