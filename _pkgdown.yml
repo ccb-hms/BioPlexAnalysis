@@ -1,0 +1,19 @@
+title: "BioPlexAnalysis"
+
+url: https://ccb-hms.github.io/BioPlexAnalysis/
+
+template:
+  params:
+    bootswatch: flatly
+
+navbar:
+  title: ~
+  type: default
+  left:
+    - text: BioNet analysis
+      href: articles/BioNet.html
+    - text: PFAM analysis
+      href: articles/PFAM.html
+  right:
+    - icon: fa-github
+      href: https://github.com/ccb-hms/BioPlexAnalysis

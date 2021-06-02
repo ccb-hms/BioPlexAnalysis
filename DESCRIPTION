@@ -19,12 +19,14 @@ Depends:
     R (>= 4.0.0),
     BioPlex	
 Imports: 
-    graph,
-    methods,
-    utils
-Suggests: 
+    AnnotationDbi,
+    AnnotationHub,
     BioNet,
     EnrichmentBrowser,
+    PFAM.db,
+    graph,
+    methods,
+    utils,
     knitr,
     rmarkdown
 Remotes:

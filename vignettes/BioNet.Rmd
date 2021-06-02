@@ -1,6 +1,6 @@
 ---
 vignette: >
-  % \VignetteIndexEntry{Data analysis}
+  % \VignetteIndexEntry{BioNet maximum scoring subnetwork analysis}
   % \VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 output:
@@ -181,7 +181,6 @@ ribo.gr <- BioPlex::mapSummarizedExperimentOntoGraph(ribo.gr, bp.prot,
     prefix = "bpprot_")
 head(graph::nodeData(ribo.gr), n = 2)
 ```
-
 
 ## SessionInfo
 
