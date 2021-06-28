@@ -89,14 +89,14 @@
 <p>Get the latest version of the 293T PPI network:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.293t</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioPlex.html">getBioPlex</a></span><span class="op">(</span>cell.line <span class="op">=</span> <span class="st">"293T"</span>, version <span class="op">=</span> <span class="st">"3.0"</span><span class="op">)</span></code></pre></div>
-<pre><code>## Using cached version from 2021-06-27 05:29:28</code></pre>
+<pre><code>## Using cached version from 2021-06-28 05:29:44</code></pre>
 <p>and turn into a graph object:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.gr</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/bioplex2graph.html">bioplex2graph</a></span><span class="op">(</span><span class="va">bp.293t</span><span class="op">)</span></code></pre></div>
 <p>Get RNA-seq data for 293T cells from GEO: <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE122425">GSE122425</a></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gse122425</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getGSE122425.html">getGSE122425</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## Using cached version from 2021-06-27 05:29:39</code></pre>
+<pre><code>## Using cached version from 2021-06-28 05:29:55</code></pre>
 <p>Differential expression analysis between NSUN2 knockout and wild type:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gse122425</span><span class="op">$</span><span class="va">GROUP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
@@ -185,7 +185,7 @@
 <code class="sourceCode R"><span class="va">scores</span> <span class="op">&lt;-</span> <span class="fu">BioNet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioNet/man/scoreNodes.html">scoreNodes</a></span><span class="op">(</span><span class="va">bp.sgr</span>, <span class="va">fb</span>, fdr <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">scores</span><span class="op">)</span></code></pre></div>
 <pre><code>##     P00813     Q8N7W2     Q6ZMN8     P55039     Q9NZL4     Q6ICG6 
-## -2.3408848 -0.4505585 -0.1727217 -1.5847732 -2.6642289 -2.0188587</code></pre>
+## -2.3408846 -0.4505579 -0.1727211 -1.5847729 -2.6642287 -2.0188585</code></pre>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">scores</span><span class="op">)</span></code></pre></div>
 <pre><code>##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
@@ -326,7 +326,7 @@ An optimal solution can be calculated using the heinz algorithm requiring a comm
 <p>For example, we might want to add the Bioplex proteome data onto the graph for inspection via the shiny graph viewer.</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.prot</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioplexProteome.html">getBioplexProteome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## Using cached version from 2021-06-27 05:51:42</code></pre>
+<pre><code>## Using cached version from 2021-06-28 05:52:51</code></pre>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.prot</span></code></pre></div>
 <pre><code>## class: SummarizedExperiment 
@@ -354,7 +354,7 @@ An optimal solution can be calculated using the heinz algorithm requiring a comm
 ## [1] "O75394"
 ## 
 ## $O75394$score
-## [1] 0.2549759
+## [1] 0.2549766
 ## 
 ## $O75394$bpprot_HEK1
 ## [1] 8.66958
@@ -392,7 +392,7 @@ An optimal solution can be calculated using the heinz algorithm requiring a comm
 ## [1] "P18124"
 ## 
 ## $P18124$score
-## [1] 0.4136689
+## [1] 0.4136696
 ## 
 ## $P18124$bpprot_HEK1
 ## [1] 7.7563
