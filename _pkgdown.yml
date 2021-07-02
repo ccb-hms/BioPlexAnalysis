@@ -14,6 +14,9 @@ navbar:
       href: articles/BioNet.html
     - text: PFAM analysis
       href: articles/PFAM.html
+    - text: Transcriptome-Proteome analysis
+      href: articles/TranscriptomeProteome.html
+
   right:
     - icon: fa-github
       href: https://github.com/ccb-hms/BioPlexAnalysis
