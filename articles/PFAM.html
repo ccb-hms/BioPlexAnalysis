@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BioPlexAnalysis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.2</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
 <p>Get the latest version of the 293T PPI network:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.293t</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioPlex.html">getBioPlex</a></span><span class="op">(</span>cell.line <span class="op">=</span> <span class="st">"293T"</span>, version <span class="op">=</span> <span class="st">"3.0"</span><span class="op">)</span></code></pre></div>
-<pre><code>## Using cached version from 2021-07-31 05:31:23</code></pre>
+<pre><code>## Using cached version from 2021-07-31 15:00:15</code></pre>
 <p>and turn into a graph object:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.gr</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/bioplex2graph.html">bioplex2graph</a></span><span class="op">(</span><span class="va">bp.293t</span><span class="op">)</span></code></pre></div>
@@ -98,8 +98,25 @@
 <code class="sourceCode R"><span class="va">ah</span> <span class="op">&lt;-</span> <span class="fu">AnnotationHub</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AnnotationHub/man/AnnotationHub-class.html">AnnotationHub</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>OrgDb package for human:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ahdb</span> <span class="op">&lt;-</span> <span class="fu">AnnotationHub</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AnnotationHub/man/AnnotationHub-class.html">query</a></span><span class="op">(</span><span class="va">ah</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"orgDb"</span>, <span class="st">"Homo sapiens"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">orgdb</span> <span class="op">&lt;-</span> <span class="va">ahdb</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">ahdb</span><span class="op">)</span><span class="op">]</span><span class="op">]</span>
+<code class="sourceCode R"><span class="fu">AnnotationHub</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AnnotationHub/man/AnnotationHub-class.html">query</a></span><span class="op">(</span><span class="va">ah</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"orgDb"</span>, <span class="st">"Homo sapiens"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## AnnotationHub with 1 record
+## # snapshotDate(): 2021-05-18
+## # names(): AH92581
+## # $dataprovider: ftp://ftp.ncbi.nlm.nih.gov/gene/DATA/
+## # $species: Homo sapiens
+## # $rdataclass: OrgDb
+## # $rdatadateadded: 2021-05-14
+## # $title: org.Hs.eg.db.sqlite
+## # $description: NCBI gene ID based annotations about Homo sapiens
+## # $taxonomyid: 9606
+## # $genome: NCBI genomes
+## # $sourcetype: NCBI/ensembl
+## # $sourceurl: ftp://ftp.ncbi.nlm.nih.gov/gene/DATA/, ftp://ftp.ensembl.org/p...
+## # $sourcesize: NA
+## # $tags: c("NCBI", "Gene", "Annotation") 
+## # retrieve record with 'object[["AH92581"]]'</code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">orgdb</span> <span class="op">&lt;-</span> <span class="va">ah</span><span class="op">[[</span><span class="st">"AH92581"</span><span class="op">]</span><span class="op">]</span>
 <span class="va">orgdb</span></code></pre></div>
 <pre><code>## OrgDb object:
 ## | DBSCHEMAVERSION: 2.1
@@ -131,7 +148,7 @@
 ## | UPSOURCENAME: Uniprot
 ## | UPSOURCEURL: http://www.UniProt.org/
 ## | UPSOURCEDATE: Mon Apr 26 21:53:12 2021</code></pre>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">AnnotationDbi</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AnnotationDbi/man/AnnotationDb-class.html">keytypes</a></span><span class="op">(</span><span class="va">orgdb</span><span class="op">)</span></code></pre></div>
 <pre><code>##  [1] "ACCNUM"       "ALIAS"        "ENSEMBL"      "ENSEMBLPROT"  "ENSEMBLTRANS"
 ##  [6] "ENTREZID"     "ENZYME"       "EVIDENCE"     "EVIDENCEALL"  "GENENAME"    
@@ -139,13 +156,13 @@
 ## [16] "OMIM"         "ONTOLOGY"     "ONTOLOGYALL"  "PATH"         "PFAM"        
 ## [21] "PMID"         "PROSITE"      "REFSEQ"       "SYMBOL"       "UCSCKG"      
 ## [26] "UNIPROT"</code></pre>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.gr</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/annotatePFAM.html">annotatePFAM</a></span><span class="op">(</span><span class="va">bp.gr</span>, <span class="va">orgdb</span><span class="op">)</span></code></pre></div>
 <p>Domain-domain association analysis:</p>
 <ol style="list-style-type: decimal">
 <li>create a map from PFAM to UNIPROT</li>
 </ol>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">unip2pfam</span> <span class="op">&lt;-</span> <span class="fu">graph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/graph/man/nodeData-methods.html">nodeData</a></span><span class="op">(</span><span class="va">bp.gr</span>, <span class="fu">graph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/graph/man/graphNEL-class.html">nodes</a></span><span class="op">(</span><span class="va">bp.gr</span><span class="op">)</span>, <span class="st">"PFAM"</span><span class="op">)</span>
 <span class="va">pfam2unip</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/stack.html">stack</a></span><span class="op">(</span><span class="va">unip2pfam</span><span class="op">)</span>
 <span class="va">pfam2unip</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">pfam2unip</span><span class="op">$</span><span class="va">ind</span><span class="op">)</span>, <span class="va">pfam2unip</span><span class="op">$</span><span class="va">values</span><span class="op">)</span>
@@ -171,14 +188,14 @@
 <ol start="2" style="list-style-type: decimal">
 <li>create a map from UNIPROT to PFAMs of interaction partners</li>
 </ol>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">unip2iapfams</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu">graph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/graph/man/graphNEL-class.html">nodes</a></span><span class="op">(</span><span class="va">bp.gr</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="fu">graph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/graph/man/nodeData-methods.html">nodeData</a></span><span class="op">(</span><span class="va">bp.gr</span>, <span class="fu">graph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/graph/man/graphNEL-class.html">edges</a></span><span class="op">(</span><span class="va">bp.gr</span><span class="op">)</span><span class="op">[[</span><span class="va">n</span><span class="op">]</span><span class="op">]</span>, <span class="st">"PFAM"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">unip2iapfams</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">unip2iapfams</span>, <span class="va">unlist</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">unip2iapfams</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">graph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/graph/man/graphNEL-class.html">nodes</a></span><span class="op">(</span><span class="va">bp.gr</span><span class="op">)</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>for each pfam, get the pfams of interacting proteins</li>
 </ol>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pfam2iapfams</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">pfam2unip</span>, <span class="kw">function</span><span class="op">(</span><span class="va">ps</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">unip2iapfams</span><span class="op">[</span><span class="va">ps</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
 <span class="va">pfam2iapfams</span> <span class="op">&lt;-</span> <span class="va">pfam2iapfams</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lengths.html">lengths</a></span><span class="op">(</span><span class="va">pfam2iapfams</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">]</span>
 <span class="va">pfam2pfam</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/stack.html">stack</a></span><span class="op">(</span><span class="va">pfam2iapfams</span><span class="op">)</span>
@@ -197,7 +214,7 @@
 <li>compute an all-against-all matrix storing pfam2pfam interaction counts:</li>
 </ol>
 <p>4a. initialize + turn pfam2pfam mapping into an integer index mapping for efficiency</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pfams</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="va">pfam2pfam</span><span class="op">)</span><span class="op">)</span>
 <span class="va">len</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">pfams</span><span class="op">)</span>
 <span class="va">ia.mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">0</span>, nrow <span class="op">=</span> <span class="va">len</span>, ncol <span class="op">=</span> <span class="va">len</span><span class="op">)</span>
@@ -214,7 +231,7 @@
 ## [5,]    1  178
 ## [6,]    2  178</code></pre>
 <p>4b. loop over all pfam-pfam pair and count the PPIs connecting them:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">len</span><span class="op">)</span><span class="op">)</span>
 <span class="op">{</span>
     <span class="kw">if</span><span class="op">(</span><span class="va">i</span> <span class="op">%%</span> <span class="fl">100</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span>
@@ -283,10 +300,10 @@
 <pre><code>## 5300</code></pre>
 <pre><code>## 5400</code></pre>
 <p>Inspect the result:</p>
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">ia.mat</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 5416 5416</code></pre>
-<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ia.mat</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></code></pre></div>
 <pre><code>##         PF02874 PF00006 PF00306 PF02823 PF00213
 ## PF02874       4       8       1       2       1
@@ -297,7 +314,7 @@
 <ol start="5" style="list-style-type: decimal">
 <li>filter out pfams that have not at least one pfam with 2 interactions</li>
 </ol>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gr1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">ia.mat</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="va">ia.mat</span> <span class="op">&lt;-</span> <span class="va">ia.mat</span><span class="op">[</span><span class="va">gr1</span> , <span class="va">gr1</span><span class="op">]</span> 
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">ia.mat</span><span class="op">)</span></code></pre></div>
@@ -306,13 +323,13 @@
 <li>calculate 2x2 contigency tables for all domain pairs:</li>
 </ol>
 <p>6a. Let’s do some precomputations of the margins for efficiency</p>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">total</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="va">ia.mat</span><span class="op">)</span><span class="op">)</span>
 <span class="va">m</span> <span class="op">&lt;-</span> <span class="va">ia.mat</span>
 <span class="va">m</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html">lower.tri</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html">lower.tri</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span><span class="op">]</span>
 <span class="va">rs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></code></pre></div>
 <p>6b. let’s define a function that computes for each domain pair: 1) the number of interactions connecting both domains; 2) the numbers of interactions involving either domain individually; and 3) the number of interactions not involving either domain</p>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">getContingency</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, <span class="va">m</span>, <span class="va">rs</span>, <span class="va">total</span><span class="op">)</span> 
 <span class="op">{</span>
     <span class="va">both</span> <span class="op">&lt;-</span> <span class="va">m</span><span class="op">[</span><span class="va">p1</span>,<span class="va">p2</span><span class="op">]</span>
@@ -324,14 +341,14 @@
 <span class="fu">getContingency</span><span class="op">(</span><span class="st">"PF02874"</span>, <span class="st">"PF00006"</span>, <span class="va">m</span>, <span class="va">rs</span>, <span class="va">total</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1]      8     89     89 183050</code></pre>
 <p>6c. now let’s get all possible domain pairs and restrict to those pairs connected by at least 2 PPI’s:</p>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">combs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/combn.html">combn</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>
 <span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">combs</span>, <span class="fl">2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">m</span><span class="op">[</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">x</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span>
 <span class="va">combs</span> <span class="op">&lt;-</span> <span class="va">combs</span><span class="op">[</span>,<span class="va">ind</span><span class="op">]</span>
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">combs</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1]     2 29118</code></pre>
 <p>6d. calculate contigency for all remaining domain pairs:</p>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">conts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">combs</span>, <span class="fl">2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">getContingency</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">x</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">m</span>, <span class="va">rs</span>, <span class="va">total</span><span class="op">)</span><span class="op">)</span> 
 <span class="va">conts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">conts</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">conts</span><span class="op">)</span></code></pre></div>
@@ -345,26 +362,26 @@
 <ol start="7" style="list-style-type: decimal">
 <li>Now we test each domain pair for over-representation of connecting PPI’s based on the hypergeometric distribution. This corresponds to a one-sided version of Fisher’s exact test:</li>
 </ol>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fisherp</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/fisher.test.html">fisher.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">x</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, 
                        alternative <span class="op">=</span> <span class="st">"greater"</span><span class="op">)</span><span class="op">$</span><span class="va">p.value</span> 
 <span class="fu">fisherp</span><span class="op">(</span><span class="va">conts</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 6.377725e-16</code></pre>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">conts</span>, <span class="fl">1</span>, <span class="va">fisherp</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">ps</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 6.377725e-16 1.194922e-04 2.339281e-03 2.382686e-09 5.183170e-02
 ## [6] 7.463328e-02</code></pre>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">ps</span>, breaks <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></code></pre></div>
 <p><img src="PFAM_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 <ol start="8" style="list-style-type: decimal">
 <li>Multiple testing correction:</li>
 </ol>
-<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">adjp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/p.adjust.html">p.adjust</a></span><span class="op">(</span><span class="va">ps</span>, method <span class="op">=</span> <span class="st">"BH"</span><span class="op">)</span></code></pre></div>
 <p>RESULT:</p>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>PFAM1 <span class="op">=</span> <span class="va">combs</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span>, 
                   PFAM2 <span class="op">=</span> <span class="va">combs</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span>,
                   PVAL <span class="op">=</span> <span class="va">ps</span>,
@@ -381,13 +398,13 @@
 <ol start="9" style="list-style-type: decimal">
 <li>Get human readable description for the PFAM domain IDs:</li>
 </ol>
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">PFAM.db</span><span class="op">)</span></code></pre></div>
 <pre><code>## </code></pre>
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">id2de</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/AnnotationDbi/man/BimapFormatting.html">as.list</a></span><span class="op">(</span><span class="va">PFAMDE</span><span class="op">)</span></code></pre></div>
 <p>What are the top 10 interacting domains:</p>
-<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">id2de</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">PFAM1</span>, <span class="fl">10</span><span class="op">)</span><span class="op">]</span>,
       <span class="va">id2de</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">PFAM2</span>, <span class="fl">10</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code>##         [,1]                                                          
@@ -413,7 +430,7 @@
 ## PF00028 "Cadherin cytoplasmic C-terminal"          
 ## PF05739 "Synaptobrevin"</code></pre>
 <p>Can we do some of this vectorized ?</p>
-<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">.f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">rs</span>, <span class="va">total</span><span class="op">)</span>
 <span class="op">{</span>
   <span class="va">one</span> <span class="op">&lt;-</span> <span class="va">rs</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">-</span> <span class="va">x</span>

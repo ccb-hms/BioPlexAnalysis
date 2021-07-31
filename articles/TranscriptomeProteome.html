@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BioPlexAnalysis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.2</span>
       </span>
     </div>
 
@@ -108,12 +108,12 @@
 ##   &lt;character&gt;  &lt;character&gt;           &lt;character&gt;            &lt;character&gt;
 ## 1 E-MTAB-2770 Homo sapiens RNA-seq of coding RNA RNA-seq of 934 human..</code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ccle.trans</span> <span class="op">&lt;-</span> <span class="fu">ExpressionAtlas</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ExpressionAtlas/man/getAtlasData.html">getAtlasData</a></span><span class="op">(</span><span class="va">atlasRes</span><span class="op">$</span><span class="va">Accession</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">ccle.trans</span> <span class="op">&lt;-</span> <span class="fu">ExpressionAtlas</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ExpressionAtlas/man/getAtlasExperiment.html">getAtlasExperiment</a></span><span class="op">(</span><span class="st">"E-MTAB-2770"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Downloading Expression Atlas experiment summary from:
 ##  ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/experiments/E-MTAB-2770/E-MTAB-2770-atlasExperimentSummary.Rdata</code></pre>
 <pre><code>## Successfully downloaded experiment summary object for E-MTAB-2770</code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ccle.trans</span> <span class="op">&lt;-</span> <span class="va">ccle.trans</span><span class="op">$</span><span class="va">`E-MTAB-2770`</span><span class="op">$</span><span class="va">rnaseq</span>
+<code class="sourceCode R"><span class="va">ccle.trans</span> <span class="op">&lt;-</span> <span class="va">ccle.trans</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="va">ccle.trans</span> <span class="op">&lt;-</span> <span class="va">ccle.trans</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">"HCT 116"</span>, <span class="va">ccle.trans</span><span class="op">$</span><span class="va">cell_line</span><span class="op">)</span><span class="op">]</span>
 <span class="va">ccle.trans</span></code></pre></div>
 <pre><code>## class: RangedSummarizedExperiment 
@@ -130,8 +130,32 @@
 <code class="sourceCode R"><span class="va">eh</span> <span class="op">&lt;-</span> <span class="fu">ExperimentHub</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ExperimentHub/man/ExperimentHub-class.html">ExperimentHub</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## snapshotDate(): 2021-05-18</code></pre>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ehdb</span> <span class="op">&lt;-</span> <span class="fu">AnnotationHub</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AnnotationHub/man/AnnotationHub-class.html">query</a></span><span class="op">(</span><span class="va">eh</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gygi"</span>, <span class="st">"depmap"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">ccle.prot</span> <span class="op">&lt;-</span> <span class="va">ehdb</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">ehdb</span><span class="op">)</span><span class="op">]</span><span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">AnnotationHub</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AnnotationHub/man/AnnotationHub-class.html">query</a></span><span class="op">(</span><span class="va">eh</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gygi"</span>, <span class="st">"depmap"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## ExperimentHub with 1 record
+## # snapshotDate(): 2021-05-18
+## # names(): EH3459
+## # package(): depmap
+## # $dataprovider: Broad Institute
+## # $species: Homo sapiens
+## # $rdataclass: tibble
+## # $rdatadateadded: 2020-05-19
+## # $title: proteomic_20Q2
+## # $description: Quantitative profiling of 12399 proteins in 375 cell lines, ...
+## # $taxonomyid: 9606
+## # $genome: 
+## # $sourcetype: CSV
+## # $sourceurl: https://gygi.med.harvard.edu/sites/gygi.med.harvard.edu/files/...
+## # $sourcesize: NA
+## # $tags: c("ExperimentHub", "ExperimentData", "ReproducibleResearch",
+## #   "RepositoryData", "AssayDomainData", "CopyNumberVariationData",
+## #   "DiseaseModel", "CancerData", "BreastCancerData", "ColonCancerData",
+## #   "KidneyCancerData", "LeukemiaCancerData", "LungCancerData",
+## #   "OvarianCancerData", "ProstateCancerData", "OrganismData",
+## #   "Homo_sapiens_Data", "PackageTypeData", "SpecimenSource",
+## #   "CellCulture", "Genome", "Proteome", "StemCell", "Tissue") 
+## # retrieve record with 'object[["EH3459"]]'</code></pre>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ccle.prot</span> <span class="op">&lt;-</span> <span class="va">eh</span><span class="op">[[</span><span class="st">"EH3459"</span><span class="op">]</span><span class="op">]</span></code></pre></div>
 <pre><code>## 'getOption("repos")' replaces Bioconductor standard repositories, see
 ## '?repositories' for details
 ## 
@@ -143,7 +167,7 @@
 <pre><code>## snapshotDate(): 2021-05-18</code></pre>
 <pre><code>## see ?depmap and browseVignettes('depmap') for documentation</code></pre>
 <pre><code>## loading from cache</code></pre>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ccle.prot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">ccle.prot</span><span class="op">)</span>
 <span class="va">ccle.prot</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/ccleProteome2SummarizedExperiment.html">ccleProteome2SummarizedExperiment</a></span><span class="op">(</span><span class="va">ccle.prot</span><span class="op">)</span>
 <span class="va">ccle.prot</span></code></pre></div>
@@ -156,26 +180,43 @@
 ## colnames(1): HCT116
 ## colData names(0):</code></pre>
 <p>Connect to <a href="http://bioconductor.org/packages/AnnotationHub">AnnotationHub</a> and obtain OrgDb package for human:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ah</span> <span class="op">&lt;-</span> <span class="fu">AnnotationHub</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AnnotationHub/man/AnnotationHub-class.html">AnnotationHub</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">ahdb</span> <span class="op">&lt;-</span> <span class="fu">AnnotationHub</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AnnotationHub/man/AnnotationHub-class.html">query</a></span><span class="op">(</span><span class="va">ah</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"orgDb"</span>, <span class="st">"Homo sapiens"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">orgdb</span> <span class="op">&lt;-</span> <span class="va">ahdb</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">ahdb</span><span class="op">)</span><span class="op">]</span><span class="op">]</span></code></pre></div>
+<span class="fu">AnnotationHub</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AnnotationHub/man/AnnotationHub-class.html">query</a></span><span class="op">(</span><span class="va">ah</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"orgDb"</span>, <span class="st">"Homo sapiens"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## AnnotationHub with 1 record
+## # snapshotDate(): 2021-05-18
+## # names(): AH92581
+## # $dataprovider: ftp://ftp.ncbi.nlm.nih.gov/gene/DATA/
+## # $species: Homo sapiens
+## # $rdataclass: OrgDb
+## # $rdatadateadded: 2021-05-14
+## # $title: org.Hs.eg.db.sqlite
+## # $description: NCBI gene ID based annotations about Homo sapiens
+## # $taxonomyid: 9606
+## # $genome: NCBI genomes
+## # $sourcetype: NCBI/ensembl
+## # $sourceurl: ftp://ftp.ncbi.nlm.nih.gov/gene/DATA/, ftp://ftp.ensembl.org/p...
+## # $sourcesize: NA
+## # $tags: c("NCBI", "Gene", "Annotation") 
+## # retrieve record with 'object[["AH92581"]]'</code></pre>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">orgdb</span> <span class="op">&lt;-</span> <span class="va">ah</span><span class="op">[[</span><span class="st">"AH92581"</span><span class="op">]</span><span class="op">]</span></code></pre></div>
 <p>Map to ENSEMBL for comparison with CCLE transcriptome data for HCT116:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rnames</span> <span class="op">&lt;-</span> <span class="fu">AnnotationDbi</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AnnotationDbi/man/AnnotationDb-class.html">mapIds</a></span><span class="op">(</span><span class="va">orgdb</span>,
                       keytype <span class="op">=</span> <span class="st">"UNIPROT"</span>,
                       column <span class="op">=</span> <span class="st">"ENSEMBL"</span>,
                       keys <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">ccle.prot</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## 'select()' returned 1:many mapping between keys and columns</code></pre>
 <p>Subset to the ENSEMBL IDs that both datasets have in common</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">isect</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html">intersect</a></span><span class="op">(</span><span class="va">rnames</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">ccle.trans</span><span class="op">)</span><span class="op">)</span>
 <span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="va">isect</span>, <span class="va">rnames</span><span class="op">)</span></code></pre></div>
 <p>This should be rather RPKM, provided gene length from EDASeq:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">assay</span><span class="op">(</span><span class="va">ccle.trans</span>, <span class="st">"cpm"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">edgeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/edgeR/man/cpm.html">cpm</a></span><span class="op">(</span><span class="fu">assay</span><span class="op">(</span><span class="va">ccle.trans</span><span class="op">)</span>, log <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>A look at general correlation between transcriptome and proteome:</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span><span class="op">(</span><span class="fu">assay</span><span class="op">(</span><span class="va">ccle.trans</span>, <span class="st">"cpm"</span><span class="op">)</span><span class="op">[</span><span class="va">isect</span>,<span class="op">]</span>, 
          <span class="fu">assay</span><span class="op">(</span><span class="va">ccle.prot</span><span class="op">)</span><span class="op">[</span><span class="va">ind</span>,<span class="op">]</span>,
          use <span class="op">=</span> <span class="st">"complete.obs"</span><span class="op">)</span></code></pre></div>
@@ -190,7 +231,7 @@
 ## sample estimates:
 ##       cor 
 ## 0.3418368</code></pre>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>trans <span class="op">=</span> <span class="fu">assay</span><span class="op">(</span><span class="va">ccle.trans</span>, <span class="st">"cpm"</span><span class="op">)</span><span class="op">[</span><span class="va">isect</span>,<span class="op">]</span>,
                  prot <span class="op">=</span> <span class="fu">assay</span><span class="op">(</span><span class="va">ccle.prot</span><span class="op">)</span><span class="op">[</span><span class="va">ind</span>,<span class="op">]</span><span class="op">)</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">trans</span>, y <span class="op">=</span> <span class="va">prot</span><span class="op">)</span> <span class="op">)</span> <span class="op">+</span>
@@ -202,9 +243,32 @@
 <pre><code>## Warning: Removed 2690 rows containing non-finite values (stat_bin2d).</code></pre>
 <p><img src="TranscriptomeProteome_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>Let’s check whether this looks very different when accounting for gene length. We therefore obtain gene length for the hg38 genome assembly (used for CCLE).</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ahdb</span> <span class="op">&lt;-</span> <span class="fu">AnnotationHub</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AnnotationHub/man/AnnotationHub-class.html">query</a></span><span class="op">(</span><span class="va">ah</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"TxDb"</span>, <span class="st">"Homo sapiens"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">txdb</span> <span class="op">&lt;-</span> <span class="va">ahdb</span><span class="op">[[</span><span class="st">"AH92591"</span><span class="op">]</span><span class="op">]</span>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">AnnotationHub</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AnnotationHub/man/AnnotationHub-class.html">query</a></span><span class="op">(</span><span class="va">ah</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"TxDb"</span>, <span class="st">"Homo sapiens"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## AnnotationHub with 35 records
+## # snapshotDate(): 2021-05-18
+## # $dataprovider: GENCODE, UCSC, NCBI, tRNAdb, snoRNAdb, RMBase v2.0
+## # $species: Homo sapiens
+## # $rdataclass: TxDb, SQLiteFile, ChainFile, FaFile
+## # additional mcols(): taxonomyid, genome, description,
+## #   coordinate_1_based, maintainer, rdatadateadded, preparerclass, tags,
+## #   rdatapath, sourceurl, sourcetype 
+## # retrieve records with, e.g., 'object[["AH52256"]]' 
+## 
+##             title                                             
+##   AH52256 | TxDb.Hsapiens.BioMart.igis.sqlite                 
+##   AH52257 | TxDb.Hsapiens.UCSC.hg18.knownGene.sqlite          
+##   AH52258 | TxDb.Hsapiens.UCSC.hg19.knownGene.sqlite          
+##   AH52259 | TxDb.Hsapiens.UCSC.hg19.lincRNAsTranscripts.sqlite
+##   AH52260 | TxDb.Hsapiens.UCSC.hg38.knownGene.sqlite          
+##   ...       ...                                               
+##   AH78915 | Chain file for Homo sapiens rRNA hg19 to hg38     
+##   AH78916 | Chain file for Homo sapiens rRNA hg38 to hg19     
+##   AH83362 | Sequences of snoRNA targets of Homo sapiens hg38  
+##   AH92591 | TxDb.Hsapiens.UCSC.hg38.knownGene.sqlite          
+##   AH92592 | TxDb.Hsapiens.UCSC.hg38.refGene.sqlite</code></pre>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">txdb</span> <span class="op">&lt;-</span> <span class="va">ah</span><span class="op">[[</span><span class="st">"AH92591"</span><span class="op">]</span><span class="op">]</span>
 <span class="va">gs</span> <span class="op">&lt;-</span> <span class="fu">GenomicFeatures</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GenomicFeatures/man/transcripts.html">genes</a></span><span class="op">(</span><span class="va">txdb</span><span class="op">)</span>
 <span class="va">gs</span></code></pre></div>
 <pre><code>## GRanges object with 27113 ranges and 1 metadata column:
@@ -223,27 +287,27 @@
 ##    9997    chr22   50523568-50526461      - |        9997
 ##   -------
 ##   seqinfo: 595 sequences (1 circular) from hg38 genome</code></pre>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">len</span> <span class="op">&lt;-</span> <span class="fu">GenomicRanges</span><span class="fu">::</span><span class="fu">width</span><span class="op">(</span><span class="va">gs</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">len</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">gs</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">len</span><span class="op">)</span></code></pre></div>
 <pre><code>##         1        10       100      1000     10000 100009613 
 ##     17574      9937     32712    245068    362847      3000</code></pre>
 <p>This requires to map from Entrez IDs present for the gene length data to ENSEMBL IDs present in the transcriptomic data.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">eids</span> <span class="op">&lt;-</span> <span class="fu">AnnotationDbi</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AnnotationDbi/man/AnnotationDb-class.html">mapIds</a></span><span class="op">(</span><span class="va">orgdb</span>,
                               column <span class="op">=</span> <span class="st">"ENTREZID"</span>,
                               keytype <span class="op">=</span> <span class="st">"ENSEMBL"</span>, 
                               keys <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">ccle.trans</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## 'select()' returned 1:many mapping between keys and columns</code></pre>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">rowData</span><span class="op">(</span><span class="va">ccle.trans</span><span class="op">)</span><span class="op">$</span><span class="va">length</span> <span class="op">&lt;-</span> <span class="va">len</span><span class="op">[</span><span class="va">eids</span><span class="op">]</span></code></pre></div>
 <p>We can now compute RPKM given the obtained gene lengths as input.</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">assay</span><span class="op">(</span><span class="va">ccle.trans</span>, <span class="st">"rpkm"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">edgeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/edgeR/man/cpm.html">rpkm</a></span><span class="op">(</span><span class="fu">assay</span><span class="op">(</span><span class="va">ccle.trans</span><span class="op">)</span>, 
                                          gene.length <span class="op">=</span> <span class="fu">rowData</span><span class="op">(</span><span class="va">ccle.trans</span><span class="op">)</span><span class="op">$</span><span class="va">length</span>,
                                          log <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> </code></pre></div>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span><span class="op">(</span><span class="fu">assay</span><span class="op">(</span><span class="va">ccle.trans</span>, <span class="st">"rpkm"</span><span class="op">)</span><span class="op">[</span><span class="va">isect</span>,<span class="op">]</span>,
          <span class="fu">assay</span><span class="op">(</span><span class="va">ccle.prot</span><span class="op">)</span><span class="op">[</span><span class="va">ind</span>,<span class="op">]</span>,
          use <span class="op">=</span> <span class="st">"complete.obs"</span><span class="op">)</span></code></pre></div>
@@ -258,7 +322,7 @@
 ## sample estimates:
 ##       cor 
 ## 0.3193519</code></pre>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>trans <span class="op">=</span> <span class="fu">assay</span><span class="op">(</span><span class="va">ccle.trans</span>, <span class="st">"rpkm"</span><span class="op">)</span><span class="op">[</span><span class="va">isect</span>,<span class="op">]</span>,
                  prot <span class="op">=</span> <span class="fu">assay</span><span class="op">(</span><span class="va">ccle.prot</span><span class="op">)</span><span class="op">[</span><span class="va">ind</span>,<span class="op">]</span><span class="op">)</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">trans</span>, y <span class="op">=</span> <span class="va">prot</span><span class="op">)</span> <span class="op">)</span> <span class="op">+</span>
@@ -274,16 +338,16 @@
 <h1 class="hasAnchor">
 <a href="#de-analysis-hek293-vs--hct116-transcriptomic-and-proteomic-level" class="anchor"></a>DE analysis HEK293 vs. HCT116 (transcriptomic and proteomic level)</h1>
 <p>Pull the HEK293 data:</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gse.293t</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getGSE122425.html">getGSE122425</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## Using cached version from 2021-07-31 05:31:34</code></pre>
+<pre><code>## Using cached version from 2021-07-31 15:00:29</code></pre>
 <p>Pull the HCT116 data:</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">klijn</span> <span class="op">&lt;-</span> <span class="fu">ExpressionAtlas</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ExpressionAtlas/man/getAtlasData.html">getAtlasData</a></span><span class="op">(</span><span class="st">"E-MTAB-2706"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Downloading Expression Atlas experiment summary from:
 ##  ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/experiments/E-MTAB-2706/E-MTAB-2706-atlasExperimentSummary.Rdata</code></pre>
 <pre><code>## Successfully downloaded experiment summary object for E-MTAB-2706</code></pre>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">klijn</span> <span class="op">&lt;-</span> <span class="va">klijn</span><span class="op">$</span><span class="va">`E-MTAB-2706`</span><span class="op">$</span><span class="va">rnaseq</span>
 <span class="va">klijn</span></code></pre></div>
 <pre><code>## class: RangedSummarizedExperiment 
@@ -296,7 +360,7 @@
 ## colnames(622): ERR413347 ERR413348 ... ERR414020 ERR415514
 ## colData names(12): AtlasAssayGroup organism ... media freeze_media</code></pre>
 <p>Combine the both HCT116 samples:</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ind2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">"HCT 116"</span>, <span class="va">klijn</span><span class="op">$</span><span class="va">cell_line</span><span class="op">)</span>
 <span class="va">emat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/edgeR/man/cbind.html">cbind</a></span><span class="op">(</span><span class="fu">assay</span><span class="op">(</span><span class="va">ccle.trans</span><span class="op">)</span>, <span class="fu">assay</span><span class="op">(</span><span class="va">klijn</span><span class="op">)</span><span class="op">[</span>,<span class="va">ind2</span><span class="op">]</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/AnnotationDbi/man/Bimap-toTable.html">colnames</a></span><span class="op">(</span><span class="va">emat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ccle"</span>, <span class="st">"klijn"</span><span class="op">)</span>
@@ -309,12 +373,12 @@
 ## ENSG00000000460 1785  1206
 ## ENSG00000000938    0     0</code></pre>
 <p>Combine with the HEK293 wildtype samples:</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">isect</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html">intersect</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">emat</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">gse.293t</span><span class="op">)</span><span class="op">)</span>
 <span class="va">emat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/edgeR/man/cbind.html">cbind</a></span><span class="op">(</span><span class="va">emat</span><span class="op">[</span><span class="va">isect</span>,<span class="op">]</span>, <span class="fu">assay</span><span class="op">(</span><span class="va">gse.293t</span><span class="op">)</span><span class="op">[</span><span class="va">isect</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/AnnotationDbi/man/Bimap-toTable.html">colnames</a></span><span class="op">(</span><span class="va">emat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HCT"</span>, <span class="st">"HEK"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span> </code></pre></div>
 <p>Compute logCPMs to bring samples from different cell lines and experiments on the same scale using the limma-trend approach:</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dge</span> <span class="op">&lt;-</span> <span class="fu">edgeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/edgeR/man/DGEList.html">DGEList</a></span><span class="op">(</span>counts <span class="op">=</span> <span class="va">emat</span><span class="op">)</span>
 <span class="va">dge</span><span class="op">$</span><span class="va">group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HCT"</span>, <span class="st">"HEK"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span>
 <span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span><span class="op">(</span><span class="op">~</span> <span class="va">dge</span><span class="op">$</span><span class="va">group</span><span class="op">)</span>
@@ -322,7 +386,7 @@
 <span class="va">dge</span> <span class="op">&lt;-</span> <span class="va">dge</span><span class="op">[</span><span class="va">keep</span>,,keep.lib.sizes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span>
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">dge</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 19484     5</code></pre>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dge</span> <span class="op">&lt;-</span> <span class="fu">edgeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/edgeR/man/calcNormFactors.html">calcNormFactors</a></span><span class="op">(</span><span class="va">dge</span><span class="op">)</span>
 <span class="va">logCPM</span> <span class="op">&lt;-</span> <span class="fu">edgeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/edgeR/man/cpm.html">cpm</a></span><span class="op">(</span><span class="va">dge</span>, log <span class="op">=</span> <span class="cn">TRUE</span>, prior.count <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">limma</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/limma/man/lmFit.html">lmFit</a></span><span class="op">(</span><span class="va">logCPM</span>, <span class="va">design</span><span class="op">)</span>
@@ -350,13 +414,13 @@
 ## ENSG00000133124 12.76978
 ## ENSG00000159217 12.66162
 ## ENSG00000041982 12.62889</code></pre>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tt</span> <span class="op">&lt;-</span> <span class="fu">limma</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/limma/man/toptable.html">topTable</a></span><span class="op">(</span><span class="va">fit</span>, coef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/AnnotationDbi/man/Bimap-toTable.html">ncol</a></span><span class="op">(</span><span class="va">design</span><span class="op">)</span>, number <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/AnnotationDbi/man/Bimap-toTable.html">nrow</a></span><span class="op">(</span><span class="va">logCPM</span><span class="op">)</span>, sort.by <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></code></pre></div>
 <p>Now let’s pull the BioPlex3 proteome data:</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.prot</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioplexProteome.html">getBioplexProteome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## Using cached version from 2021-07-31 05:52:42</code></pre>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<pre><code>## Using cached version from 2021-07-31 15:25:13</code></pre>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">rowData</span><span class="op">(</span><span class="va">bp.prot</span><span class="op">)</span></code></pre></div>
 <pre><code>## DataFrame with 9604 rows and 5 columns
 ##             ENTREZID      SYMBOL nr.peptides log2ratio  adj.pvalue
@@ -373,16 +437,16 @@
 ## Q9H3S5         93183        PIGM           1 -1.011397 8.91589e-06
 ## Q8WYQ3        400916     CHCHD10           1  0.743852 1.17163e-03</code></pre>
 <p>Compare differential expression results on transcriptomic and proteomic level based on gene symbols as those are readily available:</p>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">isect</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html">intersect</a></span><span class="op">(</span><span class="fu">rowData</span><span class="op">(</span><span class="va">bp.prot</span><span class="op">)</span><span class="op">$</span><span class="va">SYMBOL</span>, 
                    <span class="fu">rowData</span><span class="op">(</span><span class="va">gse.293t</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">logCPM</span><span class="op">)</span>, <span class="st">"SYMBOL"</span><span class="op">]</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">isect</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 8980</code></pre>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ind.trans</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="va">isect</span>, <span class="fu">rowData</span><span class="op">(</span><span class="va">gse.293t</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">logCPM</span><span class="op">)</span>, <span class="st">"SYMBOL"</span><span class="op">]</span><span class="op">)</span>
 <span class="va">ind.prot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="va">isect</span>, <span class="fu">rowData</span><span class="op">(</span><span class="va">bp.prot</span><span class="op">)</span><span class="op">$</span><span class="va">SYMBOL</span><span class="op">)</span></code></pre></div>
 <p>We need to switch here the sign of the fold change because the transcriptome is HEK-vs-HCT, the proteome is HCT-vs-HEK:</p>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span> <span class="op">*</span> <span class="va">tt</span><span class="op">[</span><span class="va">ind.trans</span>, <span class="st">"logFC"</span><span class="op">]</span>, 
          <span class="fu">rowData</span><span class="op">(</span><span class="va">bp.prot</span><span class="op">)</span><span class="op">[</span><span class="va">ind.prot</span>, <span class="st">"log2ratio"</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
@@ -396,7 +460,7 @@
 ## sample estimates:
 ##       cor 
 ## 0.6026023</code></pre>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>trans <span class="op">=</span> <span class="op">-</span><span class="fl">1</span> <span class="op">*</span> <span class="va">tt</span><span class="op">[</span><span class="va">ind.trans</span>, <span class="st">"logFC"</span><span class="op">]</span>,
                  prot <span class="op">=</span> <span class="fu">rowData</span><span class="op">(</span><span class="va">bp.prot</span><span class="op">)</span><span class="op">[</span><span class="va">ind.prot</span>, <span class="st">"log2ratio"</span><span class="op">]</span><span class="op">)</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">trans</span>, y <span class="op">=</span> <span class="va">prot</span><span class="op">)</span> <span class="op">)</span> <span class="op">+</span>
