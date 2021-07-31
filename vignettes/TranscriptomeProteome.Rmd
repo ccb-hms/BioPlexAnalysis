@@ -30,7 +30,7 @@ atlasRes <- ExpressionAtlas::searchAtlasExperiments(
               properties = "Cancer Cell Line Encyclopedia", 
               species = "human" )
 atlasRes
-ccle.trans <- ExpressionAtlas::getAtlasData("E-MTAB-2770")
+ccle.trans <- ExpressionAtlas::getAtlasExperiment("E-MTAB-2770")
 ccle.trans <- ccle.trans[[1]]
 ccle.trans <- ccle.trans[,grep("HCT 116", ccle.trans$cell_line)]
 ccle.trans
