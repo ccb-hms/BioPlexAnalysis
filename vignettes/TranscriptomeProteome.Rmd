@@ -30,8 +30,8 @@ atlasRes <- ExpressionAtlas::searchAtlasExperiments(
               properties = "Cancer Cell Line Encyclopedia", 
               species = "human" )
 atlasRes
-ccle.trans <- ExpressionAtlas::getAtlasData(atlasRes$Accession)
-ccle.trans <- ccle.trans$`E-MTAB-2770`$rnaseq
+ccle.trans <- ExpressionAtlas::getAtlasData("E-MTAB-2770")
+ccle.trans <- ccle.trans[[1]]
 ccle.trans <- ccle.trans[,grep("HCT 116", ccle.trans$cell_line)]
 ccle.trans
 ```
@@ -40,8 +40,8 @@ Get the CCLE proteome data for HCT116:
 
 ```{r ccle-proteome}
 eh <- ExperimentHub::ExperimentHub()
-ehdb <- AnnotationHub::query(eh, c("gygi", "depmap"))
-ccle.prot <- ehdb[[length(ehdb)]]
+AnnotationHub::query(eh, c("gygi", "depmap"))
+ccle.prot <- eh[["EH3459"]]
 ccle.prot <- as.data.frame(ccle.prot)
 ccle.prot <- BioPlex::ccleProteome2SummarizedExperiment(ccle.prot)
 ccle.prot
@@ -53,8 +53,8 @@ obtain OrgDb package for human:
 
 ```{r ahub, message = FALSE}
 ah <- AnnotationHub::AnnotationHub()
-ahdb <- AnnotationHub::query(ah, c("orgDb", "Homo sapiens"))
-orgdb <- ahdb[[length(ahdb)]]
+AnnotationHub::query(ah, c("orgDb", "Homo sapiens"))
+orgdb <- ah[["AH92581"]]
 ```
 
 Map to ENSEMBL for comparison with CCLE transcriptome data for HCT116:
@@ -103,8 +103,8 @@ Let's check whether this looks very different when accounting for gene length.
 We therefore obtain gene length for the hg38 genome assembly (used for CCLE).
 
 ```{r, message = FALSE}
-ahdb <- AnnotationHub::query(ah, c("TxDb", "Homo sapiens"))
-txdb <- ahdb[["AH92591"]]
+AnnotationHub::query(ah, c("TxDb", "Homo sapiens"))
+txdb <- ah[["AH92591"]]
 gs <- GenomicFeatures::genes(txdb)
 gs
 len <- GenomicRanges::width(gs)

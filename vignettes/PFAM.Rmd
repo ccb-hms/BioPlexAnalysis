@@ -40,8 +40,8 @@ ah <- AnnotationHub::AnnotationHub()
 
 OrgDb package for human:
 ```{r orgdb, message = FALSE}
-ahdb <- AnnotationHub::query(ah, c("orgDb", "Homo sapiens"))
-orgdb <- ahdb[[length(ahdb)]]
+AnnotationHub::query(ah, c("orgDb", "Homo sapiens"))
+orgdb <- ah[["AH92581"]]
 orgdb
 AnnotationDbi::keytypes(orgdb)
 ```
