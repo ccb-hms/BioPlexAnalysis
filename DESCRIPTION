@@ -16,7 +16,7 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Depends:
-    R (>= 4.0.0),
+    R (>= 4.1.0),
     BioPlex	
 Imports: 
     AnnotationDbi,
@@ -30,9 +30,12 @@ Imports:
     edgeR,
     ggplot2,
     graph,
-    methods,
-    utils,
+    graphframes,
     knitr,
-    rmarkdown
+    methods,
+    rmarkdown,
+    sparklyr,
+    utils
 Remotes:
-    ccb-hms/BioPlex
+    ccb-hms/BioPlex,
+    ccb-hms/graphframes

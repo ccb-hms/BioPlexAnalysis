@@ -16,6 +16,9 @@ navbar:
       href: articles/PFAM.html
     - text: Transcriptome-Proteome analysis
       href: articles/TranscriptomeProteome.html
+    - text: GraphFrames backend
+      href: articles/GraphFrames.html
+
 
   right:
     - icon: fa-github

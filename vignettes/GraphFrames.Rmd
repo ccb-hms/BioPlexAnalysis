@@ -1,0 +1,64 @@
+---
+vignette: >
+  % \VignetteIndexEntry{Using a GraphFrames backend}
+  % \VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+output:
+  html_document:
+    mathjax: null   
+---
+
+# Setup
+
+```{r, message = FALSE}
+library(BioPlex)
+library(BioPlexAnalysis)
+library(sparklyr)
+library(graphframes)
+```
+
+# Connecting to Spark 
+
+For working GraphFrames, we need a connection to Spark.
+For computation on a computer cluster, this can be achieved by connecting to
+the spark installation on the cluster.
+
+However, for demonstration purposes we are using here a local connection,
+that will require a local Spark installation.
+
+This can be achieved via (need to be carried out only once):
+
+```{r spark-install, eval = FALSE}
+sparklyr::spark_install("3.0")
+```
+
+We can connect to both local instances of Spark as well as remote Spark clusters.
+Here we connect to our local installation of Spark via
+
+```{r}
+sc <- sparklyr::spark_connect(master = "local", version = "3.0")
+```
+
+# Store BioPlex PPIs in a GraphFrame
+
+Get the latest version of the 293T PPI network:
+
+```{r}
+bp.293t <- BioPlex::getBioPlex(cell.line = "293T", version = "3.0")
+head(bp.293t)
+```
+
+and turn into a graph object:
+
+```{r}
+bp.gr <- BioPlex::bioplex2graph(bp.293t)
+bp.gr
+```
+
+Switch to a graphframes backend:
+
+```{r}
+gf <- bioplex2graphframe(bp.gr, sc)
+gf
+```
+
