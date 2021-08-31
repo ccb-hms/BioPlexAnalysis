@@ -11,7 +11,7 @@ navbar:
   type: default
   left:
     - text: Vignettes
-      menu
+      menu:
       - text: BioNet analysis
         href: articles/BioNet.html
       - text: PFAM analysis
