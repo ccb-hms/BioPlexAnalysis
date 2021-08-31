@@ -10,15 +10,16 @@ navbar:
   title: ~
   type: default
   left:
-    - text: BioNet analysis
-      href: articles/BioNet.html
-    - text: PFAM analysis
-      href: articles/PFAM.html
-    - text: Transcriptome-Proteome analysis
-      href: articles/TranscriptomeProteome.html
-    - text: GraphFrames backend
-      href: articles/GraphFrames.html
-
+    - text: Vignettes
+      menu
+      - text: BioNet analysis
+        href: articles/BioNet.html
+      - text: PFAM analysis
+        href: articles/PFAM.html
+      - text: Transcriptome-Proteome analysis
+        href: articles/TranscriptomeProteome.html
+      - text: GraphFrames backend
+        href: articles/GraphFrames.html
 
   right:
     - icon: fa-github
