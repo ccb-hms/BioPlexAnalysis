@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • BioPlexAnalysis</title>
+<title>Representation of BioPlex PPIs using a GraphFrames backend — graph2graphframe • BioPlexAnalysis</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,9 @@
 
 
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Representation of BioPlex PPIs using a GraphFrames backend — graph2graphframe" />
+<meta property="og:description" content="Representation of BioPlex PPIs in a GraphFrame object
+from the graphframes package." />
 
 
 
@@ -58,7 +60,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -119,18 +121,67 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Representation of BioPlex PPIs using a GraphFrames backend</h1>
+    
+    <div class="hidden name"><code>graph2graphframe.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <dl>
-        <dt><a href="GraphFrames.html">UNKNOWN TITLE</a></dt>
-        <dd></dt>
-      </dl>
+    <div class="ref-description">
+    <p>Representation of BioPlex PPIs in a <code>GraphFrame</code> object
+from the <code>graphframes</code> package.</p>
     </div>
+
+    <pre class="usage"><span class='fu'>graph2graphframe</span><span class='op'>(</span><span class='va'>gr</span>, <span class='va'>spark.con</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>gr</th>
+      <td><p>an object of class <code>graph</code> storing the
+BioPlex PPIs. Typically obtained via <code>bioplex2graph</code>.</p></td>
+    </tr>
+    <tr>
+      <th>spark.con</th>
+      <td><p>Spark connection. Typically obtained via
+<code><a href='https://rdrr.io/pkg/sparklyr/man/spark-connections.html'>sparklyr::spark_connect</a></code>.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>An object of class <code>GraphFrame</code>.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>BioPlex: <a href='https://bioplex.hms.harvard.edu/interactions.php'>https://bioplex.hms.harvard.edu/interactions.php</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code>bioplex2graph</code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://spark.rstudio.com/'>sparklyr</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘sparklyr’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:stats’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    filter</span></div><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/rstudio/graphframes'>graphframes</a></span><span class='op'>)</span>
+
+<span class='co'># (1) Obtain the latest version of the 293T PPI network</span>
+<span class='va'>bp.293t</span> <span class='op'>&lt;-</span> <span class='fu'>getBioPlex</span><span class='op'>(</span>cell.line <span class='op'>=</span> <span class='st'>"293T"</span>, version <span class='op'>=</span> <span class='st'>"3.0"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Using cached version from 2021-08-31 14:10:15</span></div><div class='input'>
+<span class='co'># (2) Turn the data into a graph </span>
+<span class='va'>bp.gr</span> <span class='op'>&lt;-</span> <span class='fu'>bioplex2graph</span><span class='op'>(</span><span class='va'>bp.293t</span><span class='op'>)</span>
+
+<span class='co'># (3) Switch to a graphframes backend</span>
+<span class='va'>sc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/sparklyr/man/spark-connections.html'>spark_connect</a></span><span class='op'>(</span>master <span class='op'>=</span> <span class='st'>"local"</span>, version <span class='op'>=</span> <span class='st'>"3.0"</span><span class='op'>)</span>
+<span class='va'>bp.gf</span> <span class='op'>&lt;-</span> <span class='fu'>graph2graphframe</span><span class='op'>(</span><span class='va'>bp.gr</span>, <span class='va'>sc</span><span class='op'>)</span> 
+
+</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 

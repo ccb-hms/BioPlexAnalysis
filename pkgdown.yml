@@ -2,10 +2,8 @@ pandoc: 2.11.4
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  BioNet: BioNet.html
-  PFAM: PFAM.html
-  TranscriptomeProteome: TranscriptomeProteome.html
-last_built: 2021-08-17T09:46Z
+  GraphFrames: GraphFrames.html
+last_built: 2021-08-31T14:14Z
 urls:
   reference: https://ccb-hms.github.io/BioPlexAnalysis//reference
   article: https://ccb-hms.github.io/BioPlexAnalysis//articles
