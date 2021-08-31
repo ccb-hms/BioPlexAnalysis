@@ -57,7 +57,7 @@ bp.gr
 
 Switch to a graphframes backend:
 
-```{r}
+```{r, warning = FALSE}
 gf <- bioplex2graphframe(bp.gr, sc)
 gf
 ```
