@@ -96,7 +96,8 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ccb-hms/BioPlex">BioPlex</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">BioPlexAnalysis</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://spark.rstudio.com/">sparklyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/graphframes">graphframes</a></span><span class="op">)</span></code></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/graphframes">graphframes</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></code></pre></div>
 </div>
 <div id="connecting-to-spark" class="section level1">
 <h1 class="hasAnchor">
@@ -116,7 +117,7 @@
 <p>Get the latest version of the 293T PPI network:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.293t</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioPlex.html">getBioPlex</a></span><span class="op">(</span>cell.line <span class="op">=</span> <span class="st">"293T"</span>, version <span class="op">=</span> <span class="st">"3.0"</span><span class="op">)</span></code></pre></div>
-<pre><code>## Using cached version from 2021-08-31 14:10:15</code></pre>
+<pre><code>## Using cached version from 2021-09-01 09:41:44</code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">bp.293t</span><span class="op">)</span></code></pre></div>
 <pre><code>##    GeneA  GeneB UniprotA UniprotB SymbolA SymbolB           pW          pNI
@@ -142,7 +143,7 @@
 ## Number of Edges = 115868</code></pre>
 <p>Switch to a graphframes backend:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/graph2graphframe.html">graph2graphframe</a></span><span class="op">(</span><span class="va">bp.gr</span>, <span class="va">sc</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">gf</span> <span class="op">&lt;-</span> <span class="fu">BioPlexAnalysis</span><span class="fu">::</span><span class="fu"><a href="../reference/graph2graphframe.html">graph2graphframe</a></span><span class="op">(</span><span class="va">bp.gr</span>, <span class="va">sc</span><span class="op">)</span>
 <span class="va">gf</span></code></pre></div>
 <pre><code>## GraphFrame
 ## Vertices:
@@ -153,12 +154,127 @@
 ##   $ isoform  &lt;chr&gt; "P00813", "Q8N7W2-2", "Q6ZMN8", "P20138", "P55039", "Q17R55",…
 ## Edges:
 ##   Database: spark_connection
-##   $ src    &lt;chr&gt; "P00813", "Q8N7W2", "Q8N7W2", "Q8N7W2", "Q8N7W2", "Q8N7W2", "Q8…
-##   $ dst    &lt;chr&gt; "A5A3E0", "P26373", "Q09028", "Q9Y3U8", "P36578", "P23396", "Q0…
-##   $ weight &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
-##   $ pW     &lt;dbl&gt; 6.881844e-10, 1.340380e-18, 7.221401e-21, 7.058372e-17, 1.63231…
-##   $ pNI    &lt;dbl&gt; 1.176357e-04, 2.256645e-01, 6.416690e-05, 1.281827e-01, 2.00637…
-##   $ pInt   &lt;dbl&gt; 0.9998824, 0.7743355, 0.9999358, 0.8718173, 0.7993621, 0.998973…</code></pre>
+##   $ src  &lt;chr&gt; "P00813", "Q8N7W2", "Q8N7W2", "Q8N7W2", "Q8N7W2", "Q8N7W2", "Q8N7…
+##   $ dst  &lt;chr&gt; "A5A3E0", "P26373", "Q09028", "Q9Y3U8", "P36578", "P23396", "Q070…
+##   $ pW   &lt;dbl&gt; 6.881844e-10, 1.340380e-18, 7.221401e-21, 7.058372e-17, 1.632313e…
+##   $ pNI  &lt;dbl&gt; 1.176357e-04, 2.256645e-01, 6.416690e-05, 1.281827e-01, 2.006379e…
+##   $ pInt &lt;dbl&gt; 0.9998824, 0.7743355, 0.9999358, 0.8718173, 0.7993621, 0.9989736,…</code></pre>
+</div>
+<div id="pagerank" class="section level1">
+<h1 class="hasAnchor">
+<a href="#pagerank" class="anchor"></a>PageRank</h1>
+<p><a href="https://en.wikipedia.org/wiki/PageRank">PageRank</a> is an algorithm used in Google Search for ranking websites in their results, but it has been adopted also for other purposes. According to Google, PageRank works by counting the number and quality of links to a page to determine a rough estimate of how important the website is. The underlying assumption is that more important websites are likely to receive more links from other websites.</p>
+<p>For the analysis if PPI networks, <em>personalized</em> PageRank seems to be capable to robustly evaluate the importance of the vertices of a network, relatively to some already known relevant nodes (<a href="https://academic.oup.com/bioinformatics/article/27/3/405/321946">Ivan and Grolmusz, 2011</a>).</p>
+<p>As an example we look at the ACADVL gene. Mutations in ACADVL are associated with very long-chain acyl-coenzyme A dehydrogenase deficiency.</p>
+<p>We first look up the corresponding node ID:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu">graphframes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/graphframes/man/gf_vertices.html">gf_vertices</a></span><span class="op">(</span><span class="va">gf</span><span class="op">)</span>, <span class="va">symbol</span> <span class="op">==</span> <span class="st">"ACADVL"</span><span class="op">)</span></code></pre></div>
+<pre><code>## # Source: spark&lt;?&gt; [?? x 4]
+##   id     entrezid symbol isoform 
+##   &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;   
+## 1 P49748 37       ACADVL P49748-2</code></pre>
+<p>And then apply the personalized PageRank as implemented in the <code>graphframes</code> package.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">gf</span> <span class="op">&lt;-</span> <span class="fu">graphframes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/graphframes/man/gf_pagerank.html">gf_pagerank</a></span><span class="op">(</span><span class="va">gf</span>, 
+                               reset_prob <span class="op">=</span> <span class="fl">0.15</span>,
+                               max_iter <span class="op">=</span> <span class="fl">10L</span>,
+                               source_id <span class="op">=</span> <span class="st">"P49748"</span><span class="op">)</span>
+<span class="va">gf</span></code></pre></div>
+<pre><code>## GraphFrame
+## Vertices:
+##   Database: spark_connection
+##   $ id       &lt;chr&gt; "A0FGR8", "A0M8Q6", "A0MZ66", "A0PJX0", "A1A4F0", "A1A519", "…
+##   $ entrezid &lt;chr&gt; "57488", "28834", "57698", "130106", "152078", "340069", "630…
+##   $ symbol   &lt;chr&gt; "ESYT2", "IGLC7", "KIAA1598", "CIB4", "C3orf55", "FAM170A", "…
+##   $ isoform  &lt;chr&gt; "A0FGR8-2", "A0M8Q6", "A0MZ66-3", "A0PJX0", "A1A4F0-2", "A1A5…
+##   $ pagerank &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## Edges:
+##   Database: spark_connection
+##   $ src    &lt;chr&gt; "A0AVK6", "A0JLV8", "A0PJK1", "A0PJX4", "A0PJX4", "A0PJX4", "A0…
+##   $ dst    &lt;chr&gt; "Q8NGA1", "P01562", "Q9UMX0", "Q03167", "Q6SZW1", "Q8N0Y2", "O7…
+##   $ pW     &lt;dbl&gt; 2.232511e-02, 7.459025e-13, 2.164653e-11, 1.717576e-09, 1.89107…
+##   $ pNI    &lt;dbl&gt; 1.114378e-02, 3.395913e-02, 8.083194e-02, 1.844441e-04, 2.14642…
+##   $ pInt   &lt;dbl&gt; 0.9665311, 0.9660409, 0.9191681, 0.9998156, 0.9999998, 0.999405…
+##   $ weight &lt;dbl&gt; 1.00000000, 0.50000000, 0.50000000, 0.09090909, 0.09090909, 0.0…</code></pre>
+<p>Inspect the results:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu">graphframes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/graphframes/man/gf_vertices.html">gf_vertices</a></span><span class="op">(</span><span class="va">gf</span><span class="op">)</span>, <span class="va">pagerank</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
+<pre><code>## # Source: spark&lt;?&gt; [?? x 5]
+##   id     entrezid symbol isoform  pagerank
+##   &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;
+## 1 Q9BTZ2 10901    DHRS4  Q9BTZ2-4    0.230
+## 2 P49748 37       ACADVL P49748-2    0.541
+## 3 P25054 324      APC    P25054      0.230</code></pre>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu">graphframes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/graphframes/man/gf_edges.html">gf_edges</a></span><span class="op">(</span><span class="va">gf</span><span class="op">)</span>, <span class="va">src</span> <span class="op">==</span> <span class="st">"P49748"</span><span class="op">)</span></code></pre></div>
+<pre><code>## # Source: spark&lt;?&gt; [?? x 6]
+##   src    dst          pW       pNI  pInt weight
+##   &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 P49748 Q9BTZ2 6.54e-12 0.0000250 1.00     0.5
+## 2 P49748 P25054 7.28e-10 0.00138   0.999    0.5</code></pre>
+<p>Switch back to a <code>graphNEL</code> backend:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">gr</span> <span class="op">&lt;-</span> <span class="fu">BioPlexAnalysis</span><span class="fu">::</span><span class="fu"><a href="../reference/graphframe2graph.html">graphframe2graph</a></span><span class="op">(</span><span class="va">gf</span><span class="op">)</span>
+<span class="va">gr</span></code></pre></div>
+<pre><code>## A graphNEL graph with directed edges
+## Number of Nodes = 13689 
+## Number of Edges = 115868</code></pre>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu">graph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/graph/man/nodeData-methods.html">nodeData</a></span><span class="op">(</span><span class="va">gr</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<pre><code>## $A0AVK6
+## $A0AVK6$entrezid
+## [1] "79733"
+## 
+## $A0AVK6$symbol
+## [1] "E2F8"
+## 
+## $A0AVK6$isoform
+## [1] "A0AVK6"
+## 
+## $A0AVK6$pagerank
+## [1] 0
+## 
+## 
+## $A0JLV8
+## $A0JLV8$entrezid
+## [1] "54807"
+## 
+## $A0JLV8$symbol
+## [1] "ZNF586"
+## 
+## $A0JLV8$isoform
+## [1] "A0JLV8"
+## 
+## $A0JLV8$pagerank
+## [1] 0</code></pre>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu">graph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/graph/man/edgeData-methods.html">edgeData</a></span><span class="op">(</span><span class="va">gr</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<pre><code>## $`A0AVK6|Q8NGA1`
+## $`A0AVK6|Q8NGA1`$weight
+## [1] 1
+## 
+## $`A0AVK6|Q8NGA1`$pW
+## [1] 0.02232511
+## 
+## $`A0AVK6|Q8NGA1`$pNI
+## [1] 0.01114378
+## 
+## $`A0AVK6|Q8NGA1`$pInt
+## [1] 0.9665311
+## 
+## 
+## $`A0JLV8|P01562`
+## $`A0JLV8|P01562`$weight
+## [1] 0.5
+## 
+## $`A0JLV8|P01562`$pW
+## [1] 7.459025e-13
+## 
+## $`A0JLV8|P01562`$pNI
+## [1] 0.03395913
+## 
+## $`A0JLV8|P01562`$pInt
+## [1] 0.9660409</code></pre>
 </div>
   </div>
 
