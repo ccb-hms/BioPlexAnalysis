@@ -36,9 +36,6 @@ sc <- spark_connect(master = "local", version = "3.0")
 bp.gf <- graph2graphframe(bp.gr, sc) 
 
 }
-\references{
-BioPlex: \url{https://bioplex.hms.harvard.edu/interactions.php}
-}
 \seealso{
-\code{\link{bioplex2graph}}
+\code{\link{graphframe2graph}}
 }

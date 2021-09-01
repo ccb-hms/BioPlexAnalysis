@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Wed Sep 01 05:33:07 EDT 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-017b-a0b4-77fc-000069b98410 
+on database directory memory:/Users/ludwig/Documents/github/BioPlexAnalysis/vignettes/databaseName=metastore_db with class loader org.apache.spark.sql.hive.client.IsolatedClientLoader$$anon$1@1254e97b 
+Loaded from file:/Users/ludwig/spark/spark-3.0.2-bin-hadoop3.2/jars/derby-10.12.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_301-b09
+user.dir=/Users/ludwig/Documents/github/BioPlexAnalysis/vignettes
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.16
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

@@ -27,6 +27,7 @@ Imports:
     ExpressionAtlas,
     GenomicFeatures,
     PFAM.db,
+    dplyr,
     edgeR,
     ggplot2,
     graph,

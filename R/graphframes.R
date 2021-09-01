@@ -6,8 +6,7 @@
 #' @param spark.con Spark connection. Typically obtained via
 #' \code{sparklyr::spark_connect}.
 #' @return An object of class \code{GraphFrame}. 
-#' @references BioPlex: \url{https://bioplex.hms.harvard.edu/interactions.php}
-#' @seealso \code{\link{bioplex2graph}}
+#' @seealso \code{\link{graphframe2graph}}
 #' @examples
 #'
 #' library(sparklyr)
@@ -50,6 +49,7 @@ graph2graphframe <- function(gr, spark.con)
     for(i in 1:2) edge.df[,i] <- as.vector(edge.df[,i]) 
     
     eattrs <- names(graph::edgeDataDefaults(gr))
+    eattrs <- setdiff(eattrs, "weight")
     .getECol <- function(n) graph::edgeData(gr, 
                                             from = edge.df$src, 
                                             to = edge.df$dst, n)
@@ -63,7 +63,37 @@ graph2graphframe <- function(gr, spark.con)
     return(bp.gf)
 }
 
+#' @title Convert a GraphFrames object to a graphNEL object
+#' @description Conversion of a GraphFrames object from the graphframes package
+#' to a graphNEL object from the graph package.
+#' @param gf An object of class \code{GraphFrame}. 
+#' @return An object of class \code{\linkS4class{graph}}
+#' @seealso \code{\link{graph2graphframe}}
+#' @export
 graphframe2graph <- function(gf)
 {
+    node.df <- data.frame(graphframes::gf_vertices(gf))
+    edge.df <- data.frame(graphframes::gf_edges(gf))
 
+    ft.cols <- c("src", "dst")
+    ftm <- as.matrix(edge.df[,ft.cols])
+    gr <- graph::ftM2graphNEL(ftm, edgemode = "directed")
+
+    # node data
+    ncols <- setdiff(colnames(node.df), "id")
+    for(col in ncols)
+    {
+        graph::nodeDataDefaults(gr, col) <- NA
+        graph::nodeData(gr, node.df$id, col) <- node.df[,col]
+    }
+
+    # edge data
+    ecols <- setdiff(colnames(edge.df), ft.cols)
+    for(col in ecols)
+    {   
+        graph::edgeDataDefaults(gr, col) <- numeric(0L)
+        graph::edgeData(gr, edge.df[,"src"], edge.df[,"dst"], col) <- edge.df[,col]
+    }   
+
+    return(gr)
 }
