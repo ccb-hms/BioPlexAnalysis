@@ -1,0 +1,245 @@
+---
+vignette: >
+  % \VignetteIndexEntry{Transcriptome-Proteome analysis}
+  % \VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+output:
+  html_document:
+    mathjax: null   
+---
+
+# Setup
+
+```{r, message = FALSE}
+library(BioPlex)
+library(AnnotationDbi)
+library(AnnotationHub)
+library(ExperimentHub)
+library(ExpressionAtlas)
+library(edgeR)
+library(ggplot2)
+library(graph)
+```
+
+# CCLE transcriptome and proteome data for HCT116
+
+Get CCLE transcriptome data for HCT116:
+ 
+```{r ccle-transcriptome}
+atlasRes <- ExpressionAtlas::searchAtlasExperiments(
+              properties = "Cancer Cell Line Encyclopedia", 
+              species = "human" )
+atlasRes
+ccle.trans <- ExpressionAtlas::getAtlasExperiment("E-MTAB-2770")
+ccle.trans <- ccle.trans[[1]]
+ccle.trans <- ccle.trans[,grep("HCT 116", ccle.trans$cell_line)]
+ccle.trans
+```
+
+Get the CCLE proteome data for HCT116:
+
+```{r ccle-proteome}
+eh <- ExperimentHub::ExperimentHub()
+AnnotationHub::query(eh, c("gygi", "depmap"))
+ccle.prot <- eh[["EH3459"]]
+ccle.prot <- as.data.frame(ccle.prot)
+ccle.prot <- BioPlex::ccleProteome2SummarizedExperiment(ccle.prot)
+ccle.prot
+```
+
+Connect to 
+[AnnotationHub](http://bioconductor.org/packages/AnnotationHub) and
+obtain OrgDb package for human:
+
+```{r ahub, message = FALSE}
+ah <- AnnotationHub::AnnotationHub()
+AnnotationHub::query(ah, c("orgDb", "Homo sapiens"))
+orgdb <- ah[["AH92581"]]
+```
+
+Map to ENSEMBL for comparison with CCLE transcriptome data for HCT116:
+
+```{r}
+rnames <- AnnotationDbi::mapIds(orgdb,
+                      keytype = "UNIPROT",
+                      column = "ENSEMBL",
+                      keys = rownames(ccle.prot))
+```
+
+Subset to the ENSEMBL IDs that both datasets have in common
+
+```{r}
+isect <- intersect(rnames, rownames(ccle.trans))
+ind <- match(isect, rnames)
+```
+
+This should be rather RPKM, provided gene length from EDASeq:
+ 
+```{r}
+assay(ccle.trans, "cpm") <- edgeR::cpm(assay(ccle.trans), log = TRUE)
+```
+
+A look at general correlation between transcriptome and proteome:
+
+```{r}
+cor.test(assay(ccle.trans, "cpm")[isect,], 
+         assay(ccle.prot)[ind,],
+         use = "complete.obs")
+```
+
+```{r}
+df <- data.frame(trans = assay(ccle.trans, "cpm")[isect,],
+                 prot = assay(ccle.prot)[ind,])
+ggplot(df, aes(x = trans, y = prot) ) +
+    geom_bin2d(bins = 70) +
+    scale_fill_continuous(type = "viridis") +
+    xlab("log2 CPM") +
+    ylab("log2 intensity") +
+    theme_bw()
+```
+
+
+Let's check whether this looks very different when accounting for gene length.
+We therefore obtain gene length for the hg38 genome assembly (used for CCLE).
+
+```{r, message = FALSE}
+AnnotationHub::query(ah, c("TxDb", "Homo sapiens"))
+txdb <- ah[["AH92591"]]
+gs <- GenomicFeatures::genes(txdb)
+gs
+len <- GenomicRanges::width(gs)
+names(len) <- names(gs)
+head(len)
+```
+
+This requires to map from Entrez IDs present for the gene length data to ENSEMBL IDs
+present in the transcriptomic data. 
+
+```{r}
+eids <- AnnotationDbi::mapIds(orgdb,
+                              column = "ENTREZID",
+                              keytype = "ENSEMBL", 
+                              keys = rownames(ccle.trans))
+rowData(ccle.trans)$length <- len[eids]
+```
+
+We can now compute RPKM given the obtained gene lengths as input.
+
+```{r}
+assay(ccle.trans, "rpkm") <- edgeR::rpkm(assay(ccle.trans), 
+                                         gene.length = rowData(ccle.trans)$length,
+                                         log = TRUE) 
+```
+
+```{r}
+cor.test(assay(ccle.trans, "rpkm")[isect,],
+         assay(ccle.prot)[ind,],
+         use = "complete.obs")
+```
+
+```{r}
+df <- data.frame(trans = assay(ccle.trans, "rpkm")[isect,],
+                 prot = assay(ccle.prot)[ind,])
+ggplot(df, aes(x = trans, y = prot) ) +
+    geom_bin2d(bins = 70) +
+    scale_fill_continuous(type = "viridis") +
+    xlab("log2 RPKM") +
+    ylab("log2 intensity") +
+    theme_bw()
+```
+
+# DE analysis HEK293 vs. HCT116 (transcriptomic and proteomic level)
+
+Pull the HEK293 data:
+
+```{r}
+gse.293t <- BioPlex::getGSE122425()
+```
+
+Pull the HCT116 data:
+
+```{r}
+klijn <- ExpressionAtlas::getAtlasData("E-MTAB-2706")
+klijn <- klijn$`E-MTAB-2706`$rnaseq
+klijn
+```
+
+Combine the both HCT116 samples:
+
+```{r}
+ind2 <- grep("HCT 116", klijn$cell_line)
+emat <- cbind(assay(ccle.trans), assay(klijn)[,ind2])
+colnames(emat) <- c("ccle", "klijn")
+head(emat)
+```
+
+Combine with the HEK293 wildtype samples:
+
+```{r}
+isect <- intersect(rownames(emat), rownames(gse.293t))
+emat <- cbind(emat[isect,], assay(gse.293t)[isect, 1:3])
+colnames(emat) <- paste0(rep(c("HCT", "HEK"), c(2,3)), c(1:2, 1:3)) 
+```
+
+Compute logCPMs to bring samples from different cell lines and experiments on
+the same scale using the limma-trend approach:
+
+```{r}
+dge <- edgeR::DGEList(counts = emat)
+dge$group <- rep(c("HCT", "HEK"), c(2,3))
+design <- model.matrix(~ dge$group)
+keep <- edgeR::filterByExpr(dge, design)
+dge <- dge[keep,,keep.lib.sizes = FALSE]
+dim(dge)
+```
+
+```{r}
+dge <- edgeR::calcNormFactors(dge)
+logCPM <- edgeR::cpm(dge, log = TRUE, prior.count = 3)
+fit <- limma::lmFit(logCPM, design)
+fit <- limma::eBayes(fit, trend = TRUE)
+limma::topTable(fit, coef = ncol(design))
+tt <- limma::topTable(fit, coef = ncol(design), number = nrow(logCPM), sort.by = "none")
+```
+
+Now let's pull the BioPlex3 proteome data:
+
+```{r}
+bp.prot <- BioPlex::getBioplexProteome()
+rowData(bp.prot)
+```
+
+Compare differential expression results on transcriptomic and proteomic level
+based on gene symbols as those are readily available:
+
+```{r}
+isect <- intersect(rowData(bp.prot)$SYMBOL, 
+                   rowData(gse.293t)[rownames(logCPM), "SYMBOL"])
+length(isect)
+```
+
+```{r}
+ind.trans <- match(isect, rowData(gse.293t)[rownames(logCPM), "SYMBOL"])
+ind.prot <- match(isect, rowData(bp.prot)$SYMBOL)
+```
+
+We need to switch here the sign of the fold change because the transcriptome
+is HEK-vs-HCT, the proteome is HCT-vs-HEK:
+
+```{r}
+cor.test(-1 * tt[ind.trans, "logFC"], 
+         rowData(bp.prot)[ind.prot, "log2ratio"])
+```
+
+```{r}
+df <- data.frame(trans = -1 * tt[ind.trans, "logFC"],
+                 prot = rowData(bp.prot)[ind.prot, "log2ratio"])
+ggplot(df, aes(x = trans, y = prot) ) +
+    geom_bin2d(bins = 70) +
+    scale_fill_continuous(type = "viridis") +
+    xlab("log2FC (transcriptome)") +
+    ylab("log2FC (proteome)") +
+    theme_bw()
+```
+
+
