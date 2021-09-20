@@ -17,9 +17,9 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Depends:
     R (>= 4.1.0),
-    BioPlex	
+    BioPlex
 Imports: 
-    BiocFileCache
+    BiocFileCache,
     graph,
     graphframes,
     sparklyr
