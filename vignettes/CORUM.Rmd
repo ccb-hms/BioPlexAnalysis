@@ -1,0 +1,36 @@
+---
+vignette: >
+  % \VignetteIndexEntry{CORUM complex overlap analysis}
+  % \VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+output:
+  html_document:
+    mathjax: null   
+---
+
+# Setup
+
+```{r, message = FALSE}
+library(BioPlex)
+library(graph)
+```
+
+Get the HCT116 network, and all three versions of the 293T PPI network:
+
+```{r}
+bp.293t.1 <- BioPlex::getBioPlex(cell.line = "293T", version = "1.0")
+bp.293t.2 <- BioPlex::getBioPlex(cell.line = "293T", version = "2.0")
+bp.293t.3 <- BioPlex::getBioPlex(cell.line = "293T", version = "3.0")
+bp.hct116 <- BioPlex::getBioPlex(cell.line = "HCT116", version = "1.0")
+```
+
+Obtain the complete set of human protein complexes from CORUM:
+
+```{r}
+corum.df <- BioPlex::getCorum(set = "all", organism = "Human")
+corum.glist <- BioPlex::corum2graphlist(corum.df)
+```
+
+
+
+

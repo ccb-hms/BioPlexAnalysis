@@ -2,4 +2,6 @@
 
 export(graph2graphframe)
 export(graphframe2graph)
+export(plotComplex)
+export(testDomainAssociation)
 importFrom(utils,stack)

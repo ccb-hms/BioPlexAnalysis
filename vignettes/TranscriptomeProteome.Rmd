@@ -53,8 +53,8 @@ obtain OrgDb package for human:
 
 ```{r ahub, message = FALSE}
 ah <- AnnotationHub::AnnotationHub()
-AnnotationHub::query(ah, c("orgDb", "Homo sapiens"))
-orgdb <- ah[["AH92581"]]
+orgdb <- AnnotationHub::query(ah, c("orgDb", "Homo sapiens"))
+orgdb <- orgdb[[1]]
 ```
 
 Map to ENSEMBL for comparison with CCLE transcriptome data for HCT116:
@@ -241,5 +241,3 @@ ggplot(df, aes(x = trans, y = prot) ) +
     ylab("log2FC (proteome)") +
     theme_bw()
 ```
-
-

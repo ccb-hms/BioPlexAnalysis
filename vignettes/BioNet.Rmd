@@ -3,9 +3,8 @@ vignette: >
   % \VignetteIndexEntry{BioNet maximum scoring subnetwork analysis}
   % \VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-output:
-  html_document:
-    mathjax: null   
+output: html_document
+runtime: shiny
 ---
 
 # Setup
@@ -192,6 +191,13 @@ ribo.gr <- BioPlex::mapSummarizedExperimentOntoGraph(ribo.gr, bp.prot,
     rowdata.cols = c("nr.peptides", "log2ratio", "adj.pvalue"),
     prefix = "bpprot_")
 head(graph::nodeData(ribo.gr), n = 2)
+```
+
+Spin up the graph viewer:
+
+```{r, echo = FALSE, message = FALSE}
+shiny::shinyAppDir(system.file("apps", package = "BioPlexAnalysis"),
+                   options = list(width = "100%", height = 500))
 ```
 
 ## SessionInfo
