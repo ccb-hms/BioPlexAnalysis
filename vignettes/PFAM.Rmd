@@ -87,12 +87,3 @@ data.frame(DOMAIN1 = unlist(id2de[top10ah]),
            DOMAIN2 = unlist(id2de[top10bh]))
 ```
 
-Plot association strength grid:
-
-```{r}
-top10ab <- unique(c(top10a, top10b))
-ind <- res.bp$PFAM1 %in% top10ab & res.bp$PFAM2 %in% top10ab 
-top.res.bp <- res.bp[ind,] 
-mat <- reshape2::acast(top.res.bp, PFAM1 ~ PFAM2, value.var = "ADJ.PVAL")
-mat <- -log10(mat)
-```

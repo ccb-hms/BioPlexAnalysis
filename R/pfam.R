@@ -41,8 +41,8 @@ testDomainAssociation <- function(gr)
     pfam2unip <- split(as.character(pfam2unip$ind), pfam2unip$values)
 
     # create a map from UNIPROT to PFAMs of interaction partners
-    .getPF <- function(n) graph::nodeData(gr, graph::edges(gr)[[n]], "PFAM")
-    unip2iapfams <- lapply(graph::nodes(gr), .getPF)
+    unip2iapfams <- graph::nodeData(gr, unlist(graph::edges(gr)), "PFAM")
+    unip2iapfams <- relist(unip2iapfams, graph::edges(gr))
     unip2iapfams <- lapply(unip2iapfams, unlist)
     names(unip2iapfams) <- graph::nodes(gr)
 
@@ -52,51 +52,25 @@ testDomainAssociation <- function(gr)
     pfam2pfam <- stack(pfam2iapfams)
     pfam2pfam$ind <- as.character(pfam2pfam$ind)
     pfam2pfam <- pfam2pfam[!is.na(pfam2pfam$values),]
-    pfam2pfam <- as.matrix(pfam2pfam)
+    tab <- table(pfam2pfam)
+    tab <- as.data.frame.table(tab)
 
-    # compute an all-against-all matrix storing pfam2pfam interaction counts
-    ## initialize + turn pfam2pfam mapping into an integer index mapping 
-    pfams <- unique(as.vector(pfam2pfam))
-    len <- length(pfams)
-    ia.mat <- matrix(0, nrow = len, ncol = len)
-    rownames(ia.mat) <- colnames(ia.mat) <- pfams
-    ind1 <- match(pfam2pfam[,1], pfams)
-    ind2 <- match(pfam2pfam[,2], pfams)
-    pfam2pfam <- cbind(ind1, ind2)
-    
-    ## loop over all pfam-pfam pair and count the PPIs connecting them
-    for(i in seq_len(len))
-    {
-        p2p <- pfam2pfam[pfam2pfam[,1] == i |  pfam2pfam[,2] == i,,drop = FALSE]
-        if(nrow(p2p))
-        {
-            for(j in i:len)
-            {
-                if(i == j) ia.mat[i,j] <- sum(p2p[,1] == j & p2p[,2] == j)
-                else ia.mat[i,j] <- sum(p2p[,1] == j | p2p[,2] == j)
-            }
-        }
-    }
+    ig <- igraph::graph_from_data_frame(tab, directed = FALSE)
+    m <- igraph::get.adjacency(ig, attr = "Freq", sparse = TRUE)
+    m2 <- m <- as.matrix(m)
+    m2[lower.tri(m2)] <- NA
+    tab <- reshape2::melt(m2, na.rm = TRUE)
 
-    # filter out pfams that have not at least one pfam with 2 interactions
-    gr1 <- apply(ia.mat, 1, function(x) any(x > 1))
-    ia.mat <- ia.mat[gr1 , gr1]
+    # restrict to domain pairs connected by at least 2 PPIs 
+    tab <- subset(tab, value > 1)
 
     # calculate 2x2 contigency tables for all domain pairs
     ## some precomputations of the margins for efficiency
-    total <- sum(as.vector(ia.mat))
-    m <- ia.mat
-    m[lower.tri(m)] <- t(m)[lower.tri(m)]
+    total <- sum(tab$value)
     rs <- rowSums(m)
 
-    ## get all possible domain pairs and restrict to those pairs connected
-    ## by at least 2 PPIs
-    combs <- combn(rownames(m), 2)
-    ind <- apply(combs, 2, function(x) m[x[1], x[2]] > 1)
-    combs <- combs[,ind]
-
     ## calculate contigency for all remaining domain pairs
-    conts <- apply(combs, 2, function(x) .getContingency(x[1], x[2], m, rs, total))
+    conts <- apply(tab, 1, function(x) .getContingency(x[1], x[2], m, rs, total))
     conts <- t(conts)
 
     # test each domain pair for over-representation of connecting PPIs
@@ -104,8 +78,8 @@ testDomainAssociation <- function(gr)
     ps <- apply(conts, 1, .fisherp)
     adjp <- p.adjust(ps, method = "BH")
 
-    res <- data.frame(PFAM1 = combs[1,],
-                  PFAM2 = combs[2,],
+    res <- data.frame(PFAM1 = tab[,1],
+                  PFAM2 = tab[,2],
                   PVAL = ps,
                   ADJ.PVAL = adjp)
     res <- res[order(ps),]

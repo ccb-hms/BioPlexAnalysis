@@ -2,6 +2,8 @@
 
 export(graph2graphframe)
 export(graphframe2graph)
-export(plotComplex)
 export(testDomainAssociation)
+importFrom(stats,fisher.test)
+importFrom(stats,p.adjust)
+importFrom(utils,combn)
 importFrom(utils,stack)
