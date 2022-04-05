@@ -37,6 +37,7 @@ Suggests:
     dplyr,
     edgeR,
     ggplot2,
+    ggalluvial,
     knitr,
     limma,
     methods,

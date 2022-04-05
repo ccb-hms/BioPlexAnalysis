@@ -32,6 +32,24 @@ responsible for the interaction. Many may simply be passengers that associate
 as a consequence of interactions mediated by contacts elsewhere in the protein
 sequence.
 }
+\examples{
+
+  # (1) obtain BioPlex PPI network for 293T cells
+  library(BioPlex)
+  df <- getBioPlex(cell.line = "HCT116", version = "1.0")
+  hct.gr <- bioplex2graph(df)
+ 
+  # (2) annotate PFAM domains
+  library(AnnotationHub)
+  ah <- AnnotationHub()
+  orgdb <- query(ah, c("orgDb", "Homo sapiens"))
+  orgdb <- orgdb[[1]]
+  hct.gr <- annotatePFAM(hct.gr, orgdb)
+
+  # (3) domain-domain association analysis
+  res <- testDomainAssociation(hct.gr)
+
+}
 \references{
 Huttlin et al. Dual proteome-scale networks reveal cell-specific remodeling
 of the human interactome. Cell, 184(11):3022-3040.e28, 2021.

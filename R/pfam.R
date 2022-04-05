@@ -30,6 +30,24 @@
 #' @references
 #' Huttlin et al. Dual proteome-scale networks reveal cell-specific remodeling
 #' of the human interactome. Cell, 184(11):3022-3040.e28, 2021.
+#'
+#' @examples
+#'
+#'   # (1) obtain BioPlex PPI network for 293T cells
+#'   library(BioPlex)
+#'   df <- getBioPlex(cell.line = "HCT116", version = "1.0")
+#'   hct.gr <- bioplex2graph(df)
+#'  
+#'   # (2) annotate PFAM domains
+#'   library(AnnotationHub)
+#'   ah <- AnnotationHub()
+#'   orgdb <- query(ah, c("orgDb", "Homo sapiens"))
+#'   orgdb <- orgdb[[1]]
+#'   hct.gr <- annotatePFAM(hct.gr, orgdb)
+#'
+#'   # (3) domain-domain association analysis
+#'   res <- testDomainAssociation(hct.gr)
+#'
 #' @importFrom stats fisher.test p.adjust
 #' @importFrom utils combn
 #' @export
@@ -80,6 +98,7 @@ testDomainAssociation <- function(gr)
 
     res <- data.frame(PFAM1 = tab[,1],
                   PFAM2 = tab[,2],
+                  FREQ = tab[,3],  
                   PVAL = ps,
                   ADJ.PVAL = adjp)
     res <- res[order(ps),]
