@@ -181,7 +181,7 @@ For that we might be interested in mapping all kind of additional data onto the
 nodes and the edges of the network.
 
 For example, we might want to add the Bioplex proteome data onto the graph for
-inspection via the shiny graph viewer.
+inspection via the [shiny graph viewer](https://github.com/ccb-hms/GraphViewer).
 
 ```{r}
 bp.prot <- BioPlex::getBioplexProteome()
@@ -191,12 +191,6 @@ ribo.gr <- BioPlex::mapSummarizedExperimentOntoGraph(ribo.gr, bp.prot,
     rowdata.cols = c("nr.peptides", "log2ratio", "adj.pvalue"),
     prefix = "bpprot_")
 head(graph::nodeData(ribo.gr), n = 2)
-```
-
-Spin up the graph viewer:
-
-```{r, echo = FALSE, message = FALSE}
-shiny::shinyAppDir(".", options = list(width = "100%", height = 500))
 ```
 
 ## SessionInfo

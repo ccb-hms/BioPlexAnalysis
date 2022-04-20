@@ -49,7 +49,7 @@
 #'   res <- testDomainAssociation(hct.gr)
 #'
 #' @importFrom stats fisher.test p.adjust
-#' @importFrom utils combn
+#' @importFrom utils combn relist
 #' @export
 testDomainAssociation <- function(gr)
 {
@@ -79,13 +79,13 @@ testDomainAssociation <- function(gr)
     m2[lower.tri(m2)] <- NA
     tab <- reshape2::melt(m2, na.rm = TRUE)
 
-    # restrict to domain pairs connected by at least 2 PPIs 
-    tab <- subset(tab, value > 1)
-
     # calculate 2x2 contigency tables for all domain pairs
     ## some precomputations of the margins for efficiency
     total <- sum(tab$value)
     rs <- rowSums(m)
+
+    # restrict to domain pairs connected by at least 2 PPIs 
+    tab <- subset(tab, value > 1)
 
     ## calculate contigency for all remaining domain pairs
     conts <- apply(tab, 1, function(x) .getContingency(x[1], x[2], m, rs, total))
@@ -127,7 +127,7 @@ testDomainAssociation <- function(gr)
 {
   one <- rs[1] - x
   two <- rs[2] - x
-  all <- total - one - two - both
+  all <- total - one - two - x
   cbind(x, one, two, all)
 }
 

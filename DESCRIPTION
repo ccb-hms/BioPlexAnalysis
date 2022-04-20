@@ -16,8 +16,7 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Depends:
-    R (>= 4.1.0),
-    BioPlex
+    R (>= 4.1.0)
 Imports: 
     BiocFileCache,
     graph,
@@ -28,12 +27,15 @@ Suggests:
     AnnotationDbi,
     AnnotationHub,
     BioNet,
+    BioPlex,
     EnrichmentBrowser,
     ExperimentHub,
     ExpressionAtlas,
     GenomicFeatures,
     GenomicRanges,
     PFAM.db,
+    RColorBrewer,
+    bio3d,
     dplyr,
     edgeR,
     ggplot2,
@@ -41,6 +43,7 @@ Suggests:
     knitr,
     limma,
     methods,
+    r3dmol,
     reshape2,
     rmarkdown,
     utils

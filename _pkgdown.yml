@@ -16,6 +16,8 @@ navbar:
         href: articles/BioNet.Rmd
       - text: Protein complex overlap analysis  
         href: articles/CORUM.html
+      - text: Mapping PPIs onto 3D protein structures
+      - href: articles/PDB.html
       - text: Protein domain association analysis
         href: articles/PFAM.html
       - text: Transcriptome-Proteome analysis
