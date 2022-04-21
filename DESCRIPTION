@@ -30,7 +30,6 @@ Suggests:
     BioPlex,
     EnrichmentBrowser,
     ExperimentHub,
-    ExpressionAtlas,
     GenomicFeatures,
     GenomicRanges,
     PFAM.db,
