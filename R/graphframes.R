@@ -2,7 +2,7 @@
 #' @description Representation of BioPlex PPIs in a \code{GraphFrame} object
 #' from the \code{graphframes} package.
 #' @param gr an object of class \code{\linkS4class{graph}} storing the
-#' BioPlex PPIs. Typically obtained via \code{\link{bioplex2graph}}.
+#' BioPlex PPIs. Typically obtained via \code{bioplex2graph}.
 #' @param spark.con Spark connection. Typically obtained via
 #' \code{sparklyr::spark_connect}.
 #' @return An object of class \code{GraphFrame}. 
@@ -11,6 +11,7 @@
 #'
 #' library(sparklyr)
 #' library(graphframes)
+#' library(BioPlex)
 #'
 #' # (1) Obtain the latest version of the 293T PPI network
 #' bp.293t <- getBioPlex(cell.line = "293T", version = "3.0")

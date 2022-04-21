@@ -8,7 +8,7 @@ testDomainAssociation(gr)
 }
 \arguments{
 \item{gr}{An object of class \code{\linkS4class{graph}} storing the BioPlex PPIs.
-Typically obtained via \code{\link{bioplex2graph}}.}
+Typically obtained via \code{bioplex2graph}.}
 }
 \value{
 A \code{data.frame} containing all tested PFAM domain pairs ordered by

@@ -11,7 +11,7 @@
 #' @description Identifies statistically associated protein domain pairs
 #' connected by a disproportionally high number of protein-protein interactions. 
 #' @param gr An object of class \code{\linkS4class{graph}} storing the BioPlex PPIs.
-#' Typically obtained via \code{\link{bioplex2graph}}.
+#' Typically obtained via \code{bioplex2graph}.
 #' @return A \code{data.frame} containing all tested PFAM domain pairs ordered by
 #' association strength.
 #' @details Given PFAM domain annotations for each node of the graph, the function 
