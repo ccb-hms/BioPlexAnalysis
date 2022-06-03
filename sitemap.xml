@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ccb-hms.github.io/BioPlexAnalysis//index.html</loc>
+    <loc>https://ccb-hms.github.io/BioPlexAnalysis/404.html</loc>
   </url>
   <url>
-    <loc>https://ccb-hms.github.io/BioPlexAnalysis//reference/graph2graphframe.html</loc>
+    <loc>https://ccb-hms.github.io/BioPlexAnalysis/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://ccb-hms.github.io/BioPlexAnalysis//reference/graphframe2graph.html</loc>
+    <loc>https://ccb-hms.github.io/BioPlexAnalysis/articles/CORUM.html</loc>
   </url>
   <url>
-    <loc>https://ccb-hms.github.io/BioPlexAnalysis//articles/BioNet.html</loc>
+    <loc>https://ccb-hms.github.io/BioPlexAnalysis/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://ccb-hms.github.io/BioPlexAnalysis//articles/GraphFrames.html</loc>
+    <loc>https://ccb-hms.github.io/BioPlexAnalysis/authors.html</loc>
   </url>
   <url>
-    <loc>https://ccb-hms.github.io/BioPlexAnalysis//articles/PFAM.html</loc>
+    <loc>https://ccb-hms.github.io/BioPlexAnalysis/index.html</loc>
   </url>
   <url>
-    <loc>https://ccb-hms.github.io/BioPlexAnalysis//articles/TranscriptomeProteome.html</loc>
+    <loc>https://ccb-hms.github.io/BioPlexAnalysis/reference/graph2graphframe.html</loc>
+  </url>
+  <url>
+    <loc>https://ccb-hms.github.io/BioPlexAnalysis/reference/graphframe2graph.html</loc>
+  </url>
+  <url>
+    <loc>https://ccb-hms.github.io/BioPlexAnalysis/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://ccb-hms.github.io/BioPlexAnalysis/reference/testDomainAssociation.html</loc>
   </url>
 </urlset>

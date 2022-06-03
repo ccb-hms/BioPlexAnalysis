@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Mon Sep 20 23:14:16 UTC 2021:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-017c-057d-1768-00000a44d800 
+Fri Jun 03 13:32:28 UTC 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0181-29c4-6e50-00000937e400 
 on database directory memory:/__w/BioPlexAnalysis/BioPlexAnalysis/docs/reference/databaseName=metastore_db with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@5ffd2b27 
-Loaded from file:/github/home/spark/spark-3.0.2-bin-hadoop3.2/jars/derby-10.12.1.1.jar
-java.vendor=Ubuntu
-java.runtime.version=11.0.11+9-Ubuntu-0ubuntu2.20.04
+Loaded from file:/github/home/spark/spark-3.0.3-bin-hadoop3.2/jars/derby-10.12.1.1.jar
+java.vendor=Private Build
+java.runtime.version=11.0.15+10-Ubuntu-0ubuntu0.20.04.1
 user.dir=/__w/BioPlexAnalysis/BioPlexAnalysis/docs/reference
 os.name=Linux
 os.arch=amd64
-os.version=5.4.0-1058-azure
+os.version=5.4.0-1080-azure
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
