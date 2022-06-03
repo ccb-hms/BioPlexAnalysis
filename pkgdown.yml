@@ -3,7 +3,9 @@ pkgdown: 2.0.3
 pkgdown_sha: ~
 articles:
   CORUM: CORUM.html
-last_built: 2022-06-03T13:32Z
+  PDB: PDB.html
+  PFAM: PFAM.html
+last_built: 2022-06-03T13:52Z
 urls:
   reference: https://ccb-hms.github.io/BioPlexAnalysis/reference
   article: https://ccb-hms.github.io/BioPlexAnalysis/articles
