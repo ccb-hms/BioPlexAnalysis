@@ -47,6 +47,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/BioNet.Rmd">Maximum scoring subnetwork analysis</a>
+    </li>
+    <li>
       <a href="../articles/CORUM.html">Protein complex overlap analysis</a>
     </li>
     <li>
@@ -54,6 +57,9 @@
     </li>
     <li>
       <a href="../articles/PFAM.html">Protein domain association analysis</a>
+    </li>
+    <li>
+      <a href="../articles/GraphFrames.html">GraphFrames backend</a>
     </li>
   </ul>
 </li>
@@ -98,20 +104,20 @@
 network:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.293t.1</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioPlex.html" class="external-link">getBioPlex</a></span><span class="op">(</span>cell.line <span class="op">=</span> <span class="st">"293T"</span>, version <span class="op">=</span> <span class="st">"1.0"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-06-03 13:42:35</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2022-06-03 16:20:32</span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.293t.2</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioPlex.html" class="external-link">getBioPlex</a></span><span class="op">(</span>cell.line <span class="op">=</span> <span class="st">"293T"</span>, version <span class="op">=</span> <span class="st">"2.0"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-06-03 13:42:36</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2022-06-03 16:20:33</span></code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.293t.3</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioPlex.html" class="external-link">getBioPlex</a></span><span class="op">(</span>cell.line <span class="op">=</span> <span class="st">"293T"</span>, version <span class="op">=</span> <span class="st">"3.0"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-06-03 13:42:38</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2022-06-03 15:57:43</span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.hct116</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioPlex.html" class="external-link">getBioPlex</a></span><span class="op">(</span>cell.line <span class="op">=</span> <span class="st">"HCT116"</span>, version <span class="op">=</span> <span class="st">"1.0"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-06-03 13:42:42</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2022-06-03 16:20:36</span></code></pre>
 <p>Obtain the complete set of human protein complexes from CORUM:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">corum.df</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getCorum.html" class="external-link">getCorum</a></span><span class="op">(</span>set <span class="op">=</span> <span class="st">"all"</span>, organism <span class="op">=</span> <span class="st">"Human"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-06-03 13:42:44</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2022-06-03 16:20:38</span></code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">corum.glist</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/corum2graphlist.html" class="external-link">corum2graphlist</a></span><span class="op">(</span><span class="va">corum.df</span><span class="op">)</span></code></pre></div>
 </div>

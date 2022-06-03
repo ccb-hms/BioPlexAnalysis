@@ -30,6 +30,9 @@ connected by a disproportionally high number of protein-protein interactions."><
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/BioNet.Rmd">Maximum scoring subnetwork analysis</a>
+    </li>
+    <li>
       <a href="../articles/CORUM.html">Protein complex overlap analysis</a>
     </li>
     <li>
@@ -37,6 +40,9 @@ connected by a disproportionally high number of protein-protein interactions."><
     </li>
     <li>
       <a href="../articles/PFAM.html">Protein domain association analysis</a>
+    </li>
+    <li>
+      <a href="../articles/GraphFrames.html">GraphFrames backend</a>
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
@@ -105,7 +111,7 @@ of the human interactome. Cell, 184(11):3022-3040.e28, 2021.</p>
 <span class="r-in">  <span class="co"># (1) obtain BioPlex PPI network for 293T cells</span></span>
 <span class="r-in">  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ccb-hms/BioPlex" class="external-link">BioPlex</a></span><span class="op">)</span></span>
 <span class="r-in">  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioPlex.html" class="external-link">getBioPlex</a></span><span class="op">(</span>cell.line <span class="op">=</span> <span class="st">"HCT116"</span>, version <span class="op">=</span> <span class="st">"1.0"</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using cached version from 2022-06-03 13:42:42</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using cached version from 2022-06-03 16:20:36</span>
 <span class="r-in">  <span class="va">hct.gr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/bioplex2graph.html" class="external-link">bioplex2graph</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
 <span class="r-in"> </span>
 <span class="r-in">  <span class="co"># (2) annotate PFAM domains</span></span>

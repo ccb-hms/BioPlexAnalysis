@@ -47,6 +47,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/BioNet.Rmd">Maximum scoring subnetwork analysis</a>
+    </li>
+    <li>
       <a href="../articles/CORUM.html">Protein complex overlap analysis</a>
     </li>
     <li>
@@ -54,6 +57,9 @@
     </li>
     <li>
       <a href="../articles/PFAM.html">Protein domain association analysis</a>
+    </li>
+    <li>
+      <a href="../articles/GraphFrames.html">GraphFrames backend</a>
     </li>
   </ul>
 </li>
@@ -105,10 +111,10 @@
 network:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.293t</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioPlex.html" class="external-link">getBioPlex</a></span><span class="op">(</span>cell.line <span class="op">=</span> <span class="st">"293T"</span>, version <span class="op">=</span> <span class="st">"3.0"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-06-03 13:42:38</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2022-06-03 15:57:43</span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.hct116</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioPlex.html" class="external-link">getBioPlex</a></span><span class="op">(</span>cell.line <span class="op">=</span> <span class="st">"HCT116"</span>, version <span class="op">=</span> <span class="st">"1.0"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-06-03 13:42:42</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2022-06-03 16:20:36</span></code></pre>
 <p>and turn into a graph object:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.gr</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/bioplex2graph.html" class="external-link">bioplex2graph</a></span><span class="op">(</span><span class="va">bp.293t</span><span class="op">)</span>
@@ -179,7 +185,7 @@ network:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span> <span class="va">res.bp</span> <span class="op">&lt;-</span> <span class="fu">BioPlexAnalysis</span><span class="fu">::</span><span class="fu"><a href="../reference/testDomainAssociation.html">testDomainAssociation</a></span><span class="op">(</span><span class="va">bp.gr</span><span class="op">)</span> <span class="op">)</span> </code></pre></div>
 <pre><code><span class="co">##    user  system elapsed </span>
-<span class="co">##  96.117  12.787 118.480</span></code></pre>
+<span class="co">##  96.523  10.350 113.866</span></code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">res.bp</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##            PFAM1   PFAM2 FREQ          PVAL      ADJ.PVAL</span>
@@ -192,7 +198,7 @@ network:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span> <span class="va">res.hct</span> <span class="op">&lt;-</span> <span class="fu">BioPlexAnalysis</span><span class="fu">::</span><span class="fu"><a href="../reference/testDomainAssociation.html">testDomainAssociation</a></span><span class="op">(</span><span class="va">hct.gr</span><span class="op">)</span> <span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##    user  system elapsed </span>
-<span class="co">##  46.507   3.006  49.974</span></code></pre>
+<span class="co">##  45.090   2.816  48.794</span></code></pre>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">res.hct</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##            PFAM1   PFAM2 FREQ          PVAL      ADJ.PVAL</span>
