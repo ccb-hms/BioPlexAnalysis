@@ -30,7 +30,7 @@ from the graphframes package."><!-- mathjax --><script src="https://cdnjs.cloudf
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/BioNet.Rmd">Maximum scoring subnetwork analysis</a>
+      <a href="../articles/BioNet.html">Maximum scoring subnetwork analysis</a>
     </li>
     <li>
       <a href="../articles/CORUM.html">Protein complex overlap analysis</a>
@@ -40,6 +40,9 @@ from the graphframes package."><!-- mathjax --><script src="https://cdnjs.cloudf
     </li>
     <li>
       <a href="../articles/PFAM.html">Protein domain association analysis</a>
+    </li>
+    <li>
+      <a href="../articles/TranscriptomeProteome.html">Transcriptome and Proteome analysis</a>
     </li>
     <li>
       <a href="../articles/GraphFrames.html">GraphFrames backend</a>
@@ -79,13 +82,18 @@ from the <code>graphframes</code> package.</p>
     <dl><dt>gr</dt>
 <dd><p>an object of class <code>graph</code> storing the
 BioPlex PPIs. Typically obtained via <code>bioplex2graph</code>.</p></dd>
+
+
 <dt>spark.con</dt>
 <dd><p>Spark connection. Typically obtained via
 <code><a href="https://rdrr.io/pkg/sparklyr/man/spark-connections.html" class="external-link">sparklyr::spark_connect</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>GraphFrame</code>.</p>
+    
+
+<p>An object of class <code>GraphFrame</code>.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -166,7 +174,7 @@ BioPlex PPIs. Typically obtained via <code>bioplex2graph</code>.</p></dd>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># (1) Obtain the latest version of the 293T PPI network</span></span>
 <span class="r-in"><span class="va">bp.293t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioPlex.html" class="external-link">getBioPlex</a></span><span class="op">(</span>cell.line <span class="op">=</span> <span class="st">"293T"</span>, version <span class="op">=</span> <span class="st">"3.0"</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using cached version from 2022-06-03 15:57:43</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using cached version from 2022-06-21 11:49:51</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># (2) Turn the data into a graph </span></span>
 <span class="r-in"><span class="va">bp.gr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/bioplex2graph.html" class="external-link">bioplex2graph</a></span><span class="op">(</span><span class="va">bp.293t</span><span class="op">)</span></span>
@@ -189,7 +197,7 @@ BioPlex PPIs. Typically obtained via <code>bioplex2graph</code>.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

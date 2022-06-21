@@ -47,7 +47,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/BioNet.Rmd">Maximum scoring subnetwork analysis</a>
+      <a href="../articles/BioNet.html">Maximum scoring subnetwork analysis</a>
     </li>
     <li>
       <a href="../articles/CORUM.html">Protein complex overlap analysis</a>
@@ -57,6 +57,9 @@
     </li>
     <li>
       <a href="../articles/PFAM.html">Protein domain association analysis</a>
+    </li>
+    <li>
+      <a href="../articles/TranscriptomeProteome.html">Transcriptome and Proteome analysis</a>
     </li>
     <li>
       <a href="../articles/GraphFrames.html">GraphFrames backend</a>
@@ -119,7 +122,7 @@ structures:</p>
 <span class="co">## 3 A0A009L7S8                               7m4z;7m4y;7m4w;7m4x;7ryg;7ryh;7ryf</span>
 <span class="co">## 4 A0A009QSN8                                              6v3a;6v39;6v3b;6v3d</span>
 <span class="co">## 5     A0A010 5b0j;5b01;6j8v;5gwv;5b02;5gww;5b0m;6j8w;5b03;5b0l;5b0k;5b0i;5b00</span>
-<span class="co">## 6     A0A011                                         3vkd;3vk5;3vkc;3vkb;3vka</span></code></pre>
+<span class="co">## 6     A0A011                                         3vka;3vk5;3vkc;3vkb;3vkd</span></code></pre>
 <p>Turn into a mapping:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">unip2pdb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">PDB</span>, <span class="st">";"</span><span class="op">)</span>
@@ -142,7 +145,7 @@ structures:</p>
 <span class="co">## [11] "5b0k" "5b0i" "5b00"</span>
 <span class="co">## </span>
 <span class="co">## $A0A011</span>
-<span class="co">## [1] "3vkd" "3vk5" "3vkc" "3vkb" "3vka"</span></code></pre>
+<span class="co">## [1] "3vka" "3vk5" "3vkc" "3vkb" "3vkd"</span></code></pre>
 <p>Get the PDB structure for the TFIIH core complex (PDB ID: <a href="https://www.rcsb.org/structure/6NMI" class="external-link">6nmi</a>)</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pdb.id</span> <span class="op">&lt;-</span> <span class="st">"6nmi"</span>
@@ -265,10 +268,11 @@ structures:</p>
 <span class="co">## 4 ATOM     A 174.716 186.287 133.174</span>
 <span class="co">## 5 ATOM     A 177.452 186.253 133.398</span>
 <span class="co">## 6 ATOM     A 177.785 187.117 132.235</span></code></pre>
-<p>Compute pairwise distances between atoms:</p>
+<p>Compute pairwise distances between atoms (this is memory
+intensive):</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#dmat &lt;- bio3d::dm(pdb)</span>
-<span class="co">#dmat[1:5,1:5]</span></code></pre></div>
+<code class="sourceCode R"><span class="co"># dmat &lt;- bio3d::dm(pdb)</span>
+<span class="co"># dmat[1:5,1:5]</span></code></pre></div>
 </div>
   </div>
 
@@ -289,7 +293,7 @@ structures:</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer>

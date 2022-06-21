@@ -47,7 +47,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/BioNet.Rmd">Maximum scoring subnetwork analysis</a>
+      <a href="../articles/BioNet.html">Maximum scoring subnetwork analysis</a>
     </li>
     <li>
       <a href="../articles/CORUM.html">Protein complex overlap analysis</a>
@@ -57,6 +57,9 @@
     </li>
     <li>
       <a href="../articles/PFAM.html">Protein domain association analysis</a>
+    </li>
+    <li>
+      <a href="../articles/TranscriptomeProteome.html">Transcriptome and Proteome analysis</a>
     </li>
     <li>
       <a href="../articles/GraphFrames.html">GraphFrames backend</a>
@@ -109,14 +112,14 @@
 <p>Get the latest version of the 293T PPI network:</p>
 <div class="sourceCode" id="section-cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.293t</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioPlex.html" class="external-link">getBioPlex</a></span><span class="op">(</span>cell.line <span class="op">=</span> <span class="st">"293T"</span>, version <span class="op">=</span> <span class="st">"3.0"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-06-03 15:57:43</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2022-06-21 11:49:51</span></code></pre>
 <p>and turn into a graph object:</p>
 <div class="sourceCode" id="section-cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.gr</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/bioplex2graph.html" class="external-link">bioplex2graph</a></span><span class="op">(</span><span class="va">bp.293t</span><span class="op">)</span></code></pre></div>
 <p>Get RNA-seq data for 293T cells from GEO: <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE122425" class="external-link">GSE122425</a></p>
 <div class="sourceCode" id="section-cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gse122425</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getGSE122425.html" class="external-link">getGSE122425</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-06-03 15:57:54</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2022-06-21 11:50:01</span></code></pre>
 <p>Differential expression analysis between NSUN2 knockout and wild
 type:</p>
 <div class="sourceCode" id="section-cb7"><pre class="downlit sourceCode r">
@@ -226,7 +229,7 @@ requiring a commercial CPLEX license.</p>
 to cache the result to not recompute this over and over again.</p>
 <div class="sourceCode" id="section-cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">module</span> <span class="op">&lt;-</span> <span class="fu">BioNet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioNet/man/runFastHeinz.html" class="external-link">runFastHeinz</a></span><span class="op">(</span><span class="va">bp.sgr</span>, <span class="va">scores</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-06-03 16:19:54</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2022-06-21 12:13:53</span></code></pre>
 <div class="sourceCode" id="section-cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">module</span></code></pre></div>
 <pre><code><span class="co">## A graphNEL graph with directed edges</span>
@@ -376,7 +379,7 @@ graph for inspection via the <a href="https://github.com/ccb-hms/GraphViewer" cl
 viewer</a>.</p>
 <div class="sourceCode" id="section-cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.prot</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioplexProteome.html" class="external-link">getBioplexProteome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-06-03 16:20:28</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2022-06-21 12:14:25</span></code></pre>
 <div class="sourceCode" id="section-cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.prot</span></code></pre></div>
 <pre><code><span class="co">## class: SummarizedExperiment </span>
@@ -404,7 +407,7 @@ viewer</a>.</p>
 <span class="co">## [1] "O75394"</span>
 <span class="co">## </span>
 <span class="co">## $O75394$score</span>
-<span class="co">## [1] 0.2549759</span>
+<span class="co">## [1] 0.2549751</span>
 <span class="co">## </span>
 <span class="co">## $O75394$bpprot_HEK1</span>
 <span class="co">## [1] 8.66958</span>
@@ -442,7 +445,7 @@ viewer</a>.</p>
 <span class="co">## [1] "P18124"</span>
 <span class="co">## </span>
 <span class="co">## $P18124$score</span>
-<span class="co">## [1] 0.4136689</span>
+<span class="co">## [1] 0.4136681</span>
 <span class="co">## </span>
 <span class="co">## $P18124$bpprot_HEK1</span>
 <span class="co">## [1] 7.7563</span>
@@ -505,39 +508,40 @@ viewer</a>.</p>
 <span class="co">## [17] matrixStats_0.62.0         </span>
 <span class="co">## </span>
 <span class="co">## loaded via a namespace (and not attached):</span>
-<span class="co">##  [1] colorspace_2.0-3       ellipsis_0.3.2         rprojroot_2.0.3       </span>
-<span class="co">##  [4] XVector_0.36.0         fs_1.5.2               bit64_4.0.5           </span>
-<span class="co">##  [7] fansi_1.0.3            splines_4.2.0          cachem_1.0.6          </span>
-<span class="co">## [10] geneplotter_1.74.0     knitr_1.39             jsonlite_1.8.0        </span>
-<span class="co">## [13] annotate_1.74.0        GO.db_3.15.0           dbplyr_2.1.1          </span>
-<span class="co">## [16] png_0.1-7              shiny_1.7.1            BiocManager_1.30.18   </span>
-<span class="co">## [19] compiler_4.2.0         httr_1.4.3             assertthat_0.2.1      </span>
-<span class="co">## [22] Matrix_1.4-1           fastmap_1.1.0          limma_3.52.1          </span>
-<span class="co">## [25] cli_3.3.0              later_1.3.0            htmltools_0.5.2       </span>
-<span class="co">## [28] tools_4.2.0            igraph_1.3.1           gtable_0.3.0          </span>
-<span class="co">## [31] glue_1.6.2             GenomeInfoDbData_1.2.8 dplyr_1.0.9           </span>
-<span class="co">## [34] rappdirs_0.3.3         Rcpp_1.0.8.3           jquerylib_0.1.4       </span>
-<span class="co">## [37] pkgdown_2.0.3          vctrs_0.4.1            Biostrings_2.64.0     </span>
-<span class="co">## [40] xfun_0.31              stringr_1.4.0          mime_0.12             </span>
-<span class="co">## [43] lifecycle_1.0.1        XML_3.99-0.9           edgeR_3.38.1          </span>
-<span class="co">## [46] zlibbioc_1.42.0        scales_1.2.0           ragg_1.2.2            </span>
-<span class="co">## [49] promises_1.2.0.1       parallel_4.2.0         KEGGgraph_1.56.0      </span>
-<span class="co">## [52] RColorBrewer_1.1-3     yaml_2.3.5             curl_4.3.2            </span>
-<span class="co">## [55] memoise_2.0.1          ggplot2_3.3.6          sass_0.4.1            </span>
-<span class="co">## [58] stringi_1.7.6          RSQLite_2.2.14         highr_0.9             </span>
-<span class="co">## [61] genefilter_1.78.0      desc_1.4.1             BioPlexAnalysis_0.99.3</span>
-<span class="co">## [64] filelock_1.0.2         BiocParallel_1.30.2    rlang_1.0.2           </span>
-<span class="co">## [67] pkgconfig_2.0.3        systemfonts_1.0.4      bitops_1.0-7          </span>
-<span class="co">## [70] evaluate_0.15          lattice_0.20-45        purrr_0.3.4           </span>
-<span class="co">## [73] bit_4.0.4              tidyselect_1.1.2       GSEABase_1.58.0       </span>
-<span class="co">## [76] magrittr_2.0.3         R6_2.5.1               generics_0.1.2        </span>
-<span class="co">## [79] DelayedArray_0.22.0    DBI_1.1.2              pillar_1.7.0          </span>
-<span class="co">## [82] survival_3.3-1         KEGGREST_1.36.0        RCurl_1.98-1.6        </span>
-<span class="co">## [85] tibble_3.1.7           crayon_1.5.1           utf8_1.2.2            </span>
-<span class="co">## [88] BiocFileCache_2.4.0    rmarkdown_2.14         locfit_1.5-9.5        </span>
-<span class="co">## [91] grid_4.2.0             blob_1.2.3             Rgraphviz_2.40.0      </span>
-<span class="co">## [94] digest_0.6.29          xtable_1.8-4           httpuv_1.6.5          </span>
-<span class="co">## [97] textshaping_0.3.6      munsell_0.5.0          bslib_0.3.1</span></code></pre>
+<span class="co">##   [1] colorspace_2.0-3       ellipsis_0.3.2         rprojroot_2.0.3       </span>
+<span class="co">##   [4] XVector_0.36.0         fs_1.5.2               bit64_4.0.5           </span>
+<span class="co">##   [7] fansi_1.0.3            codetools_0.2-18       splines_4.2.0         </span>
+<span class="co">##  [10] cachem_1.0.6           geneplotter_1.74.0     knitr_1.39            </span>
+<span class="co">##  [13] jsonlite_1.8.0         annotate_1.74.0        GO.db_3.15.0          </span>
+<span class="co">##  [16] dbplyr_2.2.0           png_0.1-7              shiny_1.7.1           </span>
+<span class="co">##  [19] BiocManager_1.30.18    compiler_4.2.0         httr_1.4.3            </span>
+<span class="co">##  [22] assertthat_0.2.1       Matrix_1.4-1           fastmap_1.1.0         </span>
+<span class="co">##  [25] limma_3.52.2           cli_3.3.0              later_1.3.0           </span>
+<span class="co">##  [28] htmltools_0.5.2        tools_4.2.0            igraph_1.3.2          </span>
+<span class="co">##  [31] gtable_0.3.0           glue_1.6.2             GenomeInfoDbData_1.2.8</span>
+<span class="co">##  [34] dplyr_1.0.9            rappdirs_0.3.3         Rcpp_1.0.8.3          </span>
+<span class="co">##  [37] jquerylib_0.1.4        pkgdown_2.0.4          vctrs_0.4.1           </span>
+<span class="co">##  [40] Biostrings_2.64.0      xfun_0.31              stringr_1.4.0         </span>
+<span class="co">##  [43] mime_0.12              lifecycle_1.0.1        XML_3.99-0.10         </span>
+<span class="co">##  [46] edgeR_3.38.1           zlibbioc_1.42.0        scales_1.2.0          </span>
+<span class="co">##  [49] ragg_1.2.2             promises_1.2.0.1       parallel_4.2.0        </span>
+<span class="co">##  [52] KEGGgraph_1.56.0       RColorBrewer_1.1-3     yaml_2.3.5            </span>
+<span class="co">##  [55] curl_4.3.2             memoise_2.0.1          ggplot2_3.3.6         </span>
+<span class="co">##  [58] sass_0.4.1             stringi_1.7.6          RSQLite_2.2.14        </span>
+<span class="co">##  [61] highr_0.9              genefilter_1.78.0      desc_1.4.1            </span>
+<span class="co">##  [64] BioPlexAnalysis_0.99.3 filelock_1.0.2         BiocParallel_1.30.3   </span>
+<span class="co">##  [67] rlang_1.0.2            pkgconfig_2.0.3        systemfonts_1.0.4     </span>
+<span class="co">##  [70] bitops_1.0-7           evaluate_0.15          lattice_0.20-45       </span>
+<span class="co">##  [73] purrr_0.3.4            bit_4.0.4              tidyselect_1.1.2      </span>
+<span class="co">##  [76] GSEABase_1.58.0        magrittr_2.0.3         R6_2.5.1              </span>
+<span class="co">##  [79] generics_0.1.2         DelayedArray_0.22.0    DBI_1.1.3             </span>
+<span class="co">##  [82] pillar_1.7.0           survival_3.3-1         KEGGREST_1.36.2       </span>
+<span class="co">##  [85] RCurl_1.98-1.7         tibble_3.1.7           crayon_1.5.1          </span>
+<span class="co">##  [88] utf8_1.2.2             BiocFileCache_2.4.0    rmarkdown_2.14        </span>
+<span class="co">##  [91] locfit_1.5-9.5         grid_4.2.0             blob_1.2.3            </span>
+<span class="co">##  [94] Rgraphviz_2.40.0       digest_0.6.29          xtable_1.8-4          </span>
+<span class="co">##  [97] httpuv_1.6.5           textshaping_0.3.6      munsell_0.5.0         </span>
+<span class="co">## [100] bslib_0.3.1</span></code></pre>
 </div>
 </div>
   </div>
@@ -559,7 +563,7 @@ viewer</a>.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer>
