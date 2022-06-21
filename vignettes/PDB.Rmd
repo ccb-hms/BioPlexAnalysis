@@ -94,9 +94,9 @@ pos <- pdb$atom[,rel.cols]
 head(pos)
 ```
 
-Compute pairwise distances between atoms:
+Compute pairwise distances between atoms (this is memory intensive):
 
 ```{r}
-dmat <- bio3d::dm(pdb)
-dmat[1:5,1:5]
+# dmat <- bio3d::dm(pdb)
+# dmat[1:5,1:5]
 ```
