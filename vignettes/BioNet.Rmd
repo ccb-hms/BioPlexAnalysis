@@ -1,6 +1,6 @@
 ---
 vignette: >
-  % \VignetteIndexEntry{BioNet maximum scoring subnetwork analysis}
+  % \VignetteIndexEntry{Maximum scoring subnetwork analysis}
   % \VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 output: html_document

@@ -97,6 +97,6 @@ head(pos)
 Compute pairwise distances between atoms:
 
 ```{r}
-#dmat <- bio3d::dm(pdb)
-#dmat[1:5,1:5]
+dmat <- bio3d::dm(pdb)
+dmat[1:5,1:5]
 ```
