@@ -1,4 +1,5 @@
 ---
+title: Transcriptome-Proteome analysis
 vignette: >
   % \VignetteIndexEntry{Transcriptome-Proteome analysis}
   % \VignetteEngine{knitr::rmarkdown}

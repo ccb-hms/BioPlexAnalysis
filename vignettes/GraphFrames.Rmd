@@ -1,4 +1,5 @@
 ---
+title: Using a GraphFrames backend
 vignette: >
   % \VignetteIndexEntry{Using a GraphFrames backend}
   % \VignetteEngine{knitr::rmarkdown}

@@ -1,10 +1,10 @@
 ---
+title: Maximum scoring subnetwork analysis
 vignette: >
   % \VignetteIndexEntry{Maximum scoring subnetwork analysis}
   % \VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 output: html_document
-runtime: shiny
 ---
 
 # Setup
@@ -15,8 +15,8 @@ library(EnrichmentBrowser)
 library(graph)
 ```
 
-# BioNet
-
+# Data retrieval
+ 
 Get the latest version of the 293T PPI network:
 
 ```{r}
@@ -35,6 +35,8 @@ Get RNA-seq data for 293T cells from GEO:
 ```{r gse122425}
 gse122425 <- BioPlex::getGSE122425()
 ```
+
+# Differential expression analysis
 
 Differential expression analysis between NSUN2 knockout and wild type: 
 
@@ -93,6 +95,8 @@ head(scores)
 summary(scores)
 ```
 
+# Maximum scoring subnetwork analysis
+
 ## First reduction step: unsupervised detection of maximum scoring subnetwork
 
 Here  we  use  a  fast  heuristic  approach  to  calculate  an  approximation
@@ -132,7 +136,6 @@ en <- names(edgeData(module))
 edgeDataDefaults(module) <- edgeDataDefaults(bp.sgr)
 module@edgeData@data[en] <- edgeData(bp.sgr)[en]
 ```
-
 
 ## Second reduction step: supervised enrichment analysis of maximum scoring subnetwork 
 

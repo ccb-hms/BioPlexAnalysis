@@ -1,4 +1,5 @@
 ---
+title: PFAM domain-domain association analysis
 vignette: >
   % \VignetteIndexEntry{PFAM domain-domain association analysis}
   % \VignetteEngine{knitr::rmarkdown}

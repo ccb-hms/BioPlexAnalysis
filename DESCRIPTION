@@ -35,6 +35,7 @@ Suggests:
     GenomicRanges,
     PFAM.db,
     RColorBrewer,
+    basilisk,
     bio3d,
     depmap,
     dplyr,
@@ -45,6 +46,7 @@ Suggests:
     limma,
     methods,
     r3dmol,
+    reticulate,
     reshape2,
     rmarkdown,
     utils

@@ -1,4 +1,5 @@
 ---
+title: CORUM complex overlap analysis
 vignette: >
   % \VignetteIndexEntry{CORUM complex overlap analysis}
   % \VignetteEngine{knitr::rmarkdown}
@@ -13,24 +14,95 @@ output:
 ```{r, message = FALSE}
 library(BioPlex)
 library(graph)
+library(basilisk)
+library(reticulate)
 ```
 
-Get the HCT116 network, and all three versions of the 293T PPI network:
+# Data retrieval 
+
+Get the latest version of the 293T PPI network ...
 
 ```{r}
-bp.293t.1 <- BioPlex::getBioPlex(cell.line = "293T", version = "1.0")
-bp.293t.2 <- BioPlex::getBioPlex(cell.line = "293T", version = "2.0")
 bp.293t.3 <- BioPlex::getBioPlex(cell.line = "293T", version = "3.0")
-bp.hct116 <- BioPlex::getBioPlex(cell.line = "HCT116", version = "1.0")
+head(bp.293t.3)
 ```
 
-Obtain the complete set of human protein complexes from CORUM:
+... and turn into a graph:
 
 ```{r}
-corum.df <- BioPlex::getCorum(set = "all", organism = "Human")
-corum.glist <- BioPlex::corum2graphlist(corum.df)
+gr.293t.3 <- BioPlex::bioplex2graph(bp.293t.3)
 ```
 
+Obtain the complete set of human protein complexes from CORUM ...
 
+```{r}
+corum.df <- BioPlex::getCorum(set = "core", organism = "Human")
+head(corum.df)
+```
 
+... and turn into a `list`:
 
+```{r}
+corum.list <- BioPlex::corum2list(corum.df)
+head(corum.list)
+```
+
+Identify complexes with at least three subunits:
+
+```{r}
+has.ge3.subunits <- lengths(corum.list) > 2
+table(has.ge3.subunits)
+```
+
+Identify complexes with at least one subunit targeted as bait:
+
+```{r}
+hasBait <- function(s, df) any(s %in% df$UniprotA)
+has.bait <- vapply(corum.list, hasBait, logical(1), df = bp.293t.3)
+```
+
+Identify complexes with at least one PPI between subunits:
+
+```{r}
+hasEdge <- function(s, gr)
+{
+    s <- intersect(s, graph::nodes(gr))
+    graph::numEdges(graph::subGraph(s, gr)) > 0
+}
+has.ge1.edge <- vapply(corum.list, hasEdge, logical(1), gr = gr.293t.3)
+```
+
+# Overlap analysis with protein complexes 
+
+Setup a python environment via basilisk that contains the
+[bioplexpy](https://pypi.org/project/bioplexpy/) package:
+
+```{r, message = FALSE, warning = FALSE}
+bp.env <- basilisk::BasiliskEnvironment(envname="bp.env",
+                                        pkgname = "BioPlexAnalysis",
+                                        packages = "pandas==0.25.1",
+                                        pip = "bioplexpy==1.0.0")
+proc <- basilisk::basiliskStart(bp.env)
+bp <- reticulate::import("bioplexpy")
+```
+
+```{r}
+gr <- bp$bioplex2graph(bp.293t.3)
+gr
+```
+
+```{r}
+corum <- bp$getCorum(complex_set = "core", organism = "Human")
+```
+
+```{r}
+bp$permutation_test_for_CORUM_complex(gr, corum, 27, 1000)
+```
+
+We stop the process when ready with the analysis.
+
+```{r}
+basilisk::basiliskStop(proc)
+```
+
+# Visualization

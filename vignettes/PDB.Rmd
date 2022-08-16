@@ -1,4 +1,5 @@
 ---
+title: Mapping PPIs onto 3D protein structures
 vignette: >
   % \VignetteIndexEntry{Mapping PPIs onto 3D protein structures}
   % \VignetteEngine{knitr::rmarkdown}
