@@ -21,18 +21,15 @@ library(ggalluvial)
 
 # Data retrieval
 
-Get the latest version of the 293T PPI network and the HCT116 PPI network:
+Get the latest version of the HCT116 PPI network:
 
 ```{r}
-bp.293t <- BioPlex::getBioPlex(cell.line = "293T", version = "3.0")
 bp.hct116 <- BioPlex::getBioPlex(cell.line = "HCT116", version = "1.0")
 ```
 
 and turn into a graph object:
 
 ```{r}
-bp.gr <- BioPlex::bioplex2graph(bp.293t)
-bp.gr
 hct.gr <- BioPlex::bioplex2graph(bp.hct116)
 hct.gr
 ```
@@ -55,15 +52,12 @@ AnnotationDbi::keytypes(orgdb)
 ```
 
 ```{r pfam}
-bp.gr <- BioPlex::annotatePFAM(bp.gr, orgdb)
 hct.gr <- BioPlex::annotatePFAM(hct.gr, orgdb)
 ```
 
 # Domain-domain association analysis
 
 ```{r}
-system.time( res.bp <- BioPlexAnalysis::testDomainAssociation(bp.gr) ) 
-head(res.bp)
 system.time( res.hct <- BioPlexAnalysis::testDomainAssociation(hct.gr) )
 head(res.hct)
 ```
@@ -74,14 +68,6 @@ Get human readable description for the PFAM domain IDs:
 library(PFAM.db)
 id2de <- as.list(PFAMDE)
 id2de <- unlist(id2de)
-```
-
-What are the top interacting domain pairs for the 293T network:
-
-```{r}
-res.bp$DOMAIN1 <- id2de[res.bp$PFAM1]
-res.bp$DOMAIN2 <- id2de[res.bp$PFAM2]
-head(res.bp)
 ```
 
 What are the top interacting domain pairs for the HCT116 network:
