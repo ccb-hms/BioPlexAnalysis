@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> • BioPlexAnalysis</title>
+<title>Mapping PPIs onto 3D protein structures • BioPlexAnalysis</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Mapping PPIs onto 3D protein structures">
 <meta property="og:description" content="BioPlexAnalysis">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -87,7 +87,7 @@
       </header><script src="PDB_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="PDB_files/r3dmol-1.6.2/3Dmol-nojquery-min.js"></script><script src="PDB_files/r3dmol-binding-0.1.2/r3dmol.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip></h1>
+      <h1 data-toc-skip>Mapping PPIs onto 3D protein structures</h1>
             
       
       
@@ -117,35 +117,35 @@ structures:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##   SP_PRIMARY                                                              PDB</span>
-<span class="co">## 1     A0A003                                                             6kvc</span>
-<span class="co">## 2 A0A009I821                               7m4y;7m4w;7ryf;7m4x;7ryg;7m4z;7ryh</span>
-<span class="co">## 3 A0A009L7S8                               7m4z;7m4y;7m4w;7m4x;7ryg;7ryh;7ryf</span>
-<span class="co">## 4 A0A009QSN8                                              6v3a;6v39;6v3b;6v3d</span>
-<span class="co">## 5     A0A010 5b0j;5b01;6j8v;5gwv;5b02;5gww;5b0m;6j8w;5b03;5b0l;5b0k;5b0i;5b00</span>
-<span class="co">## 6     A0A011                                         3vka;3vk5;3vkc;3vkb;3vkd</span></code></pre>
+<span class="co">## 1     A0A003                                                             6kv9</span>
+<span class="co">## 2 A0A009I821                               7m4x;7m4y;7ryg;7m4w;7ryf;7ryh;7m4z</span>
+<span class="co">## 3 A0A009L7S8                               7m4y;7m4z;7ryg;7m4x;7ryh;7ryf;7m4w</span>
+<span class="co">## 4 A0A009QSN8                                              6v3a;6v39;6v3d;6v3b</span>
+<span class="co">## 5     A0A010 5b01;6j8v;5b02;5gww;5b0i;5b00;5b0m;5b03;6j8w;5b0k;5b0l;5gwv;5b0j</span>
+<span class="co">## 6     A0A011                                         3vkd;3vkc;3vka;3vkb;3vk5</span></code></pre>
 <p>Turn into a mapping:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">unip2pdb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">PDB</span>, <span class="st">";"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">unip2pdb</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">$</span><span class="va">SP_PRIMARY</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">unip2pdb</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## $A0A003</span>
-<span class="co">## [1] "6kvc"</span>
+<span class="co">## [1] "6kv9"</span>
 <span class="co">## </span>
 <span class="co">## $A0A009I821</span>
-<span class="co">## [1] "7m4y" "7m4w" "7ryf" "7m4x" "7ryg" "7m4z" "7ryh"</span>
+<span class="co">## [1] "7m4x" "7m4y" "7ryg" "7m4w" "7ryf" "7ryh" "7m4z"</span>
 <span class="co">## </span>
 <span class="co">## $A0A009L7S8</span>
-<span class="co">## [1] "7m4z" "7m4y" "7m4w" "7m4x" "7ryg" "7ryh" "7ryf"</span>
+<span class="co">## [1] "7m4y" "7m4z" "7ryg" "7m4x" "7ryh" "7ryf" "7m4w"</span>
 <span class="co">## </span>
 <span class="co">## $A0A009QSN8</span>
-<span class="co">## [1] "6v3a" "6v39" "6v3b" "6v3d"</span>
+<span class="co">## [1] "6v3a" "6v39" "6v3d" "6v3b"</span>
 <span class="co">## </span>
 <span class="co">## $A0A010</span>
-<span class="co">##  [1] "5b0j" "5b01" "6j8v" "5gwv" "5b02" "5gww" "5b0m" "6j8w" "5b03" "5b0l"</span>
-<span class="co">## [11] "5b0k" "5b0i" "5b00"</span>
+<span class="co">##  [1] "5b01" "6j8v" "5b02" "5gww" "5b0i" "5b00" "5b0m" "5b03" "6j8w" "5b0k"</span>
+<span class="co">## [11] "5b0l" "5gwv" "5b0j"</span>
 <span class="co">## </span>
 <span class="co">## $A0A011</span>
-<span class="co">## [1] "3vka" "3vk5" "3vkc" "3vkb" "3vkd"</span></code></pre>
+<span class="co">## [1] "3vkd" "3vkc" "3vka" "3vkb" "3vk5"</span></code></pre>
 <p>Get the PDB structure for the TFIIH core complex (PDB ID: <a href="https://www.rcsb.org/structure/6NMI" class="external-link">6nmi</a>)</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pdb.id</span> <span class="op">&lt;-</span> <span class="st">"6nmi"</span>
