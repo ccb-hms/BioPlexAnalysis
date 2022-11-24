@@ -11,7 +11,7 @@ output:
 
 # Setup
 
-```{r, message = FALSE}
+```{r setup, message = FALSE}
 library(BioPlex)
 library(graph)
 library(basilisk)
@@ -22,40 +22,40 @@ library(reticulate)
 
 Get the latest version of the 293T PPI network ...
 
-```{r}
+```{r get-bioplex}
 bp.293t.3 <- BioPlex::getBioPlex(cell.line = "293T", version = "3.0")
 head(bp.293t.3)
 ```
 
 ... and turn into a graph:
 
-```{r}
+```{r bioplex2graph}
 gr.293t.3 <- BioPlex::bioplex2graph(bp.293t.3)
 ```
 
 Obtain the complete set of human protein complexes from CORUM ...
 
-```{r}
+```{r get-corum}
 corum.df <- BioPlex::getCorum(set = "core", organism = "Human")
 ```
 
 ... and turn into a `list`:
 
-```{r}
+```{r corum2list}
 corum.list <- BioPlex::corum2list(corum.df)
 head(corum.list)
 ```
 
 Identify complexes with at least three subunits:
 
-```{r}
+```{r has-subunit}
 has.subunits <- lengths(corum.list) > 2
 table(has.subunits)
 ```
 
 Identify complexes with at least one subunit targeted as bait:
 
-```{r}
+```{r has-bait}
 hasBait <- function(s, df) any(s %in% df$UniprotA)
 has.bait <- vapply(corum.list, hasBait, logical(1), df = bp.293t.3)
 table(has.bait)
@@ -63,7 +63,7 @@ table(has.bait)
 
 Identify complexes with at least one PPI between subunits:
 
-```{r}
+```{r has-edge}
 hasEdge <- function(s, gr)
 {
     s <- intersect(s, graph::nodes(gr))
@@ -73,7 +73,7 @@ has.edge <- vapply(corum.list, hasEdge, logical(1), gr = gr.293t.3)
 table(has.edge)
 ```
 
-# Overlap analysis with protein complexes 
+# Overlap analysis with protein complexes (random sampling)
 
 The [bioplexpy](https://pypi.org/project/bioplexpy/) package implements a 
 function for testing overlaps of PPIs with a complex of interest based on
@@ -91,7 +91,7 @@ that contains the
 the function from within R, facilitating direct exchange of data and results between
 the BioPlex R and BioPlex Python packages:
 
-```{r, message = FALSE, warning = FALSE}
+```{r basilisk-start, message = FALSE, warning = FALSE}
 bp.env <- basilisk::BasiliskEnvironment(envname="bp.env",
                                         pkgname = "BioPlexAnalysis",
                                         packages = "pandas==0.25.1",
@@ -103,7 +103,7 @@ bp <- reticulate::import("bioplexpy")
 Here, we use a functionality from the BioPlex Python package to turn the 
 BioPlex data into a [NetworkX](https://networkx.org/) graph:
 
-```{r}
+```{r bioplex2graph-py}
 gr <- bp$bioplex2graph(bp.293t.3)
 gr
 ```
@@ -111,17 +111,17 @@ gr
 We then subset the CORUM complexes to those having (i) at least three subunits,
 (ii) at least one subunit targeted as bait, and (iii) at least one PPI between subunits.
 
-```{r}
+```{r subset-corum}
 corum <- bp$getCorum(complex_set = "core", organism = "Human")
 ind <- has.subunits & has.bait & has.edge
 table(ind)
 sub.corum <- corum[ind,] 
 ```
 
-Now we carry out the overlap permutation test as implemented in the `bioplexpy`
+Now we carry out the overlap resampling test as implemented in the `bioplexpy`
 package for all complexes passing the filter criteria:
 
-```{r}
+```{r perm-test-all}
 ps <- vapply(sub.corum$ComplexID,
              function(i) bp$permutation_test_for_CORUM_complex(gr, sub.corum, i, 100),
              numeric(1))
@@ -130,11 +130,9 @@ summary(ps)
 
 We stop the process when ready with the analysis.
 
-```{r}
+```{r basilisk-stop}
 basilisk::basiliskStop(proc)
 ```
-
-# Visualization
 
 We can now take a peak at the p-value distribution from the overlap permutation
 test, observing a strong concentration near zero, confirming that, as expected,
@@ -144,3 +142,7 @@ overall PPIs network matching the complexes in size and composition.
 ```{r}
 hist(ps, breaks = 20, xlab = "p-value", ylab = "frequency", col = "#00AFBB")
 ```
+
+# Overlap analysis with protein complexes (network randomization)
+
+

@@ -14,11 +14,12 @@ License: Artistic-2.0
 VignetteBuilder: knitr
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.2
 Depends:
     R (>= 4.1.0)
 Imports: 
     BiocFileCache,
+    BiRewire,
     graph,
     graphframes,
     igraph,

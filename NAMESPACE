@@ -2,6 +2,7 @@
 
 export(graph2graphframe)
 export(graphframe2graph)
+export(testCoverage)
 export(testDomainAssociation)
 importFrom(stats,fisher.test)
 importFrom(stats,p.adjust)
