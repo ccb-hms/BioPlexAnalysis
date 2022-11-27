@@ -12,7 +12,8 @@
 #' number of edges corresponds here to the number of edges within the input set of
 #' node IDs based on the true / non-randomized version of the input graph.
 #' @param ids character. A set of ids. Need at least three IDs present
-#' as nodes in the graph.
+#' as nodes in the graph. Can also be a \code{list} which each element being a 
+#' set of IDs to sequentially test a collection of sets.
 #' @param gr graph. An object of class \code{graphNEL} from the graph package.
 #' @param nr.reps integer. Number of replications. Defaults to 1000.
 #' @return A p-value that is calculated as for a permutation test, ie as the relative
@@ -30,26 +31,36 @@
 #'   testCoverage(ids, gr, nr.reps = 100) 
 #'
 #' @export
-testCoverage <- function(ids, gr, nr.reps = 1000)
+testConnectivity <- function(ids, gr, nr.reps = 1000)
 {
-    n <- intersect(graph::nodes(gr), ids)
-    if(length(n) < 3) 
-        stop("Need >= 3 IDs present as nodes in the provided graph")
-    if(length(n) < length(ids))
-        message(length(n), " of ", length(ids),
-                " IDs present as nodes in the provided graph")
-    sgr <- graph::subGraph(n, gr)
-    obs.nr.edges <- graph::numEdges(sgr)
+    stopifnot(is.character(ids) || is.list(ids))
+    stopifnot(is(gr, "graphNEL"))
+    stopifnot(is.numeric(nr.reps) && nr.reps > 1)
+
+    if(!is.list(ids)) ids <- list(ids)
+    n <- lapply(ids, intersect, y = graph::nodes(gr))
+    ind <- lengths(n) < 3
+    if(any(ind)) 
+        stop("Need >= 3 IDs present as nodes in the provided graph\n",
+             "Elements ", paste(which(ind), collapse = ", "), 
+             " do not satisfy this requirement")
+    ind <- lengths(n) < lengths(ids)
+    if(any(ind))
+        message("Elements ", paste(which(ind), collapse = ", "),
+                " : not all IDs present as nodes in the provided graph")
+    .ned <- function(i) graph::numEdges(graph::subGraph(i, gr))
+    obs.nr.edges <- vapply(n, .ned, numeric(1))
     igr <- igraph::graph_from_graphnel(gr)
     rand.nr.edges <- replicate(nr.reps, .countRandomizedEdges(n, igr))
-    p <- (sum(rand.nr.edges >= obs.nr.edges) + 1) / (nr.reps + 1)
-    return(p)
+    rand.gre <- rowSums(rand.nr.edges >= obs.nr.edges) 
+    ps <- (rand.gre + 1) / (nr.reps + 1)
+    return(ps)
 }
 
 .countRandomizedEdges <- function(n, igr)
 {
     rew.igr <- BiRewire::birewire.rewire.undirected(igr, verbose = FALSE)
-    sgr <- igraph::subgraph(rew.igr, n)
-    nr.edges <- igraph::ecount(sgr)
+    .nied <- function(i) igraph::ecount(igraph::subgraph(rew.igr, i))
+    nr.edges <- vapply(n, .nied, numeric(1))
     return(nr.edges)
 }

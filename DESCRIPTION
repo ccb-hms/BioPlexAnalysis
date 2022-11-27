@@ -1,6 +1,6 @@
 Package: BioPlexAnalysis
 Title: Applications and downstream analysis of BioPlex PPI data
-Version: 0.99.3
+Version: 1.0.0
 Authors@R: 
     c(person("Ludwig", "Geistlinger",
              role = c("aut", "cre"),
@@ -41,6 +41,7 @@ Suggests:
     depmap,
     dplyr,
     edgeR,
+    genefilter,
     ggalluvial,
     ggplot2,
     knitr,

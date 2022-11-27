@@ -37,7 +37,7 @@ sparklyr::spark_install("3.0")
 We can connect to both local instances of Spark as well as remote Spark clusters.
 Here we connect to our local installation of Spark via
 
-```{r}
+```{r spark-connect, warning = FALSE}
 sc <- sparklyr::spark_connect(master = "local", version = "3.0")
 ```
 
