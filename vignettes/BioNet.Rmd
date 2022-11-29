@@ -147,26 +147,30 @@ head(go.gs)
 ```
 
 Given the maximum scoring subnetwork and gene sets of interest, we can
-now throw all kinds of set-based enrichment analysis (sbea) methods or 
-network-based enrichment analysis (nbea) methods onto the problem.
+now apply different set-based enrichment analysis (sbea) methods or 
+network-based enrichment analysis (nbea) methods to identify biological
+themes within a module.
 
 ```{r}
 EnrichmentBrowser::sbeaMethods()
 EnrichmentBrowser::nbeaMethods()
 ```
 
-Those are conveniently wrapped in the EnrichmentBrowser package and we are
-going to try out a couple of them here.
+Those are conveniently wrapped in the
+[EnrichmentBrowser](https://bioconductor.org/packages/EnrichmentBrowser)
+package and provide for a prioritization of gene sets of interest within
+a maximum scoring subnetwork.
 
-But for now we just take some information from the [paper](https://pubmed.ncbi.nlm.nih.gov/30526041/) to illustrate the concept:
+To illustrate the concept, we use information on gene set enrichment from the 
+[paper](https://pubmed.ncbi.nlm.nih.gov/30526041/) 
 
 NSUN2 is a nucleolus RNA m5C methyltransferase, regulator of cell proliferation
 and cell differentiation, dysfunction associated with intellectual diseases
 and cancer; reported to be a downstream target gene of MYC oncogene, a master
 regulator of cell proliferation.
 
-Among the pathways showing enrichment in the paper is Ribosome, so as showcase
-let's extract nodes participating in the gene set "Ribosome" from the maximum scoring
+Among the pathways showing enrichment in the paper is Ribosome, so as a showcase
+we extract nodes annotated to the gene set "Ribosome" from the maximum scoring
 subnetwork.
 
 ```{r}
@@ -177,10 +181,10 @@ ribo.gr <- graph::subGraph(ribo, module)
 ribo.gr
 ```
 
-Such a gene set induced sub-graph can then further explored in our BioPlex
-node data and edge data shiny viewer. 
+Such a gene set induced sub-graph can then be further explored in our [BioPlex
+node data and edge data shiny viewer](https://ccb-rstudio-connect.hms.harvard.edu/graphviewer). 
 
-For that we might be interested in mapping all kind of additional data onto the
+For that we might be interested in mapping additional data onto the
 nodes and the edges of the network.
 
 For example, we might want to add the Bioplex proteome data onto the graph for
