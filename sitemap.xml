@@ -7,22 +7,7 @@
     <loc>https://ccb-hms.github.io/BioPlexAnalysis/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://ccb-hms.github.io/BioPlexAnalysis/articles/BioNet.html</loc>
-  </url>
-  <url>
     <loc>https://ccb-hms.github.io/BioPlexAnalysis/articles/CORUM.html</loc>
-  </url>
-  <url>
-    <loc>https://ccb-hms.github.io/BioPlexAnalysis/articles/GraphFrames.html</loc>
-  </url>
-  <url>
-    <loc>https://ccb-hms.github.io/BioPlexAnalysis/articles/PDB.html</loc>
-  </url>
-  <url>
-    <loc>https://ccb-hms.github.io/BioPlexAnalysis/articles/PFAM.html</loc>
-  </url>
-  <url>
-    <loc>https://ccb-hms.github.io/BioPlexAnalysis/articles/TranscriptomeProteome.html</loc>
   </url>
   <url>
     <loc>https://ccb-hms.github.io/BioPlexAnalysis/articles/index.html</loc>
@@ -34,15 +19,9 @@
     <loc>https://ccb-hms.github.io/BioPlexAnalysis/index.html</loc>
   </url>
   <url>
-    <loc>https://ccb-hms.github.io/BioPlexAnalysis/reference/graph2graphframe.html</loc>
-  </url>
-  <url>
-    <loc>https://ccb-hms.github.io/BioPlexAnalysis/reference/graphframe2graph.html</loc>
-  </url>
-  <url>
     <loc>https://ccb-hms.github.io/BioPlexAnalysis/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://ccb-hms.github.io/BioPlexAnalysis/reference/testDomainAssociation.html</loc>
+    <loc>https://ccb-hms.github.io/BioPlexAnalysis/reference/testConnectivity.html</loc>
   </url>
 </urlset>

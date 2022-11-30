@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">BioPlexAnalysis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
       </span>
     </div>
 
@@ -90,6 +90,16 @@
 <div class="page-header"><h1 id="bioplexanalysis">BioPlexAnalysis<a class="anchor" aria-label="anchor" href="#bioplexanalysis"></a>
 </h1></div>
 <p>Applications and downstream analysis of BioPlex PPI data</p>
+<p>The <a href="https://bioplex.hms.harvard.edu/" class="external-link">BioPlex project</a> uses affinity-purification mass spectrometry to profile protein-protein interactions (PPIs) in human cell lines.</p>
+<p>To date, the BioPlex project has created two proteome-scale, cell-line-specific PPI networks. The first, BioPlex 3.0, results from affinity purification of 10,128 human proteins —- half the proteome —- in 293T cells and includes 118,162 interactions among 14,586 proteins. The second results from 5,522 immunoprecipitations in HCT116 cells and includes 70,966 interactions between 10,531 proteins.</p>
+<p>For more information, please see:</p>
+<ul>
+<li>Huttlin et al. <a href="https://doi.org/10.1016/j.cell.2015.06.043" class="external-link">The BioPlex network: a systematic exploration of the human interactome</a>. <em>Cell</em>, 2015.</li>
+<li>Huttlin et al. <a href="https://doi.org/10.1038/nature22366" class="external-link">Architecture of the human interactome defines protein communities and disease networks</a>, <em>Nature</em>, 2017.</li>
+<li>Huttlin et al. <a href="https://doi.org/10.1016/j.cell.2021.04.011" class="external-link">Dual proteome-scale networks reveal cell-specific remodeling of the human interactome</a>, <em>Cell</em>, 2021.</li>
+</ul>
+<p>The <a href="https://bioconductor.org/packages/BioPlex" class="external-link">BioPlex R package</a> implements access to the BioPlex protein-protein interaction networks and related resources from within R. Besides protein-protein interaction networks for 293T and HCT116 cells, this includes access to <a href="http://mips.helmholtz-muenchen.de/corum" class="external-link">CORUM</a> protein complex data, and transcriptome and proteome data for the two cell lines.</p>
+<p>Functionality focuses on importing these data resources and storing them in dedicated Bioconductor data structures, as a foundation for integrative downstream analysis of the data. This repository contains code for a set of downstream analyses and applications of BioPlexPPI data, bundled in the <a href="https://github.com/ccb-hms/BioPlexAnalysis" class="external-link">BioPlexAnalysis R package</a> and <a href="https://ccb-hms.github.io/BioPlexAnalysis/">compiled analysis vignettes</a>.</p>
 </div>
   </div>
 
