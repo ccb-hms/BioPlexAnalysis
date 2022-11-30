@@ -11,7 +11,7 @@ For more information, please see:
 * Huttlin et al. [Architecture of the human interactome defines protein communities and disease networks](https://doi.org/10.1038/nature22366), *Nature*, 2017.
 * Huttlin et al. [Dual proteome-scale networks reveal cell-specific remodeling of the human interactome](https://doi.org/10.1016/j.cell.2021.04.011), *Cell*, 2021.
 
-The [BioPlex R package](https://github.com/ccb-hms/BioPlex)
+The [BioPlex R package](https://bioconductor.org/packages/BioPlex)
 implements access to the BioPlex protein-protein interaction networks and
 related resources from within R. 
 Besides protein-protein interaction networks for 293T and HCT116 cells,
