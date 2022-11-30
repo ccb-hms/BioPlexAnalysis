@@ -8,7 +8,7 @@ testConnectivity(ids, gr, nr.reps = 1000)
 }
 \arguments{
 \item{ids}{character. A set of ids. Need at least three IDs present
-as nodes in the graph. Can also be a \code{list} which each element being a
+as nodes in the graph. Can also be a \code{list} with each element being a
 set of IDs to sequentially test a collection of sets.}
 
 \item{gr}{graph. An object of class \code{graphNEL} from the graph package.}

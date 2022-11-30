@@ -14,7 +14,6 @@ output:
 ```{r setup, message = FALSE}
 library(BioPlex)
 library(graph)
-library(basilisk)
 library(reticulate)
 ```
 
@@ -99,18 +98,16 @@ We then count the number of interactions in each replication, and compare
 against the observed number of interactions overlapping with the complex.
 
 Here, we set up a python environment via
-[basilisk](https://bioconductor.org/packages/basilisk)
+[reticulate](https://rstudio.github.io/reticulate/)
 that contains the
 [bioplexpy](https://pypi.org/project/bioplexpy/) package in order to invoke
 the function from within R, facilitating direct exchange of data and results between
 the BioPlex R and BioPlex Python packages:
 
 ```{r basilisk-start, message = FALSE, warning = FALSE}
-bp.env <- basilisk::BasiliskEnvironment(envname="bp.env",
-                                        pkgname = "BioPlexAnalysis",
-                                        packages = "pandas==0.25.1",
-                                        pip = "bioplexpy==1.0.0")
-proc <- basilisk::basiliskStart(bp.env)
+reticulate::virtualenv_create("r-reticulate")
+reticulate::virtualenv_install("r-reticulate", "bioplexpy")
+reticulate::use_virtualenv("r-reticulate")
 bp <- reticulate::import("bioplexpy")
 ```
 
@@ -138,12 +135,6 @@ ps <- vapply(sub.corum$ComplexID,
              numeric(1))
 head(ps)
 summary(ps)
-```
-
-We stop the process when ready with the analysis.
-
-```{r basilisk-stop}
-basilisk::basiliskStop(proc)
 ```
 
 We can now take a peak at the p-value distribution from the overlap permutation
@@ -182,7 +173,7 @@ configuration exceeded the number of edges observed for the true PPI network.
 ```{r net-rand-test, message = FALSE}
 ps2 <- BioPlexAnalysis::testConnectivity(sub.corum.list, 
                                          gr.293t.3,
-                                         nr.reps = 100)
+                                         nr.reps = 10)
 head(ps2)
 summary(ps2)
 ```
