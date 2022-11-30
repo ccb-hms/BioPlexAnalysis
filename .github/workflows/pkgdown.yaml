@@ -5,13 +5,16 @@ on:
   workflow_dispatch:
 jobs:
   job1:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     container: rocker/verse:4.2.2
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with: 
+          python-version: '3.10'
 
       # System dependencies
       - name: Install apt dependencies
@@ -19,7 +22,6 @@ jobs:
           apt-get update
           apt-get -y upgrade
           apt-get -y install rsync  #for deploy 
-          apt-get -y install python-is-python3
  
       - name: Query dependencies and update old packages
         run: |
