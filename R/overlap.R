@@ -1,4 +1,4 @@
-#' Assess coverage of a graph on a set of node IDs
+#' Assess connectivity of a graph on a set of node IDs
 #' 
 #' @description This function performs a statistical assessment of the
 #' overlap (number of edges) between a graph and a set of node IDs. This
@@ -12,7 +12,7 @@
 #' number of edges corresponds here to the number of edges within the input set of
 #' node IDs based on the true / non-randomized version of the input graph.
 #' @param ids character. A set of ids. Need at least three IDs present
-#' as nodes in the graph. Can also be a \code{list} which each element being a 
+#' as nodes in the graph. Can also be a \code{list} with each element being a 
 #' set of IDs to sequentially test a collection of sets.
 #' @param gr graph. An object of class \code{graphNEL} from the graph package.
 #' @param nr.reps integer. Number of replications. Defaults to 1000.
@@ -28,8 +28,9 @@
 #'   gr <- graphNEL(nodes = n, edgeL = edl)
 #'   
 #'   ids <- LETTERS[c(1:2, 9:10)]
-#'   testCoverage(ids, gr, nr.reps = 100) 
+#'   testConnectivity(ids, gr, nr.reps = 100) 
 #'
+#' @importFrom methods is
 #' @export
 testConnectivity <- function(ids, gr, nr.reps = 1000)
 {
@@ -52,7 +53,8 @@ testConnectivity <- function(ids, gr, nr.reps = 1000)
     obs.nr.edges <- vapply(n, .ned, numeric(1))
     igr <- igraph::graph_from_graphnel(gr)
     rand.nr.edges <- replicate(nr.reps, .countRandomizedEdges(n, igr))
-    rand.gre <- rowSums(rand.nr.edges >= obs.nr.edges) 
+    if(length(ids) == 1) rand.gre <- sum(rand.nr.edges >= obs.nr.edges)
+    else rand.gre <- rowSums(rand.nr.edges >= obs.nr.edges) 
     ps <- (rand.gre + 1) / (nr.reps + 1)
     return(ps)
 }

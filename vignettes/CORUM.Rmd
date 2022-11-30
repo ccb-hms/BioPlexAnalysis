@@ -49,7 +49,12 @@ head(corum.list)
 Identify complexes with at least three subunits:
 
 ```{r has-subunit}
-has.subunits <- lengths(corum.list) > 2
+hasSubunits <- function(s, gr)
+{
+    s <- intersect(s, graph::nodes(gr))
+    length(s) > 2
+}
+has.subunits <- vapply(corum.list, hasSubunits, logical(1), gr = gr.293t.3)
 table(has.subunits)
 ```
 
@@ -71,6 +76,15 @@ hasEdge <- function(s, gr)
 }
 has.edge <- vapply(corum.list, hasEdge, logical(1), gr = gr.293t.3)
 table(has.edge)
+```
+
+We then subset the CORUM complexes to those having (i) at least three subunits,
+(ii) at least one subunit targeted as bait, and (iii) at least one PPI between subunits.
+
+```{r}
+ind <- has.subunits & has.bait & has.edge
+table(ind)
+sub.corum.list <- corum.list[ind]
 ```
 
 # Overlap analysis with protein complexes (random sampling)
@@ -108,13 +122,10 @@ gr <- bp$bioplex2graph(bp.293t.3)
 gr
 ```
 
-We then subset the CORUM complexes to those having (i) at least three subunits,
-(ii) at least one subunit targeted as bait, and (iii) at least one PPI between subunits.
+and also to obtain the subset of CORUM complexes satisfying the above criteria. 
 
 ```{r subset-corum}
 corum <- bp$getCorum(complex_set = "core", organism = "Human")
-ind <- has.subunits & has.bait & has.edge
-table(ind)
 sub.corum <- corum[ind,] 
 ```
 
@@ -125,6 +136,7 @@ package for all complexes passing the filter criteria:
 ps <- vapply(sub.corum$ComplexID,
              function(i) bp$permutation_test_for_CORUM_complex(gr, sub.corum, i, 100),
              numeric(1))
+head(ps)
 summary(ps)
 ```
 
@@ -139,10 +151,48 @@ test, observing a strong concentration near zero, confirming that, as expected,
 many complexes are enriched for PPIs - when compared to random subsets of the
 overall PPIs network matching the complexes in size and composition.
 
-```{r}
+```{r p-hist}
 hist(ps, breaks = 20, xlab = "p-value", ylab = "frequency", col = "#00AFBB")
 ```
 
 # Overlap analysis with protein complexes (network randomization)
+
+The resampling test implemented in the BioPlex Python package addresses the question:
+given a specific network topology, how likely is it that *n* nodes are connected
+by at least *m* edges? In the spirit of a competitive enrichment test, we
+therefore assess whether the connectivity within the protein of interest exceeds
+the connectivity outside of the the protein set of interest (= overall / background
+connectivity). 
+
+It is also possible to test each complex for enrichment of PPIs based on
+network randomization as implemented in the
+[BiRewire](https://bioconductor.org/packages/BiRewire)
+ package. This addresses the question: in networks of different topology but the
+same node degree distribution, how likely is it that *n* nodes are connected by
+at least *m* edges? The network randomization test thus randomizes the overall
+network while keeping the protein set of interest fixed (in contrast to the resampling
+test, which randomizes the protein set of interest while keeping the overall network fixed).
+
+This approach is incorporated in the `testConnectivity` function, which we apply
+here to test all CORUM complexes that were passing the filter criteria above. 
+We therefore randomize the PPI network a defined number of times (here: 100 times),
+and calculate for each complex how often the number of edges in a randomized
+configuration exceeded the number of edges observed for the true PPI network.  
+
+```{r net-rand-test, message = FALSE}
+ps2 <- BioPlexAnalysis::testConnectivity(sub.corum.list, 
+                                         gr.293t.3,
+                                         nr.reps = 100)
+head(ps2)
+summary(ps2)
+```
+
+As before we can take a peak at the *p*-value distribution for the network
+randomization test, which displays as for the resampling test a strong enrichment
+of PPIs across almost all CORUM complexes. 
+
+```{r p-hist2}
+hist(ps2, breaks = 20, xlab = "p-value", ylab = "frequency", col = "#00AFBB")
+```
 
 

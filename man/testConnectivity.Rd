@@ -2,7 +2,7 @@
 % Please edit documentation in R/overlap.R
 \name{testConnectivity}
 \alias{testConnectivity}
-\title{Assess coverage of a graph on a set of node IDs}
+\title{Assess connectivity of a graph on a set of node IDs}
 \usage{
 testConnectivity(ids, gr, nr.reps = 1000)
 }
@@ -44,6 +44,6 @@ node IDs based on the true / non-randomized version of the input graph.
   gr <- graphNEL(nodes = n, edgeL = edl)
   
   ids <- LETTERS[c(1:2, 9:10)]
-  testCoverage(ids, gr, nr.reps = 100) 
+  testConnectivity(ids, gr, nr.reps = 100) 
 
 }

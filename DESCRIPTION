@@ -23,6 +23,7 @@ Imports:
     graph,
     graphframes,
     igraph,
+    methods,
     sparklyr
 Suggests:
     AnnotationDbi,
@@ -46,7 +47,6 @@ Suggests:
     ggplot2,
     knitr,
     limma,
-    methods,
     r3dmol,
     reticulate,
     reshape2,
