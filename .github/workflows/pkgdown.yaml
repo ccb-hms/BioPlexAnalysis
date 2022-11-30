@@ -19,6 +19,7 @@ jobs:
           apt-get update
           apt-get -y upgrade
           apt-get -y install rsync  #for deploy 
+          apt-get -y install python-is-python3
  
       - name: Query dependencies and update old packages
         run: |
@@ -44,7 +45,8 @@ jobs:
           Rscript -e "install.packages('pkgdown')"
           Rscript -e "install.packages('BiocManager')"
           Rscript -e "remotes::install_cran('sparklyr')"
-          Rscript -e "sparklyr::spark_install('3.3.1', hadoop_version = 2)"
+          #Rscript -e "sparklyr::spark_install('3.3.1', hadoop_version = 2)"
+          Rscript -e "sparklyr::spark_install()"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
 
