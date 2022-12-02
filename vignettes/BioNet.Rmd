@@ -104,9 +104,6 @@ to  theoptimal scoring subnetwork.
 An optimal solution can be calculated using the heinz algorithm requiring a 
 commercial CPLEX license.
 
-Note: this will run for a couple of minutes so it will be a good idea to cache the
-result to not recompute this over and over again.
-
 ```{r heinz-bp-gse122425, eval = FALSE}
 module <- BioNet::runFastHeinz(bp.sgr, scores)
 ```
@@ -162,7 +159,7 @@ package and provide for a prioritization of gene sets of interest within
 a maximum scoring subnetwork.
 
 To illustrate the concept, we use information on gene set enrichment from the 
-[paper](https://pubmed.ncbi.nlm.nih.gov/30526041/) 
+[paper](https://pubmed.ncbi.nlm.nih.gov/30526041/).
 
 NSUN2 is a nucleolus RNA m5C methyltransferase, regulator of cell proliferation
 and cell differentiation, dysfunction associated with intellectual diseases
