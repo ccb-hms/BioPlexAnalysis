@@ -151,8 +151,8 @@ hist(ps, breaks = 20, xlab = "p-value", ylab = "frequency", col = "#00AFBB")
 The resampling test implemented in the BioPlex Python package addresses the question:
 given a specific network topology, how likely is it that *n* nodes are connected
 by at least *m* edges? In the spirit of a competitive enrichment test, we
-therefore assess whether the connectivity within the protein of interest exceeds
-the connectivity outside of the the protein set of interest (= overall / background
+therefore assess whether the connectivity within the protein set of interest exceeds
+the connectivity outside of the protein set of interest (= overall / background
 connectivity). 
 
 It is also possible to test each complex for enrichment of PPIs based on
