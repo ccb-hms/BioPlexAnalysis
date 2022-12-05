@@ -44,6 +44,7 @@ jobs:
           Rscript -e "remotes::install_github('r-hub/sysreqs')"
           Rscript -e "install.packages('pkgdown')"
           Rscript -e "install.packages('BiocManager')"
+          Rscript -e "remotes::install_github('tidyverse/dbplyr')"
           Rscript -e "remotes::install_github('sparklyr/sparklyr')"
           Rscript -e "sparklyr::spark_install('3.0')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
