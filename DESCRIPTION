@@ -21,8 +21,10 @@ Imports:
     BiocFileCache,
     BiRewire,
     graph,
+    graphframes,
     igraph,
     methods,
+    sparklyr
 Suggests:
     AnnotationDbi,
     AnnotationHub,
@@ -33,6 +35,7 @@ Suggests:
     ExpressionAtlas,
     GenomicFeatures,
     GenomicRanges,
+    dplyr,
     edgeR,
     ggplot2,
     knitr,
@@ -40,3 +43,6 @@ Suggests:
     reticulate,
     rmarkdown,
     utils
+Remotes:
+    sparklyr/sparklyr,
+    ccb-hms/graphframes

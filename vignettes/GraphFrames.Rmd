@@ -1,0 +1,116 @@
+---
+title: Using a GraphFrames backend
+vignette: >
+  % \VignetteIndexEntry{Using a GraphFrames backend}
+  % \VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+output:
+  html_document:
+    mathjax: null   
+---
+
+# Setup
+
+```{r, message = FALSE}
+library(BioPlex)
+library(BioPlexAnalysis)
+library(sparklyr)
+library(graphframes)
+library(dplyr)
+```
+
+# Connecting to Spark 
+
+For working GraphFrames, we need a connection to Spark.
+For computation on a computer cluster, this can be achieved by connecting to
+the spark installation on the cluster.
+
+However, for demonstration purposes we are using here a local connection,
+that will require a local Spark installation.
+
+This can be achieved via (need to be carried out only once):
+
+```{r spark-install, eval = FALSE}
+sparklyr::spark_install("3.0")
+```
+
+We can connect to both local instances of Spark as well as remote Spark clusters.
+Here we connect to our local installation of Spark via
+
+```{r spark-connect, warning = FALSE}
+sc <- sparklyr::spark_connect(master = "local", version = "3.0")
+```
+
+# Store BioPlex PPIs in a GraphFrame
+
+Get the latest version of the 293T PPI network:
+
+```{r}
+bp.293t <- BioPlex::getBioPlex(cell.line = "293T", version = "3.0")
+head(bp.293t)
+```
+
+and turn into a graph object:
+
+```{r}
+bp.gr <- BioPlex::bioplex2graph(bp.293t)
+bp.gr
+```
+
+Switch to a graphframes backend:
+
+```{r, warning = FALSE}
+gf <- BioPlexAnalysis::graph2graphframe(bp.gr, sc)
+gf
+```
+
+# PageRank
+
+[PageRank](https://en.wikipedia.org/wiki/PageRank) is an algorithm used in
+Google Search for ranking websites in their results, but it has been adopted
+also for other purposes. According to Google, PageRank works by counting the number
+and quality of links to a page to determine a rough estimate of how important
+the website is. 
+The underlying assumption is that more important websites are likely to receive
+more links from other websites.
+
+For the analysis if PPI networks, *personalized* PageRank seems to be capable to
+robustly evaluate the importance of the vertices of a network, relatively to some
+already known relevant nodes
+([Ivan and Grolmusz, 2011](https://academic.oup.com/bioinformatics/article/27/3/405/321946)).
+
+As an example we look at the ACADVL gene. Mutations in ACADVL are associated with
+very long-chain acyl-coenzyme A dehydrogenase deficiency.
+
+We first look up the corresponding node ID:
+
+```{r}
+dplyr::filter(graphframes::gf_vertices(gf), symbol == "ACADVL")
+```
+
+And then apply the personalized PageRank as implemented in the `graphframes`
+package.
+
+```{r, warning = FALSE}
+gf <- graphframes::gf_pagerank(gf, 
+                               reset_prob = 0.15,
+                               max_iter = 10L,
+                               source_id = "P49748")
+gf
+```
+
+Inspect the results:
+
+```{r}
+dplyr::filter(graphframes::gf_vertices(gf), pagerank > 0)
+dplyr::filter(graphframes::gf_edges(gf), src == "P49748")
+```
+
+Switch back to a `graphNEL` backend:
+
+```{r, warning = FALSE}
+gr <- BioPlexAnalysis::graphframe2graph(gf)
+gr
+head(graph::nodeData(gr), n = 2)
+head(graph::edgeData(gr), n = 2)
+```
