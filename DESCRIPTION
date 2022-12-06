@@ -44,5 +44,4 @@ Suggests:
     rmarkdown,
     utils
 Remotes:
-    sparklyr/sparklyr,
     ccb-hms/graphframes
