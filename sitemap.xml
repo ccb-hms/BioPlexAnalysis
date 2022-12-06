@@ -13,6 +13,9 @@
     <loc>https://ccb-hms.github.io/BioPlexAnalysis/articles/CORUM.html</loc>
   </url>
   <url>
+    <loc>https://ccb-hms.github.io/BioPlexAnalysis/articles/GraphFrames.html</loc>
+  </url>
+  <url>
     <loc>https://ccb-hms.github.io/BioPlexAnalysis/articles/TranscriptomeProteome.html</loc>
   </url>
   <url>
@@ -23,6 +26,12 @@
   </url>
   <url>
     <loc>https://ccb-hms.github.io/BioPlexAnalysis/index.html</loc>
+  </url>
+  <url>
+    <loc>https://ccb-hms.github.io/BioPlexAnalysis/reference/graph2graphframe.html</loc>
+  </url>
+  <url>
+    <loc>https://ccb-hms.github.io/BioPlexAnalysis/reference/graphframe2graph.html</loc>
   </url>
   <url>
     <loc>https://ccb-hms.github.io/BioPlexAnalysis/reference/index.html</loc>

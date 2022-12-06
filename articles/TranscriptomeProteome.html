@@ -155,7 +155,7 @@ workaround.</p>
 <span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="st">"E-MTAB-2770.Rdata"</span><span class="op">)</span>
 <span class="va">ccle.trans</span> <span class="op">&lt;-</span> <span class="va">experimentSummary</span>
 <span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.remove</a></span><span class="op">(</span><span class="st">"E-MTAB-2770.Rdata"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-12-02 16:27:31</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2022-12-06 23:25:13</span></code></pre>
 <p>We proceed as before:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ccle.trans</span> <span class="op">&lt;-</span> <span class="va">ccle.trans</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
@@ -375,7 +375,7 @@ level)<a class="anchor" aria-label="anchor" href="#de-analysis-hek293-vs--hct116
 <p>Pull the HEK293 data:</p>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gse.293t</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getGSE122425.html" class="external-link">getGSE122425</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-12-02 16:02:56</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2022-12-06 22:54:48</span></code></pre>
 <p>Pull the HCT116 data:</p>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">klijn</span> <span class="op">&lt;-</span> <span class="fu">ExpressionAtlas</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ExpressionAtlas/man/getAtlasData.html" class="external-link">getAtlasData</a></span><span class="op">(</span><span class="st">"E-MTAB-2706"</span><span class="op">)</span></code></pre></div>
@@ -456,7 +456,7 @@ experiments on the same scale using the limma-trend approach:</p>
 <p>Now let’s pull the BioPlex3 proteome data:</p>
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.prot</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioplexProteome.html" class="external-link">getBioplexProteome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-12-02 16:23:54</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2022-12-06 23:19:59</span></code></pre>
 <div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">rowData</a></span><span class="op">(</span><span class="va">bp.prot</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## DataFrame with 9604 rows and 5 columns</span>
