@@ -6,6 +6,18 @@ template:
   params:
     bootswatch: flatly
 
+reference:
+  - title: Protein complex overlap analysis
+    contents:
+      - testConnectivity
+  - title: Protein domain association analysis
+    contents:
+      - testDomainAssociation  
+  - title: GraphFrames backend
+    contents:
+      - graph2graphframe
+      - graphframe2graph
+
 navbar:
   title: ~
   type: default
@@ -24,7 +36,9 @@ navbar:
         href: articles/TranscriptomeProteome.html
       - text: GraphFrames backend
         href: articles/GraphFrames.html
-
+    - text: Reference
+      href: reference/index.html
+    
   right:
     - icon: fa-github
       href: https://github.com/ccb-hms/BioPlexAnalysis

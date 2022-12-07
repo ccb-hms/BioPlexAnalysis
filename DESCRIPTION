@@ -24,6 +24,7 @@ Imports:
     graphframes,
     igraph,
     methods,
+    reshape2,
     sparklyr
 Suggests:
     AnnotationDbi,
@@ -35,8 +36,10 @@ Suggests:
     ExpressionAtlas,
     GenomicFeatures,
     GenomicRanges,
+    PFAM.db,
     dplyr,
     edgeR,
+    ggalluvial,
     ggplot2,
     knitr,
     limma,
