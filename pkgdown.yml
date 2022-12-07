@@ -5,8 +5,9 @@ articles:
   BioNet: BioNet.html
   CORUM: CORUM.html
   GraphFrames: GraphFrames.html
+  PFAM: PFAM.html
   TranscriptomeProteome: TranscriptomeProteome.html
-last_built: 2022-12-06T23:37Z
+last_built: 2022-12-07T01:43Z
 urls:
   reference: https://ccb-hms.github.io/BioPlexAnalysis/reference
   article: https://ccb-hms.github.io/BioPlexAnalysis/articles

@@ -66,6 +66,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../reference/index.html">Reference</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -112,14 +115,14 @@
 <p>Get the latest version of the 293T PPI network:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.293t</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioPlex.html" class="external-link">getBioPlex</a></span><span class="op">(</span>cell.line <span class="op">=</span> <span class="st">"293T"</span>, version <span class="op">=</span> <span class="st">"3.0"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-12-06 22:54:37</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2022-12-07 01:06:13</span></code></pre>
 <p>and turn into a graph object:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.gr</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/bioplex2graph.html" class="external-link">bioplex2graph</a></span><span class="op">(</span><span class="va">bp.293t</span><span class="op">)</span></code></pre></div>
 <p>Get RNA-seq data for 293T cells from GEO: <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE122425" class="external-link">GSE122425</a></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gse122425</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getGSE122425.html" class="external-link">getGSE122425</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-12-06 22:54:48</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2022-12-07 01:06:20</span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="differential-expression-analysis">Differential expression analysis<a class="anchor" aria-label="anchor" href="#differential-expression-analysis"></a>
@@ -205,7 +208,7 @@ the model for the scoring function:</p>
 <code class="sourceCode R"><span class="va">scores</span> <span class="op">&lt;-</span> <span class="fu">BioNet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioNet/man/scoreNodes.html" class="external-link">scoreNodes</a></span><span class="op">(</span><span class="va">bp.sgr</span>, <span class="va">fb</span>, fdr <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">scores</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##     P00813     Q8N7W2     Q6ZMN8     P55039     Q9NZL4     Q6ICG6 </span>
-<span class="co">## -2.3408850 -0.4505586 -0.1727219 -1.5847734 -2.6642291 -2.0188589</span></code></pre>
+<span class="co">## -2.3408848 -0.4505585 -0.1727217 -1.5847732 -2.6642288 -2.0188587</span></code></pre>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">scores</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. </span>
@@ -224,7 +227,7 @@ An optimal solution can be calculated using the heinz algorithm
 requiring a commercial CPLEX license.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">module</span> <span class="op">&lt;-</span> <span class="fu">BioNet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioNet/man/runFastHeinz.html" class="external-link">runFastHeinz</a></span><span class="op">(</span><span class="va">bp.sgr</span>, <span class="va">scores</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-12-06 23:19:28</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2022-12-07 01:26:16</span></code></pre>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">module</span></code></pre></div>
 <pre><code><span class="co">## A graphNEL graph with directed edges</span>
@@ -376,7 +379,7 @@ graph for inspection via the <a href="https://github.com/ccb-hms/GraphViewer" cl
 viewer</a>.</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.prot</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioplexProteome.html" class="external-link">getBioplexProteome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-12-06 23:19:59</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2022-12-07 01:26:48</span></code></pre>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.prot</span></code></pre></div>
 <pre><code><span class="co">## class: SummarizedExperiment </span>
@@ -404,7 +407,7 @@ viewer</a>.</p>
 <span class="co">## [1] "O75394"</span>
 <span class="co">## </span>
 <span class="co">## $O75394$score</span>
-<span class="co">## [1] 0.2549778</span>
+<span class="co">## [1] 0.2549759</span>
 <span class="co">## </span>
 <span class="co">## $O75394$bpprot_HEK1</span>
 <span class="co">## [1] 8.66958</span>
@@ -442,7 +445,7 @@ viewer</a>.</p>
 <span class="co">## [1] "P18124"</span>
 <span class="co">## </span>
 <span class="co">## $P18124$score</span>
-<span class="co">## [1] 0.4136708</span>
+<span class="co">## [1] 0.4136689</span>
 <span class="co">## </span>
 <span class="co">## $P18124$bpprot_HEK1</span>
 <span class="co">## [1] 7.7563</span>
