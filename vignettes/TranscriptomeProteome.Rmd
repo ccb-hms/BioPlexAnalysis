@@ -42,7 +42,7 @@ There is currently an
 [ExpressionAtlas](https://bioconductor.org/packages/ExpressionAtlas) package.
 We therefore pull the file directly from ftp as a workaround.
 
-```{r, eval = FALSE}
+```{r}
 ebi.ftp.url <- "ftp.ebi.ac.uk/pub/databases/microarray/data/atlas/experiments"
 mtab.url <- "E-MTAB-2770/archive/E-MTAB-2770-atlasExperimentSummary.Rdata.1"
 mtab.url <- file.path(ebi.ftp.url, mtab.url)
@@ -52,7 +52,7 @@ ccle.trans <- experimentSummary
 file.remove("E-MTAB-2770.Rdata")
 ```
 
-```{r E-MTAB-2770-cache, echo = FALSE}
+```{r E-MTAB-2770-cache, eval = FALSE, echo = FALSE}
 ccle.trans <- BioPlexAnalysis:::.getResourceFromCache("ccle.trans", update.value = NA)
 if(is.null(ccle.trans))
 {
