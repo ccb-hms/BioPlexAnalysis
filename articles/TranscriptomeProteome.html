@@ -158,7 +158,7 @@ workaround.</p>
 <span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="st">"E-MTAB-2770.Rdata"</span><span class="op">)</span>
 <span class="va">ccle.trans</span> <span class="op">&lt;-</span> <span class="va">experimentSummary</span>
 <span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.remove</a></span><span class="op">(</span><span class="st">"E-MTAB-2770.Rdata"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-12-07 01:32:10</span></code></pre>
+<pre><code><span class="co">## [1] TRUE</span></code></pre>
 <p>We proceed as before:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ccle.trans</span> <span class="op">&lt;-</span> <span class="va">ccle.trans</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
@@ -282,7 +282,7 @@ assembly (used for CCLE).</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">AnnotationHub</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AnnotationHub/man/AnnotationHub-class.html" class="external-link">query</a></span><span class="op">(</span><span class="va">ah</span>, <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TxDb"</span>, <span class="st">"Homo sapiens"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## AnnotationHub with 39 records</span>
-<span class="co">## # snapshotDate(): 2022-10-26</span>
+<span class="co">## # snapshotDate(): 2022-10-31</span>
 <span class="co">## # $dataprovider: GENCODE, UCSC, NCBI, tRNAdb, snoRNAdb, RMBase v2.0</span>
 <span class="co">## # $species: Homo sapiens</span>
 <span class="co">## # $rdataclass: TxDb, SQLiteFile, ChainFile, FaFile</span>
@@ -378,7 +378,7 @@ level)<a class="anchor" aria-label="anchor" href="#de-analysis-hek293-vs--hct116
 <p>Pull the HEK293 data:</p>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gse.293t</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getGSE122425.html" class="external-link">getGSE122425</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-12-07 01:06:20</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2023-01-06 19:11:06</span></code></pre>
 <p>Pull the HCT116 data:</p>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">klijn</span> <span class="op">&lt;-</span> <span class="fu">ExpressionAtlas</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ExpressionAtlas/man/getAtlasData.html" class="external-link">getAtlasData</a></span><span class="op">(</span><span class="st">"E-MTAB-2706"</span><span class="op">)</span></code></pre></div>
@@ -459,7 +459,7 @@ experiments on the same scale using the limma-trend approach:</p>
 <p>Now let’s pull the BioPlex3 proteome data:</p>
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.prot</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioplexProteome.html" class="external-link">getBioplexProteome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-12-07 01:26:48</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2023-01-06 19:38:15</span></code></pre>
 <div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">rowData</a></span><span class="op">(</span><span class="va">bp.prot</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## DataFrame with 9604 rows and 5 columns</span>
@@ -513,6 +513,163 @@ transcriptome is HEK-vs-HCT, the proteome is HCT-vs-HEK:</p>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"log2FC (proteome)"</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="TranscriptomeProteome_files/figure-html/unnamed-chunk-24-1.png" width="700"></p>
+</div>
+<div class="section level2">
+<h2 id="interaction-networks-of-cell-line-specific-proteins">Interaction networks of cell-line specific proteins<a class="anchor" aria-label="anchor" href="#interaction-networks-of-cell-line-specific-proteins"></a>
+</h2>
+<p>We can now inspect the interactions of proteins that are strongly
+differentially expressed between cell lines as in Supplementary Figure
+S3, Panels J-M, of the <a href="https://doi.org/10.1016/j.cell.2021.04.011" class="external-link">BioPlex 3.0
+publication</a>.</p>
+<p>Here, we inspect the interactions of CDH2, a protein that was
+observed in ~5-fold lower abundance in the HCT116 cell line when
+compared to the 293T cell line.</p>
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">rowData</a></span><span class="op">(</span><span class="va">bp.prot</span><span class="op">)</span>, <span class="va">SYMBOL</span> <span class="op">==</span> <span class="st">"CDH2"</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## DataFrame with 1 row and 5 columns</span>
+<span class="co">##           ENTREZID      SYMBOL nr.peptides log2ratio  adj.pvalue</span>
+<span class="co">##        &lt;character&gt; &lt;character&gt;   &lt;integer&gt; &lt;numeric&gt;   &lt;numeric&gt;</span>
+<span class="co">## P19022        1000        CDH2           4  -4.71349 1.59351e-06</span></code></pre>
+<p>We therefore obtain the latest versions of the both BioPlex PPI
+networks …</p>
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bp.293t</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioPlex.html" class="external-link">getBioPlex</a></span><span class="op">(</span>cell.line <span class="op">=</span> <span class="st">"293T"</span>, version <span class="op">=</span> <span class="st">"3.0"</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## Using cached version from 2023-01-06 19:10:56</span></code></pre>
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bp.hct</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioPlex.html" class="external-link">getBioPlex</a></span><span class="op">(</span>cell.line <span class="op">=</span> <span class="st">"HCT116"</span>, version <span class="op">=</span> <span class="st">"1.0"</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## Using cached version from 2023-01-06 19:44:16</span></code></pre>
+<p>Get all interactions involving CDH2:</p>
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">cdh2.293t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">bp.293t</span>, <span class="va">SymbolA</span> <span class="op">==</span> <span class="st">"CDH2"</span> <span class="op">|</span> <span class="va">SymbolB</span> <span class="op">==</span> <span class="st">"CDH2"</span><span class="op">)</span>
+<span class="va">cdh2.293t</span></code></pre></div>
+<pre><code><span class="co">##         GeneA GeneB  UniprotA UniprotB SymbolA SymbolB           pW         pNI</span>
+<span class="co">## 34970   92369  1000    Q96A44   P19022   SPSB4    CDH2 2.211900e-13 0.006840259</span>
+<span class="co">## 69156    1500  1000 O60716-10   P19022  CTNND1    CDH2 3.269941e-13 0.186489217</span>
+<span class="co">## 76938  401251  1000  Q5SSQ6-2   P19022 C6orf26    CDH2 1.864776e-16 0.143034584</span>
+<span class="co">## 85272   29119  1000    Q9UI47   P19022  CTNNA3    CDH2 2.360491e-11 0.008295743</span>
+<span class="co">## 95983    1499  1000    P35222   P19022  CTNNB1    CDH2 5.277121e-15 0.111978430</span>
+<span class="co">## 104222 200933  1000    P0C2W1   P19022  FBXO45    CDH2 3.734072e-15 0.021792003</span>
+<span class="co">## 104253  25831  1000    Q9ULT8   P19022  HECTD1    CDH2 1.138752e-15 0.225677281</span>
+<span class="co">## 107992  30851  1000    O14907   P19022 TAX1BP3    CDH2 5.217764e-15 0.135774766</span>
+<span class="co">##             pInt</span>
+<span class="co">## 34970  0.9931597</span>
+<span class="co">## 69156  0.8135108</span>
+<span class="co">## 76938  0.8569654</span>
+<span class="co">## 85272  0.9917043</span>
+<span class="co">## 95983  0.8880216</span>
+<span class="co">## 104222 0.9782080</span>
+<span class="co">## 104253 0.7743227</span>
+<span class="co">## 107992 0.8642252</span></code></pre>
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">cdh2.hct</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">bp.hct</span>, <span class="va">SymbolA</span> <span class="op">==</span> <span class="st">"CDH2"</span> <span class="op">|</span> <span class="va">SymbolB</span> <span class="op">==</span> <span class="st">"CDH2"</span><span class="op">)</span>
+<span class="va">cdh2.hct</span> </code></pre></div>
+<pre><code><span class="co">## [1] GeneA    GeneB    UniprotA UniprotB SymbolA  SymbolB  pW       pNI     </span>
+<span class="co">## [9] pInt    </span>
+<span class="co">## &lt;0 rows&gt; (or 0-length row.names)</span></code></pre>
+<p>Expand by including interactions between interactors of CDH2:</p>
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">cdh2i</span> <span class="op">&lt;-</span> <span class="va">cdh2.293t</span><span class="op">$</span><span class="va">SymbolA</span>
+<span class="va">cdh2i.293t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">bp.293t</span>, <span class="va">SymbolA</span> <span class="op"><a href="https://rdrr.io/pkg/BiocGenerics/man/match.html" class="external-link">%in%</a></span> <span class="va">cdh2i</span> <span class="op">&amp;</span> <span class="va">SymbolB</span> <span class="op"><a href="https://rdrr.io/pkg/BiocGenerics/man/match.html" class="external-link">%in%</a></span> <span class="va">cdh2i</span><span class="op">)</span>
+<span class="va">cdh2i.293t</span></code></pre></div>
+<pre><code><span class="co">##         GeneA GeneB  UniprotA  UniprotB SymbolA SymbolB           pW</span>
+<span class="co">## 34925   92369  1499    Q96A44    P35222   SPSB4  CTNNB1 1.257953e-16</span>
+<span class="co">## 69154    1500  1499 O60716-10    P35222  CTNND1  CTNNB1 7.048423e-32</span>
+<span class="co">## 76933  401251  1499  Q5SSQ6-2    P35222 C6orf26  CTNNB1 1.427882e-17</span>
+<span class="co">## 85266   29119  1499    Q9UI47    P35222  CTNNA3  CTNNB1 7.602287e-16</span>
+<span class="co">## 85269   29119  1500    Q9UI47 O60716-10  CTNNA3  CTNND1 5.885667e-13</span>
+<span class="co">## 104224 200933 25831    P0C2W1    Q9ULT8  FBXO45  HECTD1 1.993756e-22</span>
+<span class="co">## 107979  30851  1499    O14907    P35222 TAX1BP3  CTNNB1 4.986983e-13</span>
+<span class="co">##                 pNI      pInt</span>
+<span class="co">## 34925  1.842978e-02 0.9815702</span>
+<span class="co">## 69154  1.238575e-01 0.8761425</span>
+<span class="co">## 76933  1.537088e-01 0.8462912</span>
+<span class="co">## 85266  1.371513e-03 0.9986285</span>
+<span class="co">## 85269  1.056681e-01 0.8943319</span>
+<span class="co">## 104224 2.045693e-08 1.0000000</span>
+<span class="co">## 107979 4.239673e-02 0.9576033</span></code></pre>
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">cdh2i.hct</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">bp.hct</span>, <span class="va">SymbolA</span> <span class="op"><a href="https://rdrr.io/pkg/BiocGenerics/man/match.html" class="external-link">%in%</a></span> <span class="va">cdh2i</span> <span class="op">&amp;</span> <span class="va">SymbolB</span> <span class="op"><a href="https://rdrr.io/pkg/BiocGenerics/man/match.html" class="external-link">%in%</a></span> <span class="va">cdh2i</span><span class="op">)</span>
+<span class="va">cdh2i.hct</span></code></pre></div>
+<pre><code><span class="co">##       GeneA GeneB UniprotA  UniprotB SymbolA SymbolB           pW        pNI</span>
+<span class="co">## 12598 30851  1499   O14907    P35222 TAX1BP3  CTNNB1 2.751214e-14 0.00299799</span>
+<span class="co">## 12605 30851  1500   O14907 O60716-10 TAX1BP3  CTNND1 6.466209e-14 0.03046723</span>
+<span class="co">## 20768 29119  1499   Q9UI47    P35222  CTNNA3  CTNNB1 1.484592e-14 0.04277910</span>
+<span class="co">##            pInt</span>
+<span class="co">## 12598 0.9970020</span>
+<span class="co">## 12605 0.9695328</span>
+<span class="co">## 20768 0.9572209</span></code></pre>
+<p>Now we construct a joined graph of interactions involving CDH2 or one
+of its interactors for both networks:</p>
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">cdh2.293t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">cdh2.293t</span>, <span class="va">cdh2i.293t</span><span class="op">)</span>
+<span class="va">cdh2.293t</span><span class="op">$</span><span class="va">CellLine</span> <span class="op">&lt;-</span> <span class="st">"293T"</span>
+<span class="va">cdh2.hct</span> <span class="op">&lt;-</span> <span class="va">cdh2i.hct</span>
+<span class="va">cdh2.hct</span><span class="op">$</span><span class="va">CellLine</span> <span class="op">&lt;-</span> <span class="st">"HCT116"</span>
+<span class="va">cdh2.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">cdh2.293t</span>, <span class="va">cdh2.hct</span><span class="op">)</span>
+<span class="va">cdh2.df</span></code></pre></div>
+<pre><code><span class="co">##         GeneA GeneB  UniprotA  UniprotB SymbolA SymbolB           pW</span>
+<span class="co">## 34970   92369  1000    Q96A44    P19022   SPSB4    CDH2 2.211900e-13</span>
+<span class="co">## 69156    1500  1000 O60716-10    P19022  CTNND1    CDH2 3.269941e-13</span>
+<span class="co">## 76938  401251  1000  Q5SSQ6-2    P19022 C6orf26    CDH2 1.864776e-16</span>
+<span class="co">## 85272   29119  1000    Q9UI47    P19022  CTNNA3    CDH2 2.360491e-11</span>
+<span class="co">## 95983    1499  1000    P35222    P19022  CTNNB1    CDH2 5.277121e-15</span>
+<span class="co">## 104222 200933  1000    P0C2W1    P19022  FBXO45    CDH2 3.734072e-15</span>
+<span class="co">## 104253  25831  1000    Q9ULT8    P19022  HECTD1    CDH2 1.138752e-15</span>
+<span class="co">## 107992  30851  1000    O14907    P19022 TAX1BP3    CDH2 5.217764e-15</span>
+<span class="co">## 34925   92369  1499    Q96A44    P35222   SPSB4  CTNNB1 1.257953e-16</span>
+<span class="co">## 69154    1500  1499 O60716-10    P35222  CTNND1  CTNNB1 7.048423e-32</span>
+<span class="co">## 76933  401251  1499  Q5SSQ6-2    P35222 C6orf26  CTNNB1 1.427882e-17</span>
+<span class="co">## 85266   29119  1499    Q9UI47    P35222  CTNNA3  CTNNB1 7.602287e-16</span>
+<span class="co">## 85269   29119  1500    Q9UI47 O60716-10  CTNNA3  CTNND1 5.885667e-13</span>
+<span class="co">## 104224 200933 25831    P0C2W1    Q9ULT8  FBXO45  HECTD1 1.993756e-22</span>
+<span class="co">## 107979  30851  1499    O14907    P35222 TAX1BP3  CTNNB1 4.986983e-13</span>
+<span class="co">## 12598   30851  1499    O14907    P35222 TAX1BP3  CTNNB1 2.751214e-14</span>
+<span class="co">## 12605   30851  1500    O14907 O60716-10 TAX1BP3  CTNND1 6.466209e-14</span>
+<span class="co">## 20768   29119  1499    Q9UI47    P35222  CTNNA3  CTNNB1 1.484592e-14</span>
+<span class="co">##                 pNI      pInt CellLine</span>
+<span class="co">## 34970  6.840259e-03 0.9931597     293T</span>
+<span class="co">## 69156  1.864892e-01 0.8135108     293T</span>
+<span class="co">## 76938  1.430346e-01 0.8569654     293T</span>
+<span class="co">## 85272  8.295743e-03 0.9917043     293T</span>
+<span class="co">## 95983  1.119784e-01 0.8880216     293T</span>
+<span class="co">## 104222 2.179200e-02 0.9782080     293T</span>
+<span class="co">## 104253 2.256773e-01 0.7743227     293T</span>
+<span class="co">## 107992 1.357748e-01 0.8642252     293T</span>
+<span class="co">## 34925  1.842978e-02 0.9815702     293T</span>
+<span class="co">## 69154  1.238575e-01 0.8761425     293T</span>
+<span class="co">## 76933  1.537088e-01 0.8462912     293T</span>
+<span class="co">## 85266  1.371513e-03 0.9986285     293T</span>
+<span class="co">## 85269  1.056681e-01 0.8943319     293T</span>
+<span class="co">## 104224 2.045693e-08 1.0000000     293T</span>
+<span class="co">## 107979 4.239673e-02 0.9576033     293T</span>
+<span class="co">## 12598  2.997990e-03 0.9970020   HCT116</span>
+<span class="co">## 12605  3.046723e-02 0.9695328   HCT116</span>
+<span class="co">## 20768  4.277910e-02 0.9572209   HCT116</span></code></pre>
+<p>We restrict here to the relevant columns for plotting:</p>
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rel.cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SymbolA"</span>, <span class="st">"SymbolB"</span>, <span class="st">"CellLine"</span><span class="op">)</span>
+<span class="va">cdh2.df</span> <span class="op">&lt;-</span> <span class="va">cdh2.df</span><span class="op">[</span>,<span class="va">rel.cols</span><span class="op">]</span>
+<span class="va">cdh2.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">cdh2.df</span><span class="op">)</span>
+<span class="va">cdh2.df</span></code></pre></div>
+<pre><code><span class="co">##        SymbolA SymbolB CellLine</span>
+<span class="co">## 34970    SPSB4    CDH2     293T</span>
+<span class="co">## 69156   CTNND1    CDH2     293T</span>
+<span class="co">## 76938  C6orf26    CDH2     293T</span>
+<span class="co">## 85272   CTNNA3    CDH2     293T</span>
+<span class="co">## 95983   CTNNB1    CDH2     293T</span>
+<span class="co">## 104222  FBXO45    CDH2     293T</span>
+<span class="co">## 104253  HECTD1    CDH2     293T</span>
+<span class="co">## 107992 TAX1BP3    CDH2     293T</span>
+<span class="co">## 34925    SPSB4  CTNNB1     293T</span>
+<span class="co">## 69154   CTNND1  CTNNB1     293T</span>
+<span class="co">## 76933  C6orf26  CTNNB1     293T</span>
+<span class="co">## 85266   CTNNA3  CTNNB1     293T</span>
+<span class="co">## 85269   CTNNA3  CTNND1     293T</span>
+<span class="co">## 104224  FBXO45  HECTD1     293T</span>
+<span class="co">## 107979 TAX1BP3  CTNNB1     293T</span>
+<span class="co">## 12598  TAX1BP3  CTNNB1   HCT116</span>
+<span class="co">## 12605  TAX1BP3  CTNND1   HCT116</span>
+<span class="co">## 20768   CTNNA3  CTNNB1   HCT116</span></code></pre>
 </div>
   </div>
 

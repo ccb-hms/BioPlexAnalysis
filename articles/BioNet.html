@@ -115,14 +115,14 @@
 <p>Get the latest version of the 293T PPI network:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.293t</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioPlex.html" class="external-link">getBioPlex</a></span><span class="op">(</span>cell.line <span class="op">=</span> <span class="st">"293T"</span>, version <span class="op">=</span> <span class="st">"3.0"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-12-07 01:06:13</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2023-01-06 19:10:56</span></code></pre>
 <p>and turn into a graph object:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.gr</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/bioplex2graph.html" class="external-link">bioplex2graph</a></span><span class="op">(</span><span class="va">bp.293t</span><span class="op">)</span></code></pre></div>
 <p>Get RNA-seq data for 293T cells from GEO: <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE122425" class="external-link">GSE122425</a></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gse122425</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getGSE122425.html" class="external-link">getGSE122425</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-12-07 01:06:20</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2023-01-06 19:11:06</span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="differential-expression-analysis">Differential expression analysis<a class="anchor" aria-label="anchor" href="#differential-expression-analysis"></a>
@@ -208,7 +208,7 @@ the model for the scoring function:</p>
 <code class="sourceCode R"><span class="va">scores</span> <span class="op">&lt;-</span> <span class="fu">BioNet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioNet/man/scoreNodes.html" class="external-link">scoreNodes</a></span><span class="op">(</span><span class="va">bp.sgr</span>, <span class="va">fb</span>, fdr <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">scores</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##     P00813     Q8N7W2     Q6ZMN8     P55039     Q9NZL4     Q6ICG6 </span>
-<span class="co">## -2.3408848 -0.4505585 -0.1727217 -1.5847732 -2.6642288 -2.0188587</span></code></pre>
+<span class="co">## -2.3408838 -0.4505573 -0.1727204 -1.5847721 -2.6642279 -2.0188577</span></code></pre>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">scores</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. </span>
@@ -227,7 +227,7 @@ An optimal solution can be calculated using the heinz algorithm
 requiring a commercial CPLEX license.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">module</span> <span class="op">&lt;-</span> <span class="fu">BioNet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioNet/man/runFastHeinz.html" class="external-link">runFastHeinz</a></span><span class="op">(</span><span class="va">bp.sgr</span>, <span class="va">scores</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-12-07 01:26:16</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2023-01-06 19:37:34</span></code></pre>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">module</span></code></pre></div>
 <pre><code><span class="co">## A graphNEL graph with directed edges</span>
@@ -379,7 +379,7 @@ graph for inspection via the <a href="https://github.com/ccb-hms/GraphViewer" cl
 viewer</a>.</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.prot</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioplexProteome.html" class="external-link">getBioplexProteome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2022-12-07 01:26:48</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2023-01-06 19:38:15</span></code></pre>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.prot</span></code></pre></div>
 <pre><code><span class="co">## class: SummarizedExperiment </span>
@@ -407,7 +407,7 @@ viewer</a>.</p>
 <span class="co">## [1] "O75394"</span>
 <span class="co">## </span>
 <span class="co">## $O75394$score</span>
-<span class="co">## [1] 0.2549759</span>
+<span class="co">## [1] 0.254976</span>
 <span class="co">## </span>
 <span class="co">## $O75394$bpprot_HEK1</span>
 <span class="co">## [1] 8.66958</span>
@@ -445,7 +445,7 @@ viewer</a>.</p>
 <span class="co">## [1] "P18124"</span>
 <span class="co">## </span>
 <span class="co">## $P18124$score</span>
-<span class="co">## [1] 0.4136689</span>
+<span class="co">## [1] 0.413669</span>
 <span class="co">## </span>
 <span class="co">## $P18124$bpprot_HEK1</span>
 <span class="co">## [1] 7.7563</span>
@@ -498,11 +498,11 @@ viewer</a>.</p>
 <span class="co">## </span>
 <span class="co">## other attached packages:</span>
 <span class="co">##  [1] org.Hs.eg.db_3.16.0         AnnotationDbi_1.60.0       </span>
-<span class="co">##  [3] DESeq2_1.38.1               EnrichmentBrowser_2.28.0   </span>
+<span class="co">##  [3] DESeq2_1.38.2               EnrichmentBrowser_2.28.0   </span>
 <span class="co">##  [5] BioNet_1.58.0               RBGL_1.74.0                </span>
 <span class="co">##  [7] graph_1.76.0                BioPlex_1.4.2              </span>
 <span class="co">##  [9] SummarizedExperiment_1.28.0 Biobase_2.58.0             </span>
-<span class="co">## [11] GenomicRanges_1.50.1        GenomeInfoDb_1.34.4        </span>
+<span class="co">## [11] GenomicRanges_1.50.2        GenomeInfoDb_1.34.6        </span>
 <span class="co">## [13] IRanges_2.32.0              S4Vectors_0.36.1           </span>
 <span class="co">## [15] BiocGenerics_0.44.0         MatrixGenerics_1.10.0      </span>
 <span class="co">## [17] matrixStats_0.62.0         </span>
@@ -516,17 +516,17 @@ viewer</a>.</p>
 <span class="co">## [16] bit_4.0.4              curl_4.3.2             compiler_4.2.0        </span>
 <span class="co">## [19] textshaping_0.3.6      cli_3.3.0              desc_1.4.1            </span>
 <span class="co">## [22] DelayedArray_0.24.0    sass_0.4.1             scales_1.2.0          </span>
-<span class="co">## [25] KEGGgraph_1.58.0       rappdirs_0.3.3         pkgdown_2.0.4         </span>
+<span class="co">## [25] KEGGgraph_1.58.3       rappdirs_0.3.3         pkgdown_2.0.4         </span>
 <span class="co">## [28] systemfonts_1.0.4      stringr_1.4.0          digest_0.6.29         </span>
 <span class="co">## [31] rmarkdown_2.14         XVector_0.38.0         pkgconfig_2.0.3       </span>
 <span class="co">## [34] htmltools_0.5.2        highr_0.9              dbplyr_2.2.0          </span>
 <span class="co">## [37] fastmap_1.1.0          limma_3.54.0           rlang_1.0.2           </span>
 <span class="co">## [40] RSQLite_2.2.14         jquerylib_0.1.4        generics_0.1.2        </span>
-<span class="co">## [43] jsonlite_1.8.0         BiocParallel_1.32.4    dplyr_1.0.9           </span>
+<span class="co">## [43] jsonlite_1.8.0         BiocParallel_1.32.5    dplyr_1.0.9           </span>
 <span class="co">## [46] RCurl_1.98-1.7         magrittr_2.0.3         GO.db_3.16.0          </span>
 <span class="co">## [49] GenomeInfoDbData_1.2.9 Matrix_1.4-1           munsell_0.5.0         </span>
 <span class="co">## [52] Rcpp_1.0.8.3           fansi_1.0.3            lifecycle_1.0.1       </span>
-<span class="co">## [55] stringi_1.7.6          yaml_2.3.5             edgeR_3.40.0          </span>
+<span class="co">## [55] stringi_1.7.6          yaml_2.3.5             edgeR_3.40.1          </span>
 <span class="co">## [58] zlibbioc_1.44.0        BiocFileCache_2.6.0    grid_4.2.0            </span>
 <span class="co">## [61] blob_1.2.3             parallel_4.2.0         crayon_1.5.1          </span>
 <span class="co">## [64] lattice_0.20-45        Biostrings_2.66.0      annotate_1.76.0       </span>
