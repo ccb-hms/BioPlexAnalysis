@@ -1,0 +1,219 @@
+---
+title: Mapping PPIs onto 3D protein structures
+vignette: >
+  % \VignetteIndexEntry{Mapping PPIs onto 3D protein structures}
+  % \VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+output:
+  html_document:
+    mathjax: null   
+---
+
+# Setup
+
+The [bioplexpy](https://pypi.org/project/bioplexpy/) package implements functions
+to calculate and visualize physical interactions between chains of a PDB structure
+and compare with BioPlex PPIs detected in the AP-MS data.
+
+This can be used to identify subunits of a protein complex that are close enough
+to physically interact. This analysis (1) maps a set of UniProt IDs, corresponding
+to the subunits of the complex, to a PDB structure, and (2) infers physical interactions
+within a structure by calculating the distance between the atoms of different
+chains within that structure.  
+
+Here, we demonstrate how to invoke this functionality from within R, and how to
+incorporate results into subsequent analysis and visualization in R. 
+
+We start by loading the required packages.
+
+```{r, message = FALSE}
+library(BioPlex)
+library(graph)
+library(bio3d)
+library(reticulate)
+library(r3dmol)
+```
+
+# Mapping from a set of UniProt IDs to a PDB structure
+
+We use data from the [SIFTS](https://www.ebi.ac.uk/pdbe/docs/sifts/quick.html)
+project to map from CORUM complex subunits given as UniProt IDs 
+to PDB structures:
+
+```{r}
+url <- "ftp://ftp.ebi.ac.uk/pub/databases/msd/sifts/flatfiles/csv/uniprot_pdb.csv.gz"
+dest <- basename(url)
+download.file(url, destfile = dest)
+df <- read.csv("uniprot_pdb.csv.gz", skip = 1)
+file.remove(dest)
+head(df)
+```
+
+Turn into a mapping:
+
+```{r}
+unip2pdb <- strsplit(df$PDB, ";")
+names(unip2pdb) <- df$SP_PRIMARY
+head(unip2pdb)
+```
+
+Having illustrated the basic principle underlying the mapping from a CORUM complex
+to a PDB structure, we now set up a python environment via
+[reticulate](https://rstudio.github.io/reticulate/)
+that contains the
+[bioplexpy](https://pypi.org/project/bioplexpy/) package in order to invoke
+the functionality from within R, facilitating direct exchange of data and results between
+the BioPlex R and BioPlex Python packages:
+
+```{r basilisk-start, message = FALSE, warning = FALSE}
+reticulate::virtualenv_create("r-reticulate")
+reticulate::virtualenv_install("r-reticulate", "bioplexpy")
+reticulate::use_virtualenv("r-reticulate")
+bp <- reticulate::import("bioplexpy")
+```
+
+In the following, we focus on the TFIIH core complex (PDB ID: [6nmi](https://www.rcsb.org/structure/6NMI)).
+
+We first get the set of UniProt IDs corresponding to this CORUM complex ID.
+
+```{r uniprots-from-corum}
+corum <- bp$getCorum(complex_set = "core", organism = "Human")
+unips <- bp$get_UniProts_from_CORUM(corum, 107) 
+unips
+```
+
+and then also get the set of PDB IDs corresponding to the obtained set of UniProt IDs
+based on the SIFTS mapping. 
+
+```{r up2pdb}
+pdbs <- bp$get_PDB_from_UniProts(unips)
+head(pdbs)
+```
+
+As there is often no 1:1 mapping from a set of UniProt IDs to a certain PDB structure,
+it is instructive to inspect the title of the PDB entry and use prior knowledge
+about the PDB structure for a complex of interest where available.
+
+Here, we accordingly chose [6nmi](https://www.rcsb.org/structure/6NMI) as the PDB ID
+representing the TFIIH core complex.
+
+We can use functionality from the 
+[bio3d](http://thegrantlab.org/bio3d/) package to get the PDB structure for the
+TFIIH core complex (PDB ID: [6nmi](https://www.rcsb.org/structure/6NMI)).
+
+```{r}
+pdb.id <- "6nmi"
+pdb.file <- bio3d::get.pdb(pdb.id)
+pdb <- bio3d::read.pdb(pdb.file)
+pdb
+str(pdb)
+```
+
+Provide a different color for each chain:
+
+```{r}
+chains <- unlist(pdb$remark$biomat$chain)
+chains
+nr.chains <- length(chains)
+chain.colors <- RColorBrewer::brewer.pal(8, "Set1")
+chain.colors <- tolower(chain.colors)
+```
+
+And visualize the structure using functionality from the 
+[r3dmol](https://cran.r-project.org/web/packages/r3dmol/index.html) package:
+
+```{r}
+# Set up the initial viewer
+viewer <- r3dmol(
+  id = "",
+  elementId = "demo"
+) %>%
+  # Add model to scene
+  m_add_model(data = m_bio3d(pdb), format = "pdb") %>%
+  # Zoom to encompass the whole scene
+  m_zoom_to() %>%
+  # Set style of structures
+  m_set_style(style = m_style_cartoon(color = "#00cc96"))
+for(i in seq_len(nr.chains))
+  viewer <- m_set_style(viewer,
+    sel = m_sel(chain = LETTERS[i]),
+    style = m_style_cartoon(color = chain.colors[i])
+  ) 
+viewer %>% m_rotate(angle = 90, axis = "y") %>% m_spin()
+```
+
+# Identify interacting chains within a protein structure
+
+We infer physical interactions within a structure by calculating the distance
+between the atoms of different chains within that structure. 
+The coordinates of each atom can be obtained directly from the PDB file.
+
+```{r atoms}
+rel.cols <- c("type", "chain", "x", "y", "z")
+pos <- pdb$atom[,rel.cols]
+head(pos)
+```
+
+If the minimum distance between atoms of two chains is below a given threshold
+(default: 6 angstrom), these proteins are defined to interact directly; all other
+pairs of proteins that occurred in the same structure are assumed to interact indirectly.
+
+```{r ia-chains}
+ia.chains <- bp$get_interacting_chains_from_PDB('6NMI', '.', 6)
+ia.chains
+```
+
+For example, this demonstrates that chain A (red) and chain B (blue) are in close
+proximity, and that both chains are also close to chain H (pink), as evident from
+the structure view above. 
+
+Once we have obtained the list of interacting chains, we map each chain to a
+UNIPROT ID, again based on data from the SIFTS project.
+
+```{r chain2unip}
+chain2unip <- bp$list_uniprot_pdb_mappings('6NMI')
+chain2unip
+```
+
+This mapping now allows us to produce a list of interacting chains using
+their corresponding UNIPROT ID.
+
+```{r ia-unips}
+chain2unip <- unlist(chain2unip)
+ia.unips <- lapply(ia.chains, function(x) unname(chain2unip[x]))
+ia.unips
+```
+
+We reshape this `list` to a `data.frame`:
+
+```{r ia-df}
+ia1 <- vapply(ia.unips, `[`, character(1), x = 1)
+ia2 <- vapply(ia.unips, `[`, character(1), x = 2)
+ia.df <- data.frame(CHAIN1 = ia1, CHAIN2 = ia2)
+ia.df
+``` 
+
+# Identify interactions that are also detected in the BioPlex network
+
+Having inferred physical interactions between subunits of the TFIIH core complex,
+we can now investigate which of these interactions have been detected in the BioPlex
+PPI data.
+
+We therefore obtain the latest version of the BioPlex network for the 293T cell line.
+
+```{r bp-293t}
+bp.293t <- BioPlex::getBioPlex(cell.line = "293T", version = "3.0")
+```
+
+Now we restrict the inferred physical interactions between subunits of the TFIIH core complex
+to those also found in the BioPlex 293T network.
+
+```{r}
+ia.comb1 <- paste(ia.df[,1], ia.df[,2], sep = "-")
+ia.comb2 <- paste(ia.df[,2], ia.df[,1], sep = "-")
+bp.comb <- paste(bp.293t$UniprotA, bp.293t$UniprotB, sep = "-")
+ind1 <- ia.comb1 %in% bp.comb
+ind2 <- ia.comb2 %in% bp.comb
+ind <- ind1 | ind2
+ia.df[ind,]
+```

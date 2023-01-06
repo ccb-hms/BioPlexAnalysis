@@ -281,3 +281,63 @@ ggplot(df, aes(x = trans, y = prot) ) +
     ylab("log2FC (proteome)") +
     theme_bw()
 ```
+
+# Interaction networks of cell-line specific proteins
+
+We can now inspect the interactions of proteins that are strongly differentially
+expressed between cell lines as in Supplementary Figure S3, Panels J-M, of the
+[BioPlex 3.0 publication](https://doi.org/10.1016/j.cell.2021.04.011). 
+
+Here, we inspect the interactions of CDH2, a protein that was observed in
+~5-fold lower abundance in the HCT116 cell line when compared to the 293T cell line. 
+
+```{r}
+subset(rowData(bp.prot), SYMBOL == "CDH2")
+```
+
+We therefore obtain the latest versions of the both BioPlex PPI networks ...
+
+```{r}
+bp.293t <- BioPlex::getBioPlex(cell.line = "293T", version = "3.0")
+bp.hct <- BioPlex::getBioPlex(cell.line = "HCT116", version = "1.0")
+```
+
+Get all interactions involving CDH2:
+
+```{r}
+cdh2.293t <- subset(bp.293t, SymbolA == "CDH2" | SymbolB == "CDH2")
+cdh2.293t
+cdh2.hct <- subset(bp.hct, SymbolA == "CDH2" | SymbolB == "CDH2")
+cdh2.hct 
+```
+
+Expand by including interactions between interactors of CDH2:
+
+```{r}
+cdh2i <- cdh2.293t$SymbolA
+cdh2i.293t <- subset(bp.293t, SymbolA %in% cdh2i & SymbolB %in% cdh2i)
+cdh2i.293t
+cdh2i.hct <- subset(bp.hct, SymbolA %in% cdh2i & SymbolB %in% cdh2i)
+cdh2i.hct
+```
+
+Now we construct a joined graph of interactions involving CDH2 or one of its
+interactors for both networks:
+
+```{r}
+cdh2.293t <- rbind(cdh2.293t, cdh2i.293t)
+cdh2.293t$CellLine <- "293T"
+cdh2.hct <- cdh2i.hct
+cdh2.hct$CellLine <- "HCT116"
+cdh2.df <- rbind(cdh2.293t, cdh2.hct)
+cdh2.df
+```
+
+We restrict here to the relevant columns for plotting:
+
+```{r}
+rel.cols <- c("SymbolA", "SymbolB", "CellLine")
+cdh2.df <- cdh2.df[,rel.cols]
+cdh2.df <- unique(cdh2.df)
+cdh2.df
+```
