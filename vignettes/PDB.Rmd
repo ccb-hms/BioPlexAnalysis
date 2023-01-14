@@ -199,21 +199,65 @@ Having inferred physical interactions between subunits of the TFIIH core complex
 we can now investigate which of these interactions have been detected in the BioPlex
 PPI data.
 
-We therefore obtain the latest version of the BioPlex network for the 293T cell line.
+We therefore first look at all possible edges with the TFIIH core complex, and
+subsequently contrast that with edges detected in the BioPlex network and the inferred
+direct interactions from the PDB data.
+
+```{r}
+corum.df <- BioPlex::getCorum("core")
+corum.glist <- BioPlex::corum2graphlist(corum.df)
+tfiih.gr <- corum.glist[["CORUM107_TFIIH_transcription_factor_complex"]]
+tfiih.gr
+BioPlexAnalysis::plotGraph(tfiih.gr, edge.mode = "undirected", 
+                           edge.color = "grey", layout = "circle")
+```
+
+Now we obtain the latest version of the BioPlex network for the 293T cell line,
 
 ```{r bp-293t}
 bp.293t <- BioPlex::getBioPlex(cell.line = "293T", version = "3.0")
+bp.gr <- BioPlex::bioplex2graph(bp.293t)
 ```
 
-Now we restrict the inferred physical interactions between subunits of the TFIIH core complex
-to those also found in the BioPlex 293T network.
+and subset the bioplex network to edges between subunits of the TFIIH core complex.
 
 ```{r}
-ia.comb1 <- paste(ia.df[,1], ia.df[,2], sep = "-")
-ia.comb2 <- paste(ia.df[,2], ia.df[,1], sep = "-")
-bp.comb <- paste(bp.293t$UniprotA, bp.293t$UniprotB, sep = "-")
-ind1 <- ia.comb1 %in% bp.comb
-ind2 <- ia.comb2 %in% bp.comb
-ind <- ind1 | ind2
-ia.df[ind,]
+bp.tfiih <- graph::subGraph(unips, bp.gr)
+bp.tfiih.edges <- graph::edges(bp.tfiih)
+bp.tfiih.edges <- stack(bp.tfiih.edges)
+bp.tfiih.edges$ind <- as.character(bp.tfiih.edges$ind)
 ```
+
+Let's visually inspect the edges between subunits of the complex that have been
+detected in the BioPlex network. 
+
+```{r}
+graph::edgeDataDefaults(tfiih.gr, "type") <- "not detected"
+graph::edgeData(tfiih.gr, 
+                bp.tfiih.edges$ind, 
+                bp.tfiih.edges$values,
+                "type") <- "detected"
+BioPlexAnalysis::plotGraph(tfiih.gr, 
+                           edge.mode = "undirected",
+                           edge.color = "grey",
+                           layout = "circle",
+                           edge.data = "type")
+```
+
+We can contrast this with the edges that we have inferred to directly interact
+with each other from proximity of the chains within the PDB structure.
+
+```{r}
+ia.df <- subset(ia.df, CHAIN2 != "Q6ZYL4")
+graph::edgeDataDefaults(tfiih.gr, "type") <- "indirect"
+graph::edgeData(tfiih.gr, 
+                ia.df$CHAIN1, 
+                ia.df$CHAIN2,
+                "type") <- "direct"
+BioPlexAnalysis::plotGraph(tfiih.gr, 
+                           edge.mode = "undirected",
+                           edge.color = "grey",
+                           layout = "circle",
+                           edge.data = "type")
+```
+

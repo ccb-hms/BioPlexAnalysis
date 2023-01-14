@@ -2,9 +2,13 @@
 
 export(graph2graphframe)
 export(graphframe2graph)
+export(joinNetworks)
+export(plotGraph)
 export(testConnectivity)
 export(testDomainAssociation)
+export(viewPDB)
 importFrom(methods,is)
+importFrom(r3dmol,"%>%")
 importFrom(stats,fisher.test)
 importFrom(stats,p.adjust)
 importFrom(utils,combn)

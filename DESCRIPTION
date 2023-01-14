@@ -20,10 +20,16 @@ Depends:
 Imports: 
     BiocFileCache,
     BiRewire,
+    RColorBrewer,
+    bio3d,
+    ggnetwork,
+    ggplot2,
     graph,
     graphframes,
+    grid,
     igraph,
     methods,
+    r3dmol,    
     reshape2,
     sparklyr
 Suggests:
@@ -37,14 +43,11 @@ Suggests:
     GenomicFeatures,
     GenomicRanges,
     PFAM.db,
-    bio3d,
     dplyr,
     edgeR,
     ggalluvial,
-    ggplot2,
     knitr,
     limma,
-    r3dmol,    
     reticulate,
     rmarkdown,
     utils
