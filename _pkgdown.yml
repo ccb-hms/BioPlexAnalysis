@@ -12,7 +12,16 @@ reference:
       - testConnectivity
   - title: Protein domain association analysis
     contents:
-      - testDomainAssociation  
+      - testDomainAssociation
+  - title: Protein structure visualization
+    contents:
+      - viewPDB 
+  - title: Network visualization
+    contents:
+      - plotGraph
+  - title: Network utilities
+    contents:
+      - joinNetworks 
   - title: GraphFrames backend
     contents:
       - graph2graphframe
