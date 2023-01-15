@@ -378,7 +378,7 @@ level)<a class="anchor" aria-label="anchor" href="#de-analysis-hek293-vs--hct116
 <p>Pull the HEK293 data:</p>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gse.293t</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getGSE122425.html" class="external-link">getGSE122425</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2023-01-06 19:11:06</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2023-01-14 23:15:40</span></code></pre>
 <p>Pull the HCT116 data:</p>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">klijn</span> <span class="op">&lt;-</span> <span class="fu">ExpressionAtlas</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ExpressionAtlas/man/getAtlasData.html" class="external-link">getAtlasData</a></span><span class="op">(</span><span class="st">"E-MTAB-2706"</span><span class="op">)</span></code></pre></div>
@@ -459,7 +459,7 @@ experiments on the same scale using the limma-trend approach:</p>
 <p>Now let’s pull the BioPlex3 proteome data:</p>
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.prot</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioplexProteome.html" class="external-link">getBioplexProteome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2023-01-06 19:38:15</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2023-01-14 23:43:01</span></code></pre>
 <div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">rowData</a></span><span class="op">(</span><span class="va">bp.prot</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## DataFrame with 9604 rows and 5 columns</span>
@@ -534,10 +534,10 @@ compared to the 293T cell line.</p>
 networks …</p>
 <div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.293t</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioPlex.html" class="external-link">getBioPlex</a></span><span class="op">(</span>cell.line <span class="op">=</span> <span class="st">"293T"</span>, version <span class="op">=</span> <span class="st">"3.0"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2023-01-06 19:10:56</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2023-01-14 23:15:28</span></code></pre>
 <div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.hct</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioPlex.html" class="external-link">getBioPlex</a></span><span class="op">(</span>cell.line <span class="op">=</span> <span class="st">"HCT116"</span>, version <span class="op">=</span> <span class="st">"1.0"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2023-01-06 19:44:16</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2023-01-14 23:49:23</span></code></pre>
 <p>Get all interactions involving CDH2:</p>
 <div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cdh2.293t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">bp.293t</span>, <span class="va">SymbolA</span> <span class="op">==</span> <span class="st">"CDH2"</span> <span class="op">|</span> <span class="va">SymbolB</span> <span class="op">==</span> <span class="st">"CDH2"</span><span class="op">)</span>
@@ -598,13 +598,13 @@ networks …</p>
 <span class="co">## 12598 0.9970020</span>
 <span class="co">## 12605 0.9695328</span>
 <span class="co">## 20768 0.9572209</span></code></pre>
-<p>Now we construct a joined graph of interactions involving CDH2 or one
-of its interactors for both networks:</p>
+<p>Now we construct a joined network of interactions involving CDH2 or
+one of its interactors for both networks:</p>
 <div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cdh2.293t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">cdh2.293t</span>, <span class="va">cdh2i.293t</span><span class="op">)</span>
-<span class="va">cdh2.293t</span><span class="op">$</span><span class="va">CellLine</span> <span class="op">&lt;-</span> <span class="st">"293T"</span>
+<span class="va">cdh2.293t</span><span class="op">$</span><span class="va">cell.line</span> <span class="op">&lt;-</span> <span class="st">"293T"</span>
 <span class="va">cdh2.hct</span> <span class="op">&lt;-</span> <span class="va">cdh2i.hct</span>
-<span class="va">cdh2.hct</span><span class="op">$</span><span class="va">CellLine</span> <span class="op">&lt;-</span> <span class="st">"HCT116"</span>
+<span class="va">cdh2.hct</span><span class="op">$</span><span class="va">cell.line</span> <span class="op">&lt;-</span> <span class="st">"HCT116"</span>
 <span class="va">cdh2.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">cdh2.293t</span>, <span class="va">cdh2.hct</span><span class="op">)</span>
 <span class="va">cdh2.df</span></code></pre></div>
 <pre><code><span class="co">##         GeneA GeneB  UniprotA  UniprotB SymbolA SymbolB           pW</span>
@@ -626,50 +626,82 @@ of its interactors for both networks:</p>
 <span class="co">## 12598   30851  1499    O14907    P35222 TAX1BP3  CTNNB1 2.751214e-14</span>
 <span class="co">## 12605   30851  1500    O14907 O60716-10 TAX1BP3  CTNND1 6.466209e-14</span>
 <span class="co">## 20768   29119  1499    Q9UI47    P35222  CTNNA3  CTNNB1 1.484592e-14</span>
-<span class="co">##                 pNI      pInt CellLine</span>
-<span class="co">## 34970  6.840259e-03 0.9931597     293T</span>
-<span class="co">## 69156  1.864892e-01 0.8135108     293T</span>
-<span class="co">## 76938  1.430346e-01 0.8569654     293T</span>
-<span class="co">## 85272  8.295743e-03 0.9917043     293T</span>
-<span class="co">## 95983  1.119784e-01 0.8880216     293T</span>
-<span class="co">## 104222 2.179200e-02 0.9782080     293T</span>
-<span class="co">## 104253 2.256773e-01 0.7743227     293T</span>
-<span class="co">## 107992 1.357748e-01 0.8642252     293T</span>
-<span class="co">## 34925  1.842978e-02 0.9815702     293T</span>
-<span class="co">## 69154  1.238575e-01 0.8761425     293T</span>
-<span class="co">## 76933  1.537088e-01 0.8462912     293T</span>
-<span class="co">## 85266  1.371513e-03 0.9986285     293T</span>
-<span class="co">## 85269  1.056681e-01 0.8943319     293T</span>
-<span class="co">## 104224 2.045693e-08 1.0000000     293T</span>
-<span class="co">## 107979 4.239673e-02 0.9576033     293T</span>
-<span class="co">## 12598  2.997990e-03 0.9970020   HCT116</span>
-<span class="co">## 12605  3.046723e-02 0.9695328   HCT116</span>
-<span class="co">## 20768  4.277910e-02 0.9572209   HCT116</span></code></pre>
-<p>We restrict here to the relevant columns for plotting:</p>
+<span class="co">##                 pNI      pInt cell.line</span>
+<span class="co">## 34970  6.840259e-03 0.9931597      293T</span>
+<span class="co">## 69156  1.864892e-01 0.8135108      293T</span>
+<span class="co">## 76938  1.430346e-01 0.8569654      293T</span>
+<span class="co">## 85272  8.295743e-03 0.9917043      293T</span>
+<span class="co">## 95983  1.119784e-01 0.8880216      293T</span>
+<span class="co">## 104222 2.179200e-02 0.9782080      293T</span>
+<span class="co">## 104253 2.256773e-01 0.7743227      293T</span>
+<span class="co">## 107992 1.357748e-01 0.8642252      293T</span>
+<span class="co">## 34925  1.842978e-02 0.9815702      293T</span>
+<span class="co">## 69154  1.238575e-01 0.8761425      293T</span>
+<span class="co">## 76933  1.537088e-01 0.8462912      293T</span>
+<span class="co">## 85266  1.371513e-03 0.9986285      293T</span>
+<span class="co">## 85269  1.056681e-01 0.8943319      293T</span>
+<span class="co">## 104224 2.045693e-08 1.0000000      293T</span>
+<span class="co">## 107979 4.239673e-02 0.9576033      293T</span>
+<span class="co">## 12598  2.997990e-03 0.9970020    HCT116</span>
+<span class="co">## 12605  3.046723e-02 0.9695328    HCT116</span>
+<span class="co">## 20768  4.277910e-02 0.9572209    HCT116</span></code></pre>
+<p>We turn the resulting <code>data.frame</code> into a graph
+representation</p>
 <div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rel.cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SymbolA"</span>, <span class="st">"SymbolB"</span>, <span class="st">"CellLine"</span><span class="op">)</span>
-<span class="va">cdh2.df</span> <span class="op">&lt;-</span> <span class="va">cdh2.df</span><span class="op">[</span>,<span class="va">rel.cols</span><span class="op">]</span>
-<span class="va">cdh2.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">cdh2.df</span><span class="op">)</span>
-<span class="va">cdh2.df</span></code></pre></div>
-<pre><code><span class="co">##        SymbolA SymbolB CellLine</span>
-<span class="co">## 34970    SPSB4    CDH2     293T</span>
-<span class="co">## 69156   CTNND1    CDH2     293T</span>
-<span class="co">## 76938  C6orf26    CDH2     293T</span>
-<span class="co">## 85272   CTNNA3    CDH2     293T</span>
-<span class="co">## 95983   CTNNB1    CDH2     293T</span>
-<span class="co">## 104222  FBXO45    CDH2     293T</span>
-<span class="co">## 104253  HECTD1    CDH2     293T</span>
-<span class="co">## 107992 TAX1BP3    CDH2     293T</span>
-<span class="co">## 34925    SPSB4  CTNNB1     293T</span>
-<span class="co">## 69154   CTNND1  CTNNB1     293T</span>
-<span class="co">## 76933  C6orf26  CTNNB1     293T</span>
-<span class="co">## 85266   CTNNA3  CTNNB1     293T</span>
-<span class="co">## 85269   CTNNA3  CTNND1     293T</span>
-<span class="co">## 104224  FBXO45  HECTD1     293T</span>
-<span class="co">## 107979 TAX1BP3  CTNNB1     293T</span>
-<span class="co">## 12598  TAX1BP3  CTNNB1   HCT116</span>
-<span class="co">## 12605  TAX1BP3  CTNND1   HCT116</span>
-<span class="co">## 20768   CTNNA3  CTNNB1   HCT116</span></code></pre>
+<code class="sourceCode R"><span class="va">cdh2.gr</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/bioplex2graph.html" class="external-link">bioplex2graph</a></span><span class="op">(</span><span class="va">cdh2.df</span><span class="op">)</span>
+<span class="va">cdh2.gr</span></code></pre></div>
+<pre><code><span class="co">## A graphNEL graph with directed edges</span>
+<span class="co">## Number of Nodes = 9 </span>
+<span class="co">## Number of Edges = 16</span></code></pre>
+<p>And map the proteome data on the graph:</p>
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">cdh2.gr</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/mapSummarizedExperimentOntoGraph.html" class="external-link">mapSummarizedExperimentOntoGraph</a></span><span class="op">(</span><span class="va">cdh2.gr</span>, <span class="va">bp.prot</span><span class="op">)</span></code></pre></div>
+<p>And annotate for each edge whether it is present for both cell lines
+or only one of them.</p>
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">graph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/graph/man/edgeDataDefaults-methods.html" class="external-link">edgeDataDefaults</a></span><span class="op">(</span><span class="va">cdh2.gr</span>, <span class="st">"cell.line"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"BOTH"</span>
+<span class="va">rel.cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Uniprot"</span>, <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">rel.cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="va">rel.cols</span>, <span class="st">"cell.line"</span><span class="op">)</span>
+<span class="va">jdf</span> <span class="op">&lt;-</span>  <span class="va">cdh2.df</span><span class="op">[</span>,<span class="va">rel.cols</span><span class="op">]</span>
+<span class="va">jdf</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">jdf</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="fl">2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span><span class="st">"-[0-9]{1,2}$"</span>, <span class="st">""</span>, <span class="va">x</span><span class="op">)</span><span class="op">)</span>
+<span class="va">dind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/duplicated.html" class="external-link">duplicated</a></span><span class="op">(</span><span class="va">jdf</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>
+<span class="va">dup</span> <span class="op">&lt;-</span> <span class="va">jdf</span><span class="op">[</span><span class="va">dind</span>,<span class="op">]</span>
+<span class="va">ind</span> <span class="op">&lt;-</span> <span class="va">jdf</span><span class="op">$</span><span class="va">UniprotA</span> <span class="op"><a href="https://rdrr.io/pkg/BiocGenerics/man/match.html" class="external-link">%in%</a></span> <span class="va">dup</span><span class="op">$</span><span class="va">UniprotA</span> <span class="op">&amp;</span> <span class="va">jdf</span><span class="op">$</span><span class="va">UniprotB</span> <span class="op"><a href="https://rdrr.io/pkg/BiocGenerics/man/match.html" class="external-link">%in%</a></span> <span class="va">dup</span><span class="op">$</span><span class="va">UniprotB</span> 
+<span class="va">ind</span> <span class="op">&lt;-</span> <span class="va">ind</span> <span class="op">&amp;</span> <span class="va">jdf</span><span class="op">$</span><span class="va">cell.line</span> <span class="op">==</span> <span class="st">"293T"</span>
+<span class="va">jdf</span><span class="op">[</span><span class="va">ind</span>,<span class="st">"cell.line"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"BOTH"</span>  
+<span class="va">jdf</span> <span class="op">&lt;-</span> <span class="va">jdf</span><span class="op">[</span><span class="op">!</span><span class="va">dind</span>,<span class="op">]</span>
+<span class="va">jdf</span></code></pre></div>
+<pre><code><span class="co">##        UniprotA UniprotB cell.line</span>
+<span class="co">## 34970    Q96A44   P19022      293T</span>
+<span class="co">## 69156    O60716   P19022      293T</span>
+<span class="co">## 76938    Q5SSQ6   P19022      293T</span>
+<span class="co">## 85272    Q9UI47   P19022      293T</span>
+<span class="co">## 95983    P35222   P19022      293T</span>
+<span class="co">## 104222   P0C2W1   P19022      293T</span>
+<span class="co">## 104253   Q9ULT8   P19022      293T</span>
+<span class="co">## 107992   O14907   P19022      293T</span>
+<span class="co">## 34925    Q96A44   P35222      293T</span>
+<span class="co">## 69154    O60716   P35222      293T</span>
+<span class="co">## 76933    Q5SSQ6   P35222      293T</span>
+<span class="co">## 85266    Q9UI47   P35222      BOTH</span>
+<span class="co">## 85269    Q9UI47   O60716      293T</span>
+<span class="co">## 104224   P0C2W1   Q9ULT8      293T</span>
+<span class="co">## 107979   O14907   P35222      BOTH</span>
+<span class="co">## 12605    O14907   O60716    HCT116</span></code></pre>
+<p>We add this information to the graph:</p>
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">graph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/graph/man/edgeData-methods.html" class="external-link">edgeData</a></span><span class="op">(</span><span class="va">cdh2.gr</span>, <span class="va">jdf</span><span class="op">$</span><span class="va">UniprotA</span>, <span class="va">jdf</span><span class="op">$</span><span class="va">UniprotB</span>, <span class="st">"cell.line"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">jdf</span><span class="op">$</span><span class="va">cell.line</span></code></pre></div>
+<p>Inspect the resulting graph:</p>
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">BioPlexAnalysis</span><span class="fu">::</span><span class="fu"><a href="../reference/plotGraph.html">plotGraph</a></span><span class="op">(</span><span class="va">cdh2.gr</span>, 
+                           edge.color <span class="op">=</span> <span class="st">"grey"</span>,
+                           node.data <span class="op">=</span> <span class="st">"log2ratio"</span>,
+                           edge.data <span class="op">=</span> <span class="st">"cell.line"</span><span class="op">)</span>
+<span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_color_gradient2</a></span><span class="op">(</span>low <span class="op">=</span> <span class="st">"blue"</span>,
+                          mid <span class="op">=</span> <span class="st">"lightgrey"</span>,
+                          high <span class="op">=</span> <span class="st">"red"</span>,
+                          name <span class="op">=</span> <span class="st">"log2ratio"</span><span class="op">)</span></code></pre></div>
+<p><img src="TranscriptomeProteome_files/figure-html/unnamed-chunk-34-1.png" width="700"></p>
 </div>
   </div>
 

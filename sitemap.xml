@@ -43,9 +43,18 @@
     <loc>https://ccb-hms.github.io/BioPlexAnalysis/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://ccb-hms.github.io/BioPlexAnalysis/reference/joinNetworks.html</loc>
+  </url>
+  <url>
+    <loc>https://ccb-hms.github.io/BioPlexAnalysis/reference/plotGraph.html</loc>
+  </url>
+  <url>
     <loc>https://ccb-hms.github.io/BioPlexAnalysis/reference/testConnectivity.html</loc>
   </url>
   <url>
     <loc>https://ccb-hms.github.io/BioPlexAnalysis/reference/testDomainAssociation.html</loc>
+  </url>
+  <url>
+    <loc>https://ccb-hms.github.io/BioPlexAnalysis/reference/viewPDB.html</loc>
   </url>
 </urlset>

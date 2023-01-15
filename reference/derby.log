@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Fri Jan 06 20:04:31 UTC 2023:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0185-88af-59f0-00000b1c7000 
+Sun Jan 15 00:10:30 UTC 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0185-b2c3-6cdc-00000a079200 
 on database directory memory:/__w/BioPlexAnalysis/BioPlexAnalysis/docs/reference/databaseName=metastore_db with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@5ffd2b27 
 Loaded from file:/github/home/spark/spark-3.3.0-bin-hadoop2/jars/derby-10.14.2.0.jar
 java.vendor=Ubuntu

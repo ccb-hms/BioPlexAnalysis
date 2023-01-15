@@ -114,7 +114,7 @@
 <p>Get the latest version of the 293T PPI network …</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bp.293t.3</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioPlex.html" class="external-link">getBioPlex</a></span><span class="op">(</span>cell.line <span class="op">=</span> <span class="st">"293T"</span>, version <span class="op">=</span> <span class="st">"3.0"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2023-01-06 19:10:56</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2023-01-14 23:15:28</span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">bp.293t.3</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##    GeneA  GeneB UniprotA UniprotB SymbolA SymbolB           pW          pNI</span>
@@ -137,7 +137,7 @@
 <p>Obtain the complete set of human protein complexes from CORUM …</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">corum.df</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getCorum.html" class="external-link">getCorum</a></span><span class="op">(</span>set <span class="op">=</span> <span class="st">"core"</span>, organism <span class="op">=</span> <span class="st">"Human"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2023-01-06 19:38:27</span></code></pre>
+<pre><code><span class="co">## Using cached version from 2023-01-14 23:43:08</span></code></pre>
 <p>… and turn into a <code>list</code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">corum.list</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/corum2list.html" class="external-link">corum2list</a></span><span class="op">(</span><span class="va">corum.df</span><span class="op">)</span>
@@ -234,7 +234,7 @@ graph:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gr</span> <span class="op">&lt;-</span> <span class="va">bp</span><span class="op">$</span><span class="fu">bioplex2graph</span><span class="op">(</span><span class="va">bp.293t.3</span><span class="op">)</span>
 <span class="va">gr</span></code></pre></div>
-<pre><code><span class="co">## &lt;networkx.classes.digraph.DiGraph object at 0x7f9774105700&gt;</span></code></pre>
+<pre><code><span class="co">## &lt;networkx.classes.digraph.DiGraph object at 0x7f5eb9df88b0&gt;</span></code></pre>
 <p>and also to obtain the subset of CORUM complexes satisfying the above
 criteria.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
@@ -252,7 +252,7 @@ criteria:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ps</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. </span>
-<span class="co">## 0.009901 0.009901 0.009901 0.011646 0.009901 0.207921</span></code></pre>
+<span class="co">## 0.009901 0.009901 0.009901 0.011787 0.009901 0.247525</span></code></pre>
 <p>We can now take a peak at the p-value distribution from the overlap
 permutation test, observing a strong concentration near zero, confirming
 that, as expected, many complexes are enriched for PPIs - when compared
@@ -307,7 +307,7 @@ exceeded the number of edges observed for the true PPI network.</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ps2</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
-<span class="co">## 0.09091 0.09091 0.09091 0.09291 0.09091 0.72727</span></code></pre>
+<span class="co">## 0.09091 0.09091 0.09091 0.09461 0.09091 0.81818</span></code></pre>
 <p>As before we can take a peak at the <em>p</em>-value distribution for
 the network randomization test, which displays as for the resampling
 test a strong enrichment of PPIs across almost all CORUM complexes.</p>

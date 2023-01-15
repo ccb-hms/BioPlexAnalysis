@@ -140,35 +140,35 @@ structures:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##   SP_PRIMARY                                                              PDB</span>
-<span class="co">## 1     A0A003                                                        6kv9;6kvc</span>
-<span class="co">## 2 A0A009I821                               7m4y;7m4w;7ryf;7m4x;7ryg;7m4z;7ryh</span>
-<span class="co">## 3 A0A009L7S8                               7m4z;7m4y;7ryg;7m4x;7m4w;7ryh;7ryf</span>
-<span class="co">## 4 A0A009QSN8                                              6v3a;6v39;6v3d;6v3b</span>
-<span class="co">## 5     A0A010 5b0j;5b01;6j8v;5gwv;5b02;5gww;5b0m;6j8w;5b03;5b0l;5b0k;5b0i;5b00</span>
-<span class="co">## 6     A0A011                                         3vkd;3vk5;3vkc;3vkb;3vka</span></code></pre>
+<span class="co">## 1     A0A003                                                        6kvc;6kv9</span>
+<span class="co">## 2 A0A009I821                               7m4y;7m4x;7ryg;7m4w;7ryf;7ryh;7m4z</span>
+<span class="co">## 3 A0A009L7S8                               7m4z;7ryh;7ryf;7m4y;7ryg;7m4w;7m4x</span>
+<span class="co">## 4 A0A009QSN8                                              6v3d;6v39;6v3b;6v3a</span>
+<span class="co">## 5     A0A010 6j8v;5b01;5b00;5b0i;5b0l;5b0k;5b03;5b0m;6j8w;5b02;5gww;5gwv;5b0j</span>
+<span class="co">## 6     A0A011                                         3vkb;3vka;3vk5;3vkc;3vkd</span></code></pre>
 <p>Turn into a mapping:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">unip2pdb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">PDB</span>, <span class="st">";"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">unip2pdb</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">$</span><span class="va">SP_PRIMARY</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">unip2pdb</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## $A0A003</span>
-<span class="co">## [1] "6kv9" "6kvc"</span>
+<span class="co">## [1] "6kvc" "6kv9"</span>
 <span class="co">## </span>
 <span class="co">## $A0A009I821</span>
-<span class="co">## [1] "7m4y" "7m4w" "7ryf" "7m4x" "7ryg" "7m4z" "7ryh"</span>
+<span class="co">## [1] "7m4y" "7m4x" "7ryg" "7m4w" "7ryf" "7ryh" "7m4z"</span>
 <span class="co">## </span>
 <span class="co">## $A0A009L7S8</span>
-<span class="co">## [1] "7m4z" "7m4y" "7ryg" "7m4x" "7m4w" "7ryh" "7ryf"</span>
+<span class="co">## [1] "7m4z" "7ryh" "7ryf" "7m4y" "7ryg" "7m4w" "7m4x"</span>
 <span class="co">## </span>
 <span class="co">## $A0A009QSN8</span>
-<span class="co">## [1] "6v3a" "6v39" "6v3d" "6v3b"</span>
+<span class="co">## [1] "6v3d" "6v39" "6v3b" "6v3a"</span>
 <span class="co">## </span>
 <span class="co">## $A0A010</span>
-<span class="co">##  [1] "5b0j" "5b01" "6j8v" "5gwv" "5b02" "5gww" "5b0m" "6j8w" "5b03" "5b0l"</span>
-<span class="co">## [11] "5b0k" "5b0i" "5b00"</span>
+<span class="co">##  [1] "6j8v" "5b01" "5b00" "5b0i" "5b0l" "5b0k" "5b03" "5b0m" "6j8w" "5b02"</span>
+<span class="co">## [11] "5gww" "5gwv" "5b0j"</span>
 <span class="co">## </span>
 <span class="co">## $A0A011</span>
-<span class="co">## [1] "3vkd" "3vk5" "3vkc" "3vkb" "3vka"</span></code></pre>
+<span class="co">## [1] "3vkb" "3vka" "3vk5" "3vkc" "3vkd"</span></code></pre>
 <p>Having illustrated the basic principle underlying the mapping from a
 CORUM complex to a PDB structure, we now set up a python environment via
 <a href="https://rstudio.github.io/reticulate/" class="external-link">reticulate</a> that
@@ -408,29 +408,29 @@ chain to a UNIPROT ID, again based on data from the SIFTS project.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">chain2unip</span> <span class="op">&lt;-</span> <span class="va">bp</span><span class="op">$</span><span class="fu">list_uniprot_pdb_mappings</span><span class="op">(</span><span class="st">'6NMI'</span><span class="op">)</span>
 <span class="va">chain2unip</span></code></pre></div>
-<pre><code><span class="co">## $E</span>
-<span class="co">## [1] "Q13888"</span>
-<span class="co">## </span>
-<span class="co">## $C</span>
-<span class="co">## [1] "P32780"</span>
+<pre><code><span class="co">## $B</span>
+<span class="co">## [1] "P18074"</span>
 <span class="co">## </span>
 <span class="co">## $A</span>
 <span class="co">## [1] "P19447"</span>
 <span class="co">## </span>
+<span class="co">## $E</span>
+<span class="co">## [1] "Q13888"</span>
+<span class="co">## </span>
 <span class="co">## $D</span>
 <span class="co">## [1] "Q92759"</span>
-<span class="co">## </span>
-<span class="co">## $G</span>
-<span class="co">## [1] "Q6ZYL4"</span>
-<span class="co">## </span>
-<span class="co">## $H</span>
-<span class="co">## [1] "P51948"</span>
 <span class="co">## </span>
 <span class="co">## $F</span>
 <span class="co">## [1] "Q13889"</span>
 <span class="co">## </span>
-<span class="co">## $B</span>
-<span class="co">## [1] "P18074"</span></code></pre>
+<span class="co">## $H</span>
+<span class="co">## [1] "P51948"</span>
+<span class="co">## </span>
+<span class="co">## $C</span>
+<span class="co">## [1] "P32780"</span>
+<span class="co">## </span>
+<span class="co">## $G</span>
+<span class="co">## [1] "Q6ZYL4"</span></code></pre>
 <p>This mapping now allows us to produce a list of interacting chains
 using their corresponding UNIPROT ID.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
@@ -507,34 +507,68 @@ network<a class="anchor" aria-label="anchor" href="#identify-interactions-that-a
 <p>Having inferred physical interactions between subunits of the TFIIH
 core complex, we can now investigate which of these interactions have
 been detected in the BioPlex PPI data.</p>
-<p>We therefore obtain the latest version of the BioPlex network for the
-293T cell line.</p>
+<p>We therefore first look at all possible edges with the TFIIH core
+complex, and subsequently contrast that with edges detected in the
+BioPlex network and the inferred direct interactions from the PDB
+data.</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bp.293t</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioPlex.html" class="external-link">getBioPlex</a></span><span class="op">(</span>cell.line <span class="op">=</span> <span class="st">"293T"</span>, version <span class="op">=</span> <span class="st">"3.0"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Using cached version from 2023-01-06 19:10:56</span></code></pre>
-<p>Now we restrict the inferred physical interactions between subunits
-of the TFIIH core complex to those also found in the BioPlex 293T
-network.</p>
+<code class="sourceCode R"><span class="va">corum.df</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getCorum.html" class="external-link">getCorum</a></span><span class="op">(</span><span class="st">"core"</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## Using cached version from 2023-01-14 23:43:08</span></code></pre>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ia.comb1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">ia.df</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, <span class="va">ia.df</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span>
-<span class="va">ia.comb2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">ia.df</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>, <span class="va">ia.df</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span>
-<span class="va">bp.comb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">bp.293t</span><span class="op">$</span><span class="va">UniprotA</span>, <span class="va">bp.293t</span><span class="op">$</span><span class="va">UniprotB</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span>
-<span class="va">ind1</span> <span class="op">&lt;-</span> <span class="va">ia.comb1</span> <span class="op"><a href="https://rdrr.io/pkg/BiocGenerics/man/match.html" class="external-link">%in%</a></span> <span class="va">bp.comb</span>
-<span class="va">ind2</span> <span class="op">&lt;-</span> <span class="va">ia.comb2</span> <span class="op"><a href="https://rdrr.io/pkg/BiocGenerics/man/match.html" class="external-link">%in%</a></span> <span class="va">bp.comb</span>
-<span class="va">ind</span> <span class="op">&lt;-</span> <span class="va">ind1</span> <span class="op">|</span> <span class="va">ind2</span>
-<span class="va">ia.df</span><span class="op">[</span><span class="va">ind</span>,<span class="op">]</span></code></pre></div>
-<pre><code><span class="co">##    CHAIN1 CHAIN2</span>
-<span class="co">## 2  P19447 Q92759</span>
-<span class="co">## 3  P19447 Q13888</span>
-<span class="co">## 4  P19447 Q6ZYL4</span>
-<span class="co">## 5  P19447 P51948</span>
-<span class="co">## 8  P18074 P51948</span>
-<span class="co">## 9  P32780 Q92759</span>
-<span class="co">## 10 P32780 Q13888</span>
-<span class="co">## 11 P32780 Q13889</span>
-<span class="co">## 12 Q92759 Q13889</span>
-<span class="co">## 13 Q92759 Q6ZYL4</span>
-<span class="co">## 14 Q13888 Q13889</span></code></pre>
+<code class="sourceCode R"><span class="va">corum.glist</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/corum2graphlist.html" class="external-link">corum2graphlist</a></span><span class="op">(</span><span class="va">corum.df</span><span class="op">)</span>
+<span class="va">tfiih.gr</span> <span class="op">&lt;-</span> <span class="va">corum.glist</span><span class="op">[[</span><span class="st">"CORUM107_TFIIH_transcription_factor_complex"</span><span class="op">]</span><span class="op">]</span>
+<span class="va">tfiih.gr</span></code></pre></div>
+<pre><code><span class="co">## A graphNEL graph with undirected edges</span>
+<span class="co">## Number of Nodes = 9 </span>
+<span class="co">## Number of Edges = 36</span></code></pre>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">BioPlexAnalysis</span><span class="fu">::</span><span class="fu"><a href="../reference/plotGraph.html">plotGraph</a></span><span class="op">(</span><span class="va">tfiih.gr</span>, edge.mode <span class="op">=</span> <span class="st">"undirected"</span>, 
+                           edge.color <span class="op">=</span> <span class="st">"grey"</span>, layout <span class="op">=</span> <span class="st">"circle"</span><span class="op">)</span></code></pre></div>
+<p><img src="PDB_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p>Now we obtain the latest version of the BioPlex network for the 293T
+cell line,</p>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bp.293t</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/getBioPlex.html" class="external-link">getBioPlex</a></span><span class="op">(</span>cell.line <span class="op">=</span> <span class="st">"293T"</span>, version <span class="op">=</span> <span class="st">"3.0"</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## Using cached version from 2023-01-14 23:15:28</span></code></pre>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bp.gr</span> <span class="op">&lt;-</span> <span class="fu">BioPlex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BioPlex/man/bioplex2graph.html" class="external-link">bioplex2graph</a></span><span class="op">(</span><span class="va">bp.293t</span><span class="op">)</span></code></pre></div>
+<p>and subset the bioplex network to edges between subunits of the TFIIH
+core complex.</p>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bp.tfiih</span> <span class="op">&lt;-</span> <span class="fu">graph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/graph/man/subGraph.html" class="external-link">subGraph</a></span><span class="op">(</span><span class="va">unips</span>, <span class="va">bp.gr</span><span class="op">)</span>
+<span class="va">bp.tfiih.edges</span> <span class="op">&lt;-</span> <span class="fu">graph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/graph/man/graphNEL-class.html" class="external-link">edges</a></span><span class="op">(</span><span class="va">bp.tfiih</span><span class="op">)</span>
+<span class="va">bp.tfiih.edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/stack.html" class="external-link">stack</a></span><span class="op">(</span><span class="va">bp.tfiih.edges</span><span class="op">)</span>
+<span class="va">bp.tfiih.edges</span><span class="op">$</span><span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">bp.tfiih.edges</span><span class="op">$</span><span class="va">ind</span><span class="op">)</span></code></pre></div>
+<p>Let’s visually inspect the edges between subunits of the complex that
+have been detected in the BioPlex network.</p>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">graph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/graph/man/edgeDataDefaults-methods.html" class="external-link">edgeDataDefaults</a></span><span class="op">(</span><span class="va">tfiih.gr</span>, <span class="st">"type"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"not detected"</span>
+<span class="fu">graph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/graph/man/edgeData-methods.html" class="external-link">edgeData</a></span><span class="op">(</span><span class="va">tfiih.gr</span>, 
+                <span class="va">bp.tfiih.edges</span><span class="op">$</span><span class="va">ind</span>, 
+                <span class="va">bp.tfiih.edges</span><span class="op">$</span><span class="va">values</span>,
+                <span class="st">"type"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"detected"</span>
+<span class="fu">BioPlexAnalysis</span><span class="fu">::</span><span class="fu"><a href="../reference/plotGraph.html">plotGraph</a></span><span class="op">(</span><span class="va">tfiih.gr</span>, 
+                           edge.mode <span class="op">=</span> <span class="st">"undirected"</span>,
+                           edge.color <span class="op">=</span> <span class="st">"grey"</span>,
+                           layout <span class="op">=</span> <span class="st">"circle"</span>,
+                           edge.data <span class="op">=</span> <span class="st">"type"</span><span class="op">)</span></code></pre></div>
+<p><img src="PDB_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<p>We can contrast this with the edges that we have inferred to directly
+interact with each other from proximity of the chains within the PDB
+structure.</p>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ia.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">ia.df</span>, <span class="va">CHAIN2</span> <span class="op">!=</span> <span class="st">"Q6ZYL4"</span><span class="op">)</span>
+<span class="fu">graph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/graph/man/edgeDataDefaults-methods.html" class="external-link">edgeDataDefaults</a></span><span class="op">(</span><span class="va">tfiih.gr</span>, <span class="st">"type"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"indirect"</span>
+<span class="fu">graph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/graph/man/edgeData-methods.html" class="external-link">edgeData</a></span><span class="op">(</span><span class="va">tfiih.gr</span>, 
+                <span class="va">ia.df</span><span class="op">$</span><span class="va">CHAIN1</span>, 
+                <span class="va">ia.df</span><span class="op">$</span><span class="va">CHAIN2</span>,
+                <span class="st">"type"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"direct"</span>
+<span class="fu">BioPlexAnalysis</span><span class="fu">::</span><span class="fu"><a href="../reference/plotGraph.html">plotGraph</a></span><span class="op">(</span><span class="va">tfiih.gr</span>, 
+                           edge.mode <span class="op">=</span> <span class="st">"undirected"</span>,
+                           edge.color <span class="op">=</span> <span class="st">"grey"</span>,
+                           layout <span class="op">=</span> <span class="st">"circle"</span>,
+                           edge.data <span class="op">=</span> <span class="st">"type"</span><span class="op">)</span></code></pre></div>
+<p><img src="PDB_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 </div>
   </div>
 
